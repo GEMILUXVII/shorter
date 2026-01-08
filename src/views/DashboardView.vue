@@ -29,16 +29,16 @@ const linkStore = useLinkStore()
             <div
               v-for="(link, index) in linkStore.popularLinks"
               :key="link.id"
-              class="flex items-center gap-5 p-4 bg-[var(--color-bg-secondary)] rounded-xl"
+              class="flex items-center gap-5 p-5 bg-[var(--color-bg-secondary)] rounded-xl"
             >
               <!-- Rank -->
               <div
                 :class="[
-                  'flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg',
-                  index === 0 ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' :
-                  index === 1 ? 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300' :
-                  index === 2 ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400' :
-                  'bg-[var(--color-card)] text-[var(--color-text-muted)]'
+                  'flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-bold text-lg',
+                  index === 0 ? 'bg-amber-400 text-white' :
+                  index === 1 ? 'bg-slate-400 text-white' :
+                  index === 2 ? 'bg-orange-400 text-white' :
+                  'bg-[var(--color-card)] text-[var(--color-text-muted)] border border-[var(--color-border)]'
                 ]"
               >
                 {{ index + 1 }}
