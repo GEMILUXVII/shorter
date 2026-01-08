@@ -83,7 +83,7 @@ async function handleSubmit() {
   
   try {
     const formattedUrl = formatUrl(url.value)
-    const link = linkStore.addLink(formattedUrl, {
+    const link = await linkStore.addLink(formattedUrl, {
       customCode: customCode.value || null,
       expiresIn: expiryOption.value,
       password: password.value || null,
