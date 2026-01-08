@@ -107,9 +107,9 @@ onUnmounted(() => {
               <Transition name="fade">
                 <div
                   v-if="showUserMenu"
-                  class="absolute right-0 mt-4 w-48 bg-white/90 backdrop-blur-sm border border-gray-100 rounded-2xl shadow-lg py-2"
+                  class="absolute right-0 mt-4 w-48 bg-[var(--color-card)]/90 backdrop-blur-sm border border-[var(--color-border)] rounded-2xl shadow-lg py-2"
                 >
-                  <div class="px-4 py-2 text-xs text-gray-400 border-b border-gray-50 uppercase tracking-wider">
+                  <div class="px-4 py-2 text-xs text-[var(--color-text-muted)] border-b border-[var(--color-border)] uppercase tracking-wider">
                     {{ user?.email }}
                   </div>
                   <button

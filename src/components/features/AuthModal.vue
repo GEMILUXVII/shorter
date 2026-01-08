@@ -89,14 +89,14 @@ function switchMode() {
         <!-- Modal -->
         <div class="relative w-full max-w-md animate-fade-in-up">
           <!-- 卡片主体 - 极简浮动风格 -->
-          <div class="relative bg-[var(--color-bg)]/95 backdrop-blur-xl rounded-3xl shadow-2xl p-8 md:p-10 border border-white/50">
+          <div class="relative bg-[var(--color-bg)]/95 backdrop-blur-xl rounded-3xl shadow-2xl p-8 md:p-10 border border-[var(--color-border)]">
             <!-- Header -->
             <div class="text-center mb-10">
               <h2 class="text-3xl font-serif font-medium text-[var(--color-text)]">
-                {{ isRegister ? 'Join Shorter' : 'Welcome Back' }}
+                {{ isRegister ? '加入 Shorter' : '欢迎回来' }}
               </h2>
               <p class="mt-2 text-[var(--color-text-secondary)] font-light">
-                {{ isRegister ? 'Start simplifying your links today.' : 'Login to manage your links.' }}
+                {{ isRegister ? '让链接管理变得简单而优雅' : '登录以管理您的所有短链接' }}
               </p>
             </div>
             
@@ -116,7 +116,7 @@ function switchMode() {
                 <input
                   v-model="password"
                   type="password"
-                  placeholder="Password"
+                  placeholder="密码"
                   class="clean-input !text-base bg-transparent"
                   required
                 />
@@ -128,7 +128,7 @@ function switchMode() {
                   <input
                     v-model="confirmPassword"
                     type="password"
-                    placeholder="Confirm Password"
+                    placeholder="确认密码"
                     class="clean-input !text-base bg-transparent"
                     required
                   />
@@ -147,20 +147,20 @@ function switchMode() {
                 class="clean-btn w-full text-lg py-3 mt-4 shadow-lg shadow-[var(--color-primary)]/20"
                 :disabled="!canSubmit || isLoading"
               >
-                <span v-if="isLoading" class="animate-pulse">Processing...</span>
-                <span v-else>{{ isRegister ? 'Create Account' : 'Sign In' }}</span>
+                <span v-if="isLoading" class="animate-pulse">处理中...</span>
+                <span v-else>{{ isRegister ? '创建账号' : '立即登录' }}</span>
               </button>
             </form>
             
             <!-- Footer -->
             <div class="mt-8 text-center text-sm text-[var(--color-text-muted)]">
-              {{ isRegister ? 'Already have an account?' : "Don't have an account?" }}
+              {{ isRegister ? '已有账号？' : "还没有账号？" }}
               <button
                 type="button"
                 class="text-[var(--color-primary)] font-medium hover:underline ml-1"
                 @click="switchMode"
               >
-                {{ isRegister ? 'Log in' : 'Sign up' }}
+                {{ isRegister ? '去登录' : '免费注册' }}
               </button>
             </div>
             

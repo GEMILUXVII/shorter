@@ -18,7 +18,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="py-12 px-6 sm:px-8 lg:px-12">
+  <div class="py-24 px-6 sm:px-8 lg:px-12">
     <div class="max-w-6xl mx-auto space-y-12">
       <!-- Header -->
       <div class="text-center">

@@ -34,6 +34,31 @@
   --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.04);
 }
 
+/* 暗色主题 - 午夜森林 (Midnight Garden) */
+.dark {
+  /* 主色调 - 保持鼠尾草/薄荷绿，但略微提亮以适应深底 */
+  --color-primary: #6ee7b7; /* Emerald 300 - 发光的薄荷绿 */
+  --color-primary-hover: #34d399;
+  --color-primary-light: #064e3b;
+
+  /* 背景色 - 深邃的炭灰/深岩石色 */
+  --color-bg: #121212; /* 纯黑略带暖意 */
+  --color-bg-secondary: #1c1c1c;
+  --color-card: #262626;
+
+  /* 边框 - 深灰 */
+  --color-border: #333333;
+
+  /* 文字颜色 - 柔和的米白 */
+  --color-text: #e5e5e5;
+  --color-text-secondary: #a3a3a3;
+  --color-text-muted: #525252;
+
+  /* 阴影 - 改为发光感 */
+  --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
 /* 基础样式重置与字体 */
 html {
   /* 优先使用优雅的衬线体作为标题，无衬线体作为正文 */
@@ -50,6 +75,8 @@ body {
   background: 
     radial-gradient(circle at 10% 20%, rgba(92, 141, 137, 0.03) 0%, transparent 40%),
     radial-gradient(circle at 90% 80%, rgba(216, 172, 156, 0.05) 0%, transparent 40%);
+  background-color: var(--color-bg);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* 标题样式 - 更具设计感 */
