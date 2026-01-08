@@ -17,6 +17,7 @@ const customCode = ref('')
 const showAdvanced = ref(false)
 const isLoading = ref(false)
 const generatedLink = ref(null)
+const baseUrl = window.location.origin
 
 const urlError = computed(() => {
   if (!url.value) return ''
@@ -114,17 +115,18 @@ function handleReset() {
         
         <!-- 高级选项 -->
         <Transition name="slide-up">
-          <div v-if="showAdvanced" class="pt-2">
-            <BaseInput
-              v-model="customCode"
-              placeholder="自定义短码（可选，如: my-link）"
-              size="md"
-              hint="留空将自动生成6位随机短码"
-            >
-              <template #prefix>
-                <span class="text-sm text-[var(--color-text-muted)]">{{ window.location.origin }}/</span>
-              </template>
-            </BaseInput>
+          <div v-if="showAdvanced" class="mt-4">
+            <div class="p-5 bg-[var(--color-bg-secondary)] rounded-xl space-y-4">
+              <div class="flex flex-wrap items-center gap-2 text-sm">
+                <span class="text-[var(--color-text-secondary)]">生成的短链将是：</span>
+                <code class="px-2 py-1 bg-[var(--color-card)] rounded text-[var(--color-primary)] font-mono">{{ baseUrl }}/<span class="text-[var(--color-text)]">你的短码</span></code>
+              </div>
+              <BaseInput
+                v-model="customCode"
+                placeholder="输入自定义短码（留空自动生成）"
+                size="md"
+              />
+            </div>
           </div>
         </Transition>
         
