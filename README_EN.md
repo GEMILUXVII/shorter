@@ -11,7 +11,6 @@
 <br>
 
 <div align="center">
-  <a href="https://github.com/GEMILUXVII/shorter"><img src="https://img.shields.io/badge/version-v1.0.0-5c8d89?style=for-the-badge" alt="Version"></a>
   <a href="https://github.com/GEMILUXVII/shorter/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0-E53935?style=for-the-badge" alt="License"></a>
   <a href="https://vuejs.org/"><img src="https://img.shields.io/badge/Vue-3.x-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white" alt="Vue 3"></a>
   <a href="https://vitejs.dev/"><img src="https://img.shields.io/badge/Vite-5.x-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite"></a>
