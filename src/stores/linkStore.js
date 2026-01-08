@@ -186,9 +186,8 @@ export const useLinkStore = defineStore('links', () => {
       
       if (response.ok) {
         const serverLinks = await response.json()
-        // 合并服务器链接和本地链接（去重）
-        const localLinks = links.value.filter(l => !serverLinks.find(s => s.code === l.code))
-        links.value = [...serverLinks, ...localLinks]
+        // 用服务器数据完全替换本地数据（确保删除同步）
+        links.value = serverLinks
         saveToStorage()
       }
     } catch (e) {
