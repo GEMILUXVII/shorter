@@ -10,7 +10,43 @@ export function isValidUrl(url) {
   
   try {
     const urlObj = new URL(url)
-    return ['http:', 'https:'].includes(urlObj.protocol)
+    
+    // 必须是 http 或 https 协议
+    if (!['http:', 'https:'].includes(urlObj.protocol)) {
+      return false
+    }
+    
+    // 主机名必须包含至少一个点（排除 localhost 等）
+    // 例如：example.com, sub.example.com
+    const hostname = urlObj.hostname
+    
+    // 检查是否是 IP 地址（允许）
+    const ipv4Pattern = /^(\d{1,3}\.){3}\d{1,3}$/
+    if (ipv4Pattern.test(hostname)) {
+      return true
+    }
+    
+    // 检查是否是有效域名（必须包含点，且不能以点开头或结尾）
+    if (!hostname.includes('.') || hostname.startsWith('.') || hostname.endsWith('.')) {
+      return false
+    }
+    
+    // 检查域名各部分是否有效（至少2个字符的顶级域名）
+    const parts = hostname.split('.')
+    const tld = parts[parts.length - 1]
+    if (tld.length < 2) {
+      return false
+    }
+    
+    // 域名只能包含字母、数字和连字符
+    const domainPattern = /^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?$/
+    for (const part of parts) {
+      if (!part || !domainPattern.test(part)) {
+        return false
+      }
+    }
+    
+    return true
   } catch {
     return false
   }
