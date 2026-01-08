@@ -67,10 +67,23 @@ export const useLinkStore = defineStore('links', () => {
     }
     
     // 检查是否已存在相同的原始链接
-    const existingLink = links.value.find(link => link.originalUrl === originalUrl)
-    if (existingLink && !customCode) {
-      // 如果已存在且没有指定自定义短码，返回已有的链接
-      return existingLink
+    // 只有在以下情况才复用：
+    // 1. 没有自定义短码
+    // 2. 没有设置过期时间、密码、最大点击数、备注
+    // 3. 已存在的链接也是"干净"的（无高级选项）
+    const hasOptions = customCode || (expiresIn && expiresIn !== 'never') || password || maxClicks || note
+    
+    if (!hasOptions) {
+      const existingLink = links.value.find(link => 
+        link.originalUrl === originalUrl && 
+        !link.password && 
+        !link.expiresAt && 
+        !link.maxClicks
+      )
+      
+      if (existingLink) {
+        return existingLink
+      }
     }
     
     const code = customCode || generateFriendlyId(6)
