@@ -41,11 +41,11 @@ function handleClearAll() {
 </script>
 
 <template>
-  <div class="space-y-4">
+  <div class="space-y-6">
     <!-- Header -->
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div>
-        <h3 class="text-lg font-semibold text-[var(--color-text)]">我的短链</h3>
+        <h3 class="text-xl font-semibold text-[var(--color-text)]">我的短链</h3>
         <p class="text-sm text-[var(--color-text-secondary)]">
           共 {{ linkStore.totalLinks }} 条链接
         </p>
@@ -80,7 +80,7 @@ function handleClearAll() {
     </div>
     
     <!-- Links list -->
-    <div v-if="!isEmpty" class="space-y-3">
+    <div v-if="!isEmpty" class="space-y-4">
       <TransitionGroup name="list">
         <LinkItem
           v-for="link in filteredLinks"

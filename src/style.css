@@ -132,6 +132,26 @@ body {
   margin-top: 2rem !important;
 }
 
+.space-y-6 > * + * {
+  margin-top: 1.5rem !important;
+}
+
+.space-y-5 > * + * {
+  margin-top: 1.25rem !important;
+}
+
+.space-y-4 > * + * {
+  margin-top: 1rem !important;
+}
+
+.gap-5 {
+  gap: 1.25rem !important;
+}
+
+.p-5 {
+  padding: 1.25rem !important;
+}
+
 .gap-8 {
   gap: 2rem !important;
 }

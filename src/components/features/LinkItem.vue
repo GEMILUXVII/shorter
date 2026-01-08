@@ -34,7 +34,7 @@ function handleDelete() {
 </script>
 
 <template>
-  <div class="group flex items-center gap-4 p-4 bg-[var(--color-card)] border border-[var(--color-border)] rounded-xl hover:border-[var(--color-primary)] transition-all">
+  <div class="group flex items-center gap-5 p-5 bg-[var(--color-card)] border border-[var(--color-border)] rounded-xl hover:border-[var(--color-primary)] transition-all">
     <!-- Favicon / Domain icon -->
     <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-[var(--color-bg-secondary)] flex items-center justify-center">
       <img
