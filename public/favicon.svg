@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .bg { fill: #2c2c2c; transition: fill 0.3s; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #4a726f; }
+    }
+  </style>
+  <rect class="bg" width="64" height="64" rx="16" />
+  <text 
+    x="32" 
+    y="44" 
+    font-family="'Playfair Display', 'Times New Roman', serif" 
+    font-weight="bold" 
+    font-size="42" 
+    fill="white" 
+    text-anchor="middle"
+  >S</text>
+  <circle cx="50" cy="46" r="3" fill="white" />
+</svg>
