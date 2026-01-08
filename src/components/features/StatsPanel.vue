@@ -42,18 +42,18 @@ function todayLinks() {
 </script>
 
 <template>
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-    <BaseCard
-      v-for="stat in stats"
-      :key="stat.label"
-      padding="md"
-      hover
-    >
-      <div class="flex items-center gap-4">
+  <BaseCard padding="lg">
+    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-around gap-6 sm:gap-8">
+      <div
+        v-for="(stat, index) in stats"
+        :key="stat.label"
+        class="flex items-center gap-4 flex-1"
+        :class="{ 'sm:border-r sm:border-[var(--color-border)] sm:pr-8': index < stats.length - 1 }"
+      >
         <!-- Icon -->
         <div
           :class="[
-            'flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center',
+            'flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center',
             stat.color
           ]"
           v-html="stat.icon"
@@ -61,7 +61,7 @@ function todayLinks() {
         
         <!-- Content -->
         <div>
-          <p class="text-2xl font-bold text-[var(--color-text)]">
+          <p class="text-3xl font-bold text-[var(--color-text)]">
             {{ stat.value.toLocaleString() }}
           </p>
           <p class="text-sm text-[var(--color-text-secondary)]">
@@ -69,6 +69,6 @@ function todayLinks() {
           </p>
         </div>
       </div>
-    </BaseCard>
-  </div>
+    </div>
+  </BaseCard>
 </template>
