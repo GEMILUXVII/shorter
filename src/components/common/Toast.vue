@@ -28,13 +28,13 @@ function getIcon(type) {
 function getTypeClasses(type) {
   switch (type) {
     case 'success':
-      return 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-800 dark:text-green-200'
+      return 'bg-green-50/80 dark:bg-green-900/40 border-green-200 dark:border-green-800 text-green-800 dark:text-green-200 backdrop-blur-sm'
     case 'error':
-      return 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-800 dark:text-red-200'
+      return 'bg-red-50/80 dark:bg-red-900/40 border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 backdrop-blur-sm'
     case 'warning':
-      return 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800 text-yellow-800 dark:text-yellow-200'
+      return 'bg-yellow-50/80 dark:bg-yellow-900/40 border-yellow-200 dark:border-yellow-800 text-yellow-800 dark:text-yellow-200 backdrop-blur-sm'
     default:
-      return 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-200'
+      return 'bg-blue-50/80 dark:bg-blue-900/40 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-200 backdrop-blur-sm'
   }
 }
 </script>
@@ -47,7 +47,7 @@ function getTypeClasses(type) {
           v-for="toast in toasts"
           :key="toast.id"
           :class="[
-            'pointer-events-auto flex items-start gap-3 p-4 rounded-lg border shadow-lg',
+            'pointer-events-auto flex items-center gap-4 px-5 py-4 rounded-xl border shadow-lg',
             getTypeClasses(toast.type)
           ]"
         >
