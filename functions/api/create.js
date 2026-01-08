@@ -67,6 +67,26 @@ export async function onRequestPost(context) {
         )
       }
       
+      // 保留路径 - 禁止使用这些作为短码
+      const reservedCodes = [
+        // 系统文件
+        'favicon', 'favicon.svg', 'favicon.ico', 'vite.svg',
+        'robots', 'robots.txt', 'sitemap', 'sitemap.xml',
+        // SPA 路由
+        'dashboard', 'login', 'register', 'settings', 'profile',
+        // API 路径
+        'api', 'assets', 'static', 'public',
+        // 其他保留
+        'admin', 'root', 'system', 'config', 'null', 'undefined'
+      ]
+      
+      if (reservedCodes.includes(code.toLowerCase())) {
+        return Response.json(
+          { success: false, message: '该短码为系统保留，请更换' },
+          { status: 400 }
+        )
+      }
+      
       // 检查短码是否已存在
       const existing = await env.LINKS_KV.get(code)
       if (existing) {

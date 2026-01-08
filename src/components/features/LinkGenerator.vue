@@ -102,7 +102,11 @@ async function handleSubmit() {
     note.value = ''
     showAdvanced.value = false
   } catch (e) {
-    error(t('link.error.createFailed'))
+    if (e.code === 'RESERVED_CODE') {
+      error(t('link.error.reservedCode'))
+    } else {
+      error(e.message || t('link.error.createFailed'))
+    }
   } finally {
     isLoading.value = false
   }

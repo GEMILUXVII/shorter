@@ -69,8 +69,11 @@ export default {
     generate: '生成短链',
     processing: '生成中...',
     error: {
-      invalidUrl: '请输入有效的网址',
-      empty: '请输入网址'
+      invalidUrl: '清输入有效的网址',
+      empty: '请输入网址',
+      reservedCode: '该短码为系统保留，请更换',
+      maxClicksInvalid: '请输入有效的数字',
+      createFailed: '创建失败，请稍后重试'
     },
     success: '生成成功！',
     copy: '复制',

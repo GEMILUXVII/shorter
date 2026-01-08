@@ -70,7 +70,10 @@ export default {
     processing: 'Processing...',
     error: {
       invalidUrl: 'Please enter a valid URL',
-      empty: 'Please enter a URL'
+      empty: 'Please enter a URL',
+      reservedCode: 'This code is reserved, please choose another',
+      maxClicksInvalid: 'Please enter a valid number',
+      createFailed: 'Failed to create, please try again'
     },
     success: 'Shortened!',
     copy: 'Copy',

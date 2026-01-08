@@ -51,6 +51,21 @@ export const useLinkStore = defineStore('links', () => {
   async function addLink(originalUrl, options = {}) {
     const { customCode, expiresIn, password, maxClicks, note } = options
     
+    // 保留路径 - 禁止使用这些作为短码
+    const reservedCodes = [
+      'favicon', 'favicon.svg', 'favicon.ico', 'vite.svg',
+      'robots', 'robots.txt', 'sitemap', 'sitemap.xml',
+      'dashboard', 'login', 'register', 'settings', 'profile',
+      'api', 'assets', 'static', 'public',
+      'admin', 'root', 'system', 'config', 'null', 'undefined'
+    ]
+    
+    if (customCode && reservedCodes.includes(customCode.toLowerCase())) {
+      const err = new Error('RESERVED_CODE')
+      err.code = 'RESERVED_CODE'
+      throw err
+    }
+    
     // 检查是否已存在相同的原始链接
     const existingLink = links.value.find(link => link.originalUrl === originalUrl)
     if (existingLink && !customCode) {
