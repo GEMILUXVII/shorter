@@ -97,7 +97,7 @@ function handleInput(e) {
     </div>
     
     <!-- Error message -->
-    <p v-if="error" class="mt-1.5 text-sm text-[var(--color-error)]">
+    <p v-if="error" class="mt-2 mb-2 text-sm text-[var(--color-error)]">
       {{ error }}
     </p>
     

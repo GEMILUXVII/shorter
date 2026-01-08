@@ -49,6 +49,13 @@ export const useLinkStore = defineStore('links', () => {
   }
   
   function addLink(originalUrl, customCode = null) {
+    // 检查是否已存在相同的原始链接
+    const existingLink = links.value.find(link => link.originalUrl === originalUrl)
+    if (existingLink && !customCode) {
+      // 如果已存在且没有指定自定义短码，返回已有的链接
+      return existingLink
+    }
+    
     const code = customCode || generateFriendlyId(6)
     const baseUrl = window.location.origin
     

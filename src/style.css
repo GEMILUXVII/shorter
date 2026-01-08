@@ -87,6 +87,17 @@ body {
   margin-right: auto !important;
 }
 
+.mt-4 {
+  margin-top: 1rem !important;
+}
+
+.mt-2 {
+  margin-top: 0.5rem !important;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem !important;
+}
 .max-w-5xl {
   max-width: 64rem !important;
 }
