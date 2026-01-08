@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
+import { useAuth } from '@/composables/useAuth'
+import AuthModal from '@/components/features/AuthModal.vue'
 
 defineProps({
   isDark: Boolean
@@ -10,11 +12,20 @@ defineEmits(['toggle-theme'])
 
 const route = useRoute()
 const mobileMenuOpen = ref(false)
+const showAuthModal = ref(false)
+const showUserMenu = ref(false)
+
+const { user, isLoggedIn, logout } = useAuth()
 
 const navLinks = [
   { name: '首页', path: '/' },
   { name: '管理面板', path: '/dashboard' }
 ]
+
+function handleLogout() {
+  logout()
+  showUserMenu.value = false
+}
 </script>
 
 <template>
@@ -66,6 +77,49 @@ const navLinks = [
             </svg>
           </button>
           
+          <!-- Login / User Menu -->
+          <div class="relative">
+            <template v-if="isLoggedIn">
+              <!-- User button -->
+              <button
+                class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-secondary)] transition-colors"
+                @click="showUserMenu = !showUserMenu"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                </svg>
+                <span class="hidden sm:inline">{{ user?.email?.split('@')[0] }}</span>
+              </button>
+              
+              <!-- Dropdown -->
+              <Transition name="fade">
+                <div
+                  v-if="showUserMenu"
+                  class="absolute right-0 mt-2 w-48 bg-[var(--color-card)] border border-[var(--color-border)] rounded-lg shadow-lg py-1"
+                >
+                  <div class="px-4 py-2 text-sm text-[var(--color-text-muted)] border-b border-[var(--color-border)]">
+                    {{ user?.email }}
+                  </div>
+                  <button
+                    class="w-full text-left px-4 py-2 text-sm text-[var(--color-text)] hover:bg-[var(--color-bg-secondary)] transition-colors"
+                    @click="handleLogout"
+                  >
+                    退出登录
+                  </button>
+                </div>
+              </Transition>
+            </template>
+            
+            <template v-else>
+              <button
+                class="px-4 py-1.5 rounded-lg text-sm font-medium bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] transition-colors"
+                @click="showAuthModal = true"
+              >
+                登录
+              </button>
+            </template>
+          </div>
+          
           <!-- Mobile menu button -->
           <button
             class="md:hidden p-2 rounded-lg text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-secondary)] transition-colors"
@@ -99,4 +153,7 @@ const navLinks = [
       </Transition>
     </div>
   </header>
+  
+  <!-- Auth Modal -->
+  <AuthModal :visible="showAuthModal" @close="showAuthModal = false" />
 </template>

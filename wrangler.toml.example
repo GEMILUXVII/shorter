@@ -10,3 +10,16 @@ pages_build_output_dir = "./dist"
 binding = "LINKS_KV"
 id = "your-kv-namespace-id-here"
 preview_id = "your-preview-kv-namespace-id-here"
+
+# 用户 KV 命名空间
+# 创建: npx wrangler kv namespace create USERS_KV
+# 预览: npx wrangler kv namespace create USERS_KV --preview
+[[kv_namespaces]]
+binding = "USERS_KV"
+id = "your-users-kv-namespace-id-here"
+preview_id = "your-users-preview-kv-namespace-id-here"
+
+# 环境变量
+[vars]
+JWT_SECRET = "your-jwt-secret-here"
+

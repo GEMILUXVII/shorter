@@ -65,7 +65,7 @@ function handleInput(e) {
 <template>
   <div class="w-full">
     <!-- Label -->
-    <label v-if="label" class="block text-sm font-medium text-[var(--color-text)] mb-1.5">
+    <label v-if="label" class="block text-sm font-medium text-[var(--color-text)] mb-2">
       {{ label }}
     </label>
     
