@@ -120,8 +120,13 @@ cp wrangler.toml.example wrangler.toml
 ### 2. 创建 KV 命名空间
 
 ```bash
-wrangler kv:namespace create "LINKS"
-wrangler kv:namespace create "USERS"
+# 生产环境 KV
+npx wrangler kv namespace create LINKS_KV
+npx wrangler kv namespace create USERS_KV
+
+# 预览环境 KV
+npx wrangler kv namespace create LINKS_KV --preview
+npx wrangler kv namespace create USERS_KV --preview
 ```
 
 ### 3. 部署

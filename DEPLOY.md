@@ -18,9 +18,11 @@ npx wrangler login
 ```bash
 # 创建生产环境 KV
 npx wrangler kv namespace create LINKS_KV
+npx wrangler kv namespace create USERS_KV
 
 # 创建预览环境 KV
 npx wrangler kv namespace create LINKS_KV --preview
+npx wrangler kv namespace create USERS_KV --preview
 ```
 
 记下输出的 `id` 值。
