@@ -1,19 +1,49 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <style>
-    .bg { fill: #2c2c2c; transition: fill 0.3s; }
+    /* Base: Light Mode (Browser tab usually light) */
+    /* Dark Charcoal Background */
+    .bg { fill: #2c2c2c; }
+    /* Bright Emerald S */
+    .s-stroke { stroke: #6ee7b7; }
+    /* Accent Dot */
+    .dot { fill: #fdfbf7; }
+
+    /* Dark Mode (Browser tab usually dark) */
     @media (prefers-color-scheme: dark) {
-      .bg { fill: #4a726f; }
+      /* Bright/Sage Background to stand out against dark tab */
+      .bg { fill: #6ee7b7; }
+      /* Dark Charcoal S */
+      .s-stroke { stroke: #121212; }
+      .dot { fill: #121212; }
     }
   </style>
-  <rect class="bg" width="64" height="64" rx="16" />
-  <text 
-    x="32" 
-    y="44" 
-    font-family="'Playfair Display', 'Times New Roman', serif" 
-    font-weight="bold" 
-    font-size="42" 
-    fill="white" 
-    text-anchor="middle"
-  >S</text>
-  <circle cx="50" cy="46" r="3" fill="white" />
+
+  <!-- Background: Soft Rounded Square -->
+  <rect class="bg" width="64" height="64" rx="14" />
+  
+  <!-- Symbol: Abstract S (Infinity-like) -->
+  <!-- Constructed with thick strokes for readability at 16px -->
+  <g transform="translate(32, 32)">
+    <!-- Top Arc -->
+    <path class="s-stroke"
+          d="M 6 -8 
+             A 8 8 0 1 0 -10 -8
+             Q -10 2, 0 8"
+          fill="none"
+          stroke-width="7"
+          stroke-linecap="round"
+          stroke-linejoin="round" />
+          
+    <!-- Bottom Arc (Rotated 180) -->
+    <path class="s-stroke"
+          d="M -6 8 
+             A 8 8 0 1 0 10 8
+             Q 10 -2, 0 -8"
+          fill="none"
+          stroke-width="7"
+          stroke-linecap="round"
+          stroke-linejoin="round" />
+  </g>
+  
+  <!-- Center connecting dot for flair? No, clean is better -->
 </svg>

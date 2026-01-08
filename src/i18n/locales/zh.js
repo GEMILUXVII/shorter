@@ -69,7 +69,7 @@ export default {
     generate: '生成短链',
     processing: '生成中...',
     error: {
-      invalidUrl: '清输入有效的网址',
+      invalidUrl: '请输入有效的网址',
       empty: '请输入网址'
     },
     success: '生成成功！',
