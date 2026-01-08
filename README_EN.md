@@ -11,6 +11,7 @@
 <br>
 
 <div align="center">
+<div align="center">
   <a href="https://github.com/GEMILUXVII/shorter/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0-E53935?style=for-the-badge" alt="License"></a>
   <a href="https://vuejs.org/"><img src="https://img.shields.io/badge/Vue-3.x-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white" alt="Vue 3"></a>
   <a href="https://vitejs.dev/"><img src="https://img.shields.io/badge/Vite-5.x-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite"></a>
@@ -29,7 +30,7 @@
   <a href="#features">Features</a> |
   <a href="#quick-start">Quick Start</a> |
   <a href="#deployment">Deployment</a> |
-  <a href="#tech-stack">Tech Stack</a>
+  <a href="https://shorter-7sc.pages.dev">Demo</a>
 </div>
 
 <div align="center">
@@ -43,6 +44,19 @@
 Shorter is a modern, minimalist URL shortening service built with Vue 3 and deployed on Cloudflare Workers. It offers a clean, elegant user interface with support for dark mode and multi-language (Chinese/English) switching.
 
 **Design Philosophy**: Fresh & Refined. We embrace natural, warm color tones (Sage Green, Cream), generous white space, and subtle animations to create a calm, focused user experience.
+
+## Preview
+
+<details>
+<summary>Click to see interface preview</summary>
+<div align="center">
+  <h3>Home</h3>
+  <img src="public/home.png" alt="Shorter Home" width="80%" />
+  <br><br>
+  <h3>Dashboard</h3>
+  <img src="public/dashboard.png" alt="Shorter Dashboard" width="80%" />
+</div>
+</details>
 
 ## Features
 

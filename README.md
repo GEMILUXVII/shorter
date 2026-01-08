@@ -11,6 +11,7 @@
 <br>
 
 <div align="center">
+<div align="center">
   <a href="https://github.com/GEMILUXVII/shorter/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0-E53935?style=for-the-badge" alt="License"></a>
   <a href="https://vuejs.org/"><img src="https://img.shields.io/badge/Vue-3.x-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white" alt="Vue 3"></a>
   <a href="https://vitejs.dev/"><img src="https://img.shields.io/badge/Vite-5.x-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite"></a>
@@ -25,11 +26,11 @@
 <br>
 
 <div align="center">
-  <a href="README_EN.md#project-overview">Overview</a> |
-  <a href="README_EN.md#features">Features</a> |
-  <a href="README_EN.md#quick-start">Quick Start</a> |
-  <a href="README_EN.md#deployment">Deployment</a> |
-  <a href="README_EN.md#tech-stack">Tech Stack</a>
+  <a href="#项目简介">项目简介</a> |
+  <a href="#功能特性">功能特性</a> |
+  <a href="#快速开始">快速开始</a> |
+  <a href="#部署指南">部署指南</a> |
+  <a href="https://shorter-7sc.pages.dev">在线演示</a>
 </div>
 
 <div align="center">
@@ -43,6 +44,19 @@
 Shorter 是一个现代化的极简短链服务，基于 Vue 3 构建，部署在 Cloudflare Workers 上。它提供简洁优雅的用户界面，支持暗色模式和中英双语切换。
 
 **设计理念**：清新脱俗 (Fresh & Refined)。我们采用自然、温暖的色调（鼠尾草绿、奶油白），注重留白和微动效，打造宁静专注的用户体验。
+
+## 界面预览
+
+<details>
+<summary>点击查看界面预览</summary>
+<div align="center">
+  <h3>首页 (Home)</h3>
+  <img src="public/home.png" alt="Shorter Home" width="80%" />
+  <br><br>
+  <h3>仪表盘 (Dashboard)</h3>
+  <img src="public/dashboard.png" alt="Shorter Dashboard" width="80%" />
+</div>
+</details>
 
 ## 功能特性
 
