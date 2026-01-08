@@ -35,9 +35,9 @@ defineEmits(['click'])
       'disabled:opacity-50 disabled:cursor-not-allowed',
       // Sizes
       {
-        'px-3 py-1.5 text-sm': size === 'sm',
-        'px-4 py-2.5 text-base': size === 'md',
-        'px-6 py-3 text-lg': size === 'lg',
+        'px-4 py-2 text-sm': size === 'sm',
+        'px-5 py-3 text-base': size === 'md',
+        'px-8 py-4 text-lg': size === 'lg',
       },
       // Variants
       {
