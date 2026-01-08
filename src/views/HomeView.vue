@@ -5,16 +5,7 @@ import LinkGenerator from '@/components/features/LinkGenerator.vue'
 <template>
   <div class="py-16 lg:py-24 px-6 sm:px-8 lg:px-12">
     <div class="max-w-5xl mx-auto space-y-20">
-      <!-- Hero Section -->
-      <section class="text-center py-8">
-        <h1 class="text-5xl sm:text-6xl font-bold text-[var(--color-text)] leading-tight">
-          简洁 · 快速 · 可靠
-        </h1>
-        <p class="mt-6 text-xl text-[var(--color-text-secondary)] max-w-3xl mx-auto leading-relaxed">
-          现代化的短链服务<br>
-          将冗长链接转换为简洁短链，方便分享和追踪
-        </p>
-      </section>
+      <!-- Hero Section Removed -->
       
       <!-- Link Generator -->
       <section class="flex justify-center py-4">

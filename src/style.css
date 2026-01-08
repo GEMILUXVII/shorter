@@ -1,361 +1,204 @@
 @import "tailwindcss";
 
-/* 自定义 CSS 变量 - 简约蓝色调设计 */
+/* 自定义 CSS 变量 - 清新脱俗（Zen Garden Design） */
 :root {
-  /* 主色调 - 鲜艳蓝色系 */
-  --color-primary: #0ea5e9;
-  --color-primary-hover: #0284c7;
-  --color-primary-light: #e0f2fe;
+  /* 主色调 - 鼠尾草绿/自然系 */
+  /* 使用较柔和的绿色，而非刺眼的电光绿 */
+  --color-primary: #5c8d89; /* 灰绿色 Sage */
+  --color-primary-hover: #4a726f;
+  --color-primary-light: #e6f2f1;
 
-  /* 中性色 - 深灰色系 */
-  --color-bg: #fafafa;
-  --color-bg-secondary: #f5f5f5;
+  /* 辅助色 */
+  --color-accent: #d8ac9c; /* 柔和的珊瑚/陶土色，用于点缀 */
+
+  /* 背景色 - 奶油/米白调 */
+  --color-bg: #fdfbf7; /* 极淡的暖米色 */
+  --color-bg-secondary: #f4f1ea;
   --color-card: #ffffff;
-  --color-border: #e5e5e5;
+  
+  /* 边框 - 极淡 */
+  --color-border: #e6e2d8;
 
-  /* 文字颜色 */
-  --color-text: #171717;
-  --color-text-secondary: #525252;
-  --color-text-muted: #a3a3a3;
+  /* 文字颜色 - 深炭灰，高对比度但不如纯黑生硬 */
+  --color-text: #2c2c2c;
+  --color-text-secondary: #595959;
+  --color-text-muted: #9ca3af;
 
-  /* 状态色 */
-  --color-success: #22c55e;
-  --color-error: #ef4444;
-  --color-warning: #eab308;
+  /* 状态色 - 调低饱和度 */
+  --color-success: #5c8d89;
+  --color-error: #ef8e8e;
+  --color-warning: #eace88;
 
-  /* 阴影 */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  /* 阴影 - 几乎不可见，仅用于浮动感 */
+  --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.04);
 }
 
-/* 暗色主题 */
-.dark {
-  --color-primary: #38bdf8;
-  --color-primary-hover: #0ea5e9;
-  --color-primary-light: #0c4a6e;
-
-  --color-bg: #0a0a0a;
-  --color-bg-secondary: #171717;
-  --color-card: #1c1c1c;
-  --color-border: #2e2e2e;
-
-  --color-text: #fafafa;
-  --color-text-secondary: #a3a3a3;
-  --color-text-muted: #525252;
-}
-
-/* 基础样式重置 */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* 基础样式重置与字体 */
 html {
-  font-family:
-    "Inter",
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
-  line-height: 1.6;
+  /* 优先使用优雅的衬线体作为标题，无衬线体作为正文 */
+  font-family: "Optima", "Candara", "Noto Sans SC", system-ui, sans-serif;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
 body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
   min-height: 100vh;
+  /* 添加极其微妙的纹理或渐变背景 */
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(92, 141, 137, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(216, 172, 156, 0.05) 0%, transparent 40%);
 }
 
-/* 隐藏数字输入框的 spinner */
+/* 标题样式 - 更具设计感 */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Playfair Display", "Times New Roman", serif; /* 引入衬线体增强高级感 */
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+/* 极简输入框 (.clean-input) */
+.clean-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--color-border);
+  padding: 1rem 0.5rem;
+  font-size: 1.25rem;
+  color: var(--color-text);
+  transition: all 0.3s ease;
+  border-radius: 0;
+}
+
+.clean-input:focus {
+  outline: none;
+  border-bottom-color: var(--color-primary);
+  background: linear-gradient(to bottom, transparent 95%, rgba(92, 141, 137, 0.05) 100%);
+}
+
+.clean-input::placeholder {
+  color: #c7c2b8;
+  font-weight: 300;
+}
+
+/* 极简按钮 (.clean-btn) */
+.clean-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2rem;
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: 9999px; /* 全圆角 */
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-sm);
+}
+
+.clean-btn:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.clean-btn:disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.clean-btn.ghost {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  box-shadow: none;
+}
+
+.clean-btn.ghost:hover {
+  background-color: rgba(0,0,0,0.03);
+  color: var(--color-text);
+}
+
+/* 布局容器 - 去除卡片感 */
+.page-container {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.section-content {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+/* 通用动画 - 缓慢上浮 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* 覆盖 Tailwind 类以适应极简风格 */
+
+/* 隐藏数字输入框 Spinner */
 input[type="number"] {
   -moz-appearance: textfield;
+  appearance: none;
 }
-
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* 确保页面内容居中 */
-.page-container {
-  max-width: 64rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-/* Tailwind 类的 fallback */
-.mx-auto {
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
-.mt-4 {
-  margin-top: 1rem !important;
-}
-
-.mt-2 {
-  margin-top: 0.5rem !important;
-}
-
-.mb-2 {
-  margin-bottom: 0.5rem !important;
-}
-.max-w-5xl {
-  max-width: 64rem !important;
-}
-
-.max-w-4xl {
-  max-width: 56rem !important;
-}
-
-.max-w-3xl {
-  max-width: 48rem !important;
-}
-
-.max-w-2xl {
-  max-width: 42rem !important;
-}
-
-.text-center {
-  text-align: center !important;
-}
-
-.flex {
-  display: flex !important;
-}
-
-.justify-center {
-  justify-content: center !important;
-}
-
-.items-center {
-  align-items: center !important;
-}
-
-/* 间距类 */
-.space-y-20 > * + * {
-  margin-top: 5rem !important;
-}
-
-.space-y-12 > * + * {
-  margin-top: 3rem !important;
-}
-
-.space-y-8 > * + * {
-  margin-top: 2rem !important;
-}
-
-.space-y-6 > * + * {
-  margin-top: 1.5rem !important;
-}
-
-.space-y-5 > * + * {
-  margin-top: 1.25rem !important;
-}
-
-.space-y-4 > * + * {
-  margin-top: 1rem !important;
-}
-
-.gap-5 {
-  gap: 1.25rem !important;
-}
-
-.p-5 {
-  padding: 1.25rem !important;
-}
-
-.gap-8 {
-  gap: 2rem !important;
-}
-
-.gap-6 {
-  gap: 1.5rem !important;
-}
-
-/* Padding 类 */
-.p-10 {
-  padding: 2.5rem !important;
-}
-
-.p-8 {
-  padding: 2rem !important;
-}
-
-.py-4 {
-  padding-top: 1rem !important;
-  padding-bottom: 1rem !important;
-}
-
-.py-3 {
-  padding-top: 0.75rem !important;
-  padding-bottom: 0.75rem !important;
-}
-
-.py-2 {
-  padding-top: 0.5rem !important;
-  padding-bottom: 0.5rem !important;
-}
-
-.py-10 {
-  padding-top: 2.5rem !important;
-  padding-bottom: 2.5rem !important;
-}
-
-.px-8 {
-  padding-left: 2rem !important;
-  padding-right: 2rem !important;
-}
-
-.px-5 {
-  padding-left: 1.25rem !important;
-  padding-right: 1.25rem !important;
-}
-
-.px-4 {
-  padding-left: 1rem !important;
-  padding-right: 1rem !important;
-}
-
-.py-16 {
-  padding-top: 4rem !important;
-  padding-bottom: 4rem !important;
-}
-
-.py-12 {
-  padding-top: 3rem !important;
-  padding-bottom: 3rem !important;
-}
-
-.mb-12 {
-  margin-bottom: 3rem !important;
-}
-
-.mb-8 {
-  margin-bottom: 2rem !important;
-}
-
-.mb-6 {
-  margin-bottom: 1.5rem !important;
-}
-
-.mt-6 {
-  margin-top: 1.5rem !important;
-}
-
-.mt-4 {
-  margin-top: 1rem !important;
-}
-
-/* Grid */
-.grid {
-  display: grid !important;
-}
-
-.grid-cols-1 {
-  grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
-}
-
-@media (min-width: 768px) {
-  .md\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  }
-}
-
-/* 圆角 */
-.rounded-2xl {
-  border-radius: 1rem !important;
-}
-
-.rounded-xl {
-  border-radius: 0.75rem !important;
-}
-
-/* 定位类 */
-.left-4 {
-  left: 1rem !important;
-}
-
-.pl-12 {
-  padding-left: 3rem !important;
-}
-
-.pr-12 {
-  padding-right: 3rem !important;
-}
-
-.pointer-events-none {
-  pointer-events: none !important;
-}
-
-/* 通用动画 */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-.slide-up-enter-active,
-.slide-up-leave-active {
-  transition: all 0.3s ease;
-}
-
-.slide-up-enter-from,
-.slide-up-leave-to {
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-/* 列表动画 */
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.3s ease;
-}
-
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
-  transform: translateX(-20px);
-}
-
-.list-move {
-  transition: transform 0.3s ease;
-}
-
-/* 滚动条美化 */
+/* 滚动条 - 极细极淡 */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
 }
-
 ::-webkit-scrollbar-track {
-  background: var(--color-bg-secondary);
+  background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-  border-radius: 4px;
+  background: #e0e0e0;
+  border-radius: 3px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-muted);
+  background: #d0d0d0;
 }
 
-/* 选中文字样式 */
+/* 选中文字 */
 ::selection {
-  background-color: var(--color-primary);
-  color: white;
+  background-color: rgba(92, 141, 137, 0.2);
+  color: var(--color-text);
+}
+
+/* 实用工具类 */
+.text-serif {
+  font-family: "Playfair Display", serif;
+}
+
+.bg-cream {
+  background-color: var(--color-bg);
+}
+
+/* 响应式调整 */
+@media (max-width: 640px) {
+  .clean-input {
+    font-size: 1rem;
+  }
+  .page-container {
+    padding: 1rem;
+  }
 }

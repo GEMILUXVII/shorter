@@ -1,9 +1,6 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import QRCode from 'qrcode'
-import BaseInput from '@/components/common/BaseInput.vue'
-import BaseButton from '@/components/common/BaseButton.vue'
-import BaseCard from '@/components/common/BaseCard.vue'
 import { useLinkStore } from '@/stores/linkStore'
 import { useClipboard } from '@/composables/useClipboard'
 import { useToast } from '@/composables/useToast'
@@ -26,11 +23,11 @@ watch(generatedLink, async (newLink) => {
   if (newLink?.shortUrl) {
     try {
       qrCodeUrl.value = await QRCode.toDataURL(newLink.shortUrl, {
-        width: 200,
+        width: 400,
         margin: 2,
         color: {
-          dark: '#171717',
-          light: '#ffffff'
+          dark: '#5c8d89', // 使用主题色
+          light: '#00000000' // 透明背景
         }
       })
     } catch (e) {
@@ -92,7 +89,7 @@ async function handleSubmit() {
     })
     
     generatedLink.value = link
-    success('短链创建成功！')
+    success('短链创建成功')
     
     // 清空输入
     url.value = ''
@@ -112,6 +109,7 @@ async function handleSubmit() {
 function handleCopy() {
   if (generatedLink.value) {
     copy(generatedLink.value.shortUrl)
+    success('已复制到剪贴板')
   }
 }
 
@@ -121,194 +119,185 @@ function handleReset() {
 </script>
 
 <template>
-  <div class="w-full max-w-3xl mx-auto">
-    <!-- 生成表单 -->
-    <BaseCard padding="lg">
-      <div class="space-y-8">
-        <!-- 标题 -->
-        <div class="text-center py-2">
-          <h2 class="text-2xl font-bold text-[var(--color-text)]">缩短您的链接</h2>
-          <p class="mt-3 text-lg text-[var(--color-text-secondary)]">
-            输入长链接，一键生成简洁短链
-          </p>
-        </div>
-        
-        <!-- URL 输入 -->
-        <BaseInput
+  <div class="w-full max-w-4xl mx-auto px-4 py-8 md:py-16">
+    <!-- 主标题区 - 增加呼吸感 -->
+    <section class="text-center mb-16 animate-fade-in-up">
+      <h1 class="text-4xl md:text-5xl font-serif text-[var(--color-text)] mb-6">
+        Simplify your links, <span class="text-[var(--color-primary)] italic">beautifully.</span>
+      </h1>
+      <p class="text-lg text-[var(--color-text-secondary)] font-light">
+        输入长链接，生成简洁、优雅的短链接。
+      </p>
+    </section>
+
+    <!-- 极简输入区 -->
+    <div class="relative max-w-2xl mx-auto mb-12 animate-fade-in-up" style="animation-delay: 0.1s">
+      <div class="relative group">
+        <input
           v-model="url"
-          type="url"
-          placeholder="https://example.com/your-very-long-url..."
-          size="lg"
-          :error="urlError"
+          type="text"
+          placeholder="在此粘贴您的长链接..."
+          class="clean-input text-center md:text-2xl py-6 border-b-2 placeholder-[var(--color-text-muted)] group-hover:border-[var(--color-primary-light)] focus:border-[var(--color-primary)] transition-colors"
           @keyup.enter="handleSubmit"
-        >
-          <template #prefix>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
-            </svg>
-          </template>
-        </BaseInput>
-        
-        <!-- 高级选项切换 -->
+        />
+        <!-- 错误提示 -->
+        <div v-if="urlError" class="absolute -bottom-8 left-0 w-full text-center text-[var(--color-error)] text-sm">
+          {{ urlError }}
+        </div>
+      </div>
+    
+      <!-- 提交按钮 -->
+      <div class="mt-12 text-center">
         <button
-          type="button"
-          class="flex items-center gap-1 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors"
-          @click="showAdvanced = !showAdvanced"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-4 w-4 transition-transform"
-            :class="{ 'rotate-90': showAdvanced }"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-          </svg>
-          高级选项
-        </button>
-        
-        <!-- 高级选项 -->
-        <Transition name="slide-up">
-          <div v-if="showAdvanced" class="mt-4">
-            <div class="p-5 bg-[var(--color-bg-secondary)] rounded-xl space-y-5">
-              <!-- 自定义短码 -->
-              <div class="space-y-2">
-                <label class="text-sm font-medium text-[var(--color-text)]">自定义短码</label>
-                <div class="flex items-center gap-2 text-sm text-[var(--color-text-muted)] mb-2">
-                  <code class="px-2 py-1 bg-[var(--color-card)] rounded text-[var(--color-primary)] font-mono">{{ baseUrl }}/</code>
-                  <span>+ 你的短码</span>
-                </div>
-                <BaseInput
-                  v-model="customCode"
-                  placeholder="留空自动生成6位随机码"
-                  size="md"
-                />
-              </div>
-              
-              <!-- 有效期 -->
-              <div class="space-y-2">
-                <label class="text-sm font-medium text-[var(--color-text)]">有效期</label>
-                <div class="flex flex-wrap gap-2">
-                  <button
-                    v-for="opt in expiryOptions"
-                    :key="opt.value"
-                    type="button"
-                    :class="[
-                      'px-4 py-2 rounded-lg text-sm transition-colors',
-                      expiryOption === opt.value
-                        ? 'bg-[var(--color-primary)] text-white'
-                        : 'bg-[var(--color-card)] text-[var(--color-text-secondary)] hover:bg-[var(--color-card-hover)]'
-                    ]"
-                    @click="expiryOption = opt.value"
-                  >
-                    {{ opt.label }}
-                  </button>
-                </div>
-              </div>
-              
-              <!-- 密码保护 -->
-              <div class="space-y-2">
-                <label class="text-sm font-medium text-[var(--color-text)]">密码保护</label>
-                <BaseInput
-                  v-model="password"
-                  type="password"
-                  placeholder="设置访问密码（可选）"
-                  size="md"
-                />
-              </div>
-              
-              <!-- 访问限制 -->
-              <div class="space-y-2">
-                <label class="text-sm font-medium text-[var(--color-text)]">访问次数限制</label>
-                <input
-                  v-model="maxClicks"
-                  type="number"
-                  min="1"
-                  placeholder="不限制则留空"
-                  :class="[
-                    'w-full px-4 py-3 bg-[var(--color-card)] border rounded-lg text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:border-transparent',
-                    maxClicksError ? 'border-[var(--color-error)] focus:ring-[var(--color-error)]' : 'border-[var(--color-border)] focus:ring-[var(--color-primary)]'
-                  ]"
-                />
-                <p v-if="maxClicksError" class="text-sm text-[var(--color-error)]">
-                  {{ maxClicksError }}
-                </p>
-              </div>
-              
-              <!-- 备注 -->
-              <div class="space-y-2">
-                <label class="text-sm font-medium text-[var(--color-text)]">备注</label>
-                <textarea
-                  v-model="note"
-                  placeholder="添加链接备注（可选）"
-                  rows="2"
-                  class="w-full px-4 py-3 bg-[var(--color-card)] border border-[var(--color-border)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent resize-none"
-                />
-              </div>
-            </div>
-          </div>
-        </Transition>
-        
-        <!-- 提交按钮 -->
-        <BaseButton
-          variant="primary"
-          size="lg"
-          block
-          :loading="isLoading"
+          class="clean-btn text-lg px-10 py-3 md:text-xl md:px-12 md:py-4 shadow-lg shadow-[var(--color-primary)]/20 hover:shadow-[var(--color-primary)]/40"
           :disabled="!canSubmit"
           @click="handleSubmit"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
-          </svg>
-          生成短链
-        </BaseButton>
+          <span v-if="isLoading" class="flex items-center gap-2">
+            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            处理中...
+          </span>
+          <span v-else>立即生成</span>
+        </button>
       </div>
-    </BaseCard>
-    
-    <!-- 生成结果 -->
-    <Transition name="slide-up">
-      <BaseCard v-if="generatedLink" padding="md" class="mt-6">
-        <div class="flex flex-col sm:flex-row gap-6">
-          <!-- 二维码 -->
-          <div v-if="qrCodeUrl" class="flex-shrink-0 flex justify-center sm:justify-start">
-            <div class="p-3 bg-white rounded-xl shadow-sm">
-              <img :src="qrCodeUrl" alt="QR Code" class="w-32 h-32" />
+
+      <!-- 高级选项开关 -->
+      <div class="mt-8 text-center">
+        <button
+          type="button"
+          class="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors flex items-center justify-center gap-1 mx-auto"
+          @click="showAdvanced = !showAdvanced"
+        >
+          <span>更多选项</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4 transition-transform duration-300"
+            :class="{ 'rotate-180': showAdvanced }"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+      
+      <!-- 高级选项内容 -->
+      <Transition
+        enter-active-class="transition duration-300 ease-out"
+        enter-from-class="transform -translate-y-4 opacity-0"
+        enter-to-class="transform translate-y-0 opacity-100"
+        leave-active-class="transition duration-200 ease-in"
+        leave-from-class="transform translate-y-0 opacity-100"
+        leave-to-class="transform -translate-y-4 opacity-0"
+      >
+        <div v-if="showAdvanced" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 text-left bg-[var(--color-bg-secondary)]/50 p-8 rounded-3xl">
+          <!-- 自定义短码 -->
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-[var(--color-text-secondary)]">自定义后缀</label>
+            <div class="flex items-center gap-2">
+              <span class="text-[var(--color-text-muted)] font-serif italic">{{ baseUrl.replace(/^https?:\/\//, '') }}/</span>
+              <input
+                v-model="customCode"
+                placeholder="random"
+                class="clean-input !text-base !py-1 !border-b !w-full"
+              />
             </div>
           </div>
           
-          <!-- 短链信息 -->
-          <div class="flex-1 min-w-0 flex flex-col justify-between">
-            <div>
-              <p class="text-sm text-[var(--color-text-secondary)] mb-1">您的短链接已生成</p>
+          <!-- 有效期 -->
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-[var(--color-text-secondary)]">有效期</label>
+            <div class="flex flex-wrap gap-2">
+              <button
+                v-for="opt in expiryOptions"
+                :key="opt.value"
+                type="button"
+                :class="[
+                  'px-3 py-1 rounded-full text-sm transition-all border',
+                  expiryOption === opt.value
+                    ? 'border-[var(--color-primary)] text-[var(--color-primary)] bg-[var(--color-primary)]/5'
+                    : 'border-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
+                ]"
+                @click="expiryOption = opt.value"
+              >
+                {{ opt.label }}
+              </button>
+            </div>
+          </div>
+          
+          <!-- 密码保护 -->
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-[var(--color-text-secondary)]">访问密码</label>
+            <input
+              v-model="password"
+              type="password"
+              placeholder="可选"
+              class="clean-input !text-base !py-1 !border-b"
+            />
+          </div>
+
+          <!-- 访问限制 -->
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-[var(--color-text-secondary)]">最大访问次数</label>
+            <input
+              v-model="maxClicks"
+              type="number"
+              placeholder="无限制"
+              class="clean-input !text-base !py-1 !border-b"
+            />
+          </div>
+        </div>
+      </Transition>
+    </div>
+
+    <!-- 结果展示区 - 极简风格 -->
+    <Transition name="fade">
+      <div v-if="generatedLink" class="mt-20 max-w-3xl mx-auto animate-fade-in-up border-t border-[var(--color-border)] pt-12">
+        <div class="flex flex-col md:flex-row items-center gap-12">
+          <!-- 左侧：链接信息 -->
+          <div class="flex-1 text-center md:text-left space-y-4">
+            <div class="space-y-1">
+              <p class="text-sm text-[var(--color-text-muted)] uppercase tracking-wide">Short Link Generated</p>
               <a
                 :href="generatedLink.shortUrl"
                 target="_blank"
-                class="text-lg font-medium text-[var(--color-primary)] hover:underline break-all"
+                class="text-3xl md:text-4xl font-serif text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] transition-colors break-all"
               >
-                {{ generatedLink.shortUrl }}
+                {{ generatedLink.shortUrl.replace(/^https?:\/\//, '') }}
               </a>
-              <p class="mt-1 text-sm text-[var(--color-text-muted)] truncate">
-                原链接: {{ generatedLink.originalUrl }}
-              </p>
             </div>
-          
-            <!-- 操作按钮 -->
-            <div class="flex items-center gap-2 mt-4">
-              <BaseButton variant="primary" size="sm" @click="handleCopy">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-                  <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
-                </svg>
-                复制
-              </BaseButton>
-              <BaseButton variant="ghost" size="sm" @click="handleReset">
-                创建新链接
-              </BaseButton>
+            
+            <p class="text-[var(--color-text-secondary)] truncate text-sm px-4 md:px-0">
+              <span class="opacity-50">Original:</span> {{ generatedLink.originalUrl }}
+            </p>
+
+            <div class="flex items-center justify-center md:justify-start gap-4 mt-6">
+              <button
+                class="clean-btn text-sm px-6 py-2"
+                @click="handleCopy"
+              >
+                复制链接
+              </button>
+              <button
+                class="clean-btn ghost text-sm px-6 py-2"
+                @click="handleReset"
+              >
+                再来一个
+              </button>
+            </div>
+          </div>
+
+          <!-- 右侧：极简二维码 -->
+          <div v-if="qrCodeUrl" class="flex-shrink-0">
+            <div class="p-4 bg-white rounded-2xl shadow-[var(--shadow-sm)]">
+              <img :src="qrCodeUrl" alt="QR Code" class="w-32 h-32 opacity-80 hover:opacity-100 transition-opacity" />
             </div>
           </div>
         </div>
-      </BaseCard>
+      </div>
     </Transition>
   </div>
 </template>
