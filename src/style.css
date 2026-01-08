@@ -72,6 +72,17 @@ body {
   min-height: 100vh;
 }
 
+/* 隐藏数字输入框的 spinner */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* 确保页面内容居中 */
 .page-container {
   max-width: 64rem;

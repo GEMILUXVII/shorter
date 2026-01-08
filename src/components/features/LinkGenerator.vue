@@ -19,6 +19,19 @@ const isLoading = ref(false)
 const generatedLink = ref(null)
 const baseUrl = window.location.origin
 
+// 高级选项
+const expiryOption = ref('never') // 1d, 7d, 30d, never
+const password = ref('')
+const maxClicks = ref('')
+const note = ref('')
+
+const expiryOptions = [
+  { value: 'never', label: '永不过期' },
+  { value: '1d', label: '1 天' },
+  { value: '7d', label: '7 天' },
+  { value: '30d', label: '30 天' }
+]
+
 const urlError = computed(() => {
   if (!url.value) return ''
   const formatted = formatUrl(url.value)
@@ -28,8 +41,17 @@ const urlError = computed(() => {
   return ''
 })
 
+const maxClicksError = computed(() => {
+  if (!maxClicks.value) return ''
+  const num = parseInt(maxClicks.value)
+  if (isNaN(num) || num <= 0) {
+    return '访问次数必须是正整数'
+  }
+  return ''
+})
+
 const canSubmit = computed(() => {
-  return url.value && !urlError.value && !isLoading.value
+  return url.value && !urlError.value && !maxClicksError.value && !isLoading.value
 })
 
 async function handleSubmit() {
@@ -39,7 +61,13 @@ async function handleSubmit() {
   
   try {
     const formattedUrl = formatUrl(url.value)
-    const link = linkStore.addLink(formattedUrl, customCode.value || null)
+    const link = linkStore.addLink(formattedUrl, {
+      customCode: customCode.value || null,
+      expiresIn: expiryOption.value,
+      password: password.value || null,
+      maxClicks: maxClicks.value || null,
+      note: note.value || null
+    })
     
     generatedLink.value = link
     success('短链创建成功！')
@@ -47,6 +75,10 @@ async function handleSubmit() {
     // 清空输入
     url.value = ''
     customCode.value = ''
+    expiryOption.value = 'never'
+    password.value = ''
+    maxClicks.value = ''
+    note.value = ''
     showAdvanced.value = false
   } catch (e) {
     error('创建失败，请重试')
@@ -116,16 +148,81 @@ function handleReset() {
         <!-- 高级选项 -->
         <Transition name="slide-up">
           <div v-if="showAdvanced" class="mt-4">
-            <div class="p-5 bg-[var(--color-bg-secondary)] rounded-xl space-y-4">
-              <div class="flex flex-wrap items-center gap-2 text-sm">
-                <span class="text-[var(--color-text-secondary)]">生成的短链将是：</span>
-                <code class="px-2 py-1 bg-[var(--color-card)] rounded text-[var(--color-primary)] font-mono">{{ baseUrl }}/<span class="text-[var(--color-text)]">你的短码</span></code>
+            <div class="p-5 bg-[var(--color-bg-secondary)] rounded-xl space-y-5">
+              <!-- 自定义短码 -->
+              <div class="space-y-2">
+                <label class="text-sm font-medium text-[var(--color-text)]">自定义短码</label>
+                <div class="flex items-center gap-2 text-sm text-[var(--color-text-muted)] mb-2">
+                  <code class="px-2 py-1 bg-[var(--color-card)] rounded text-[var(--color-primary)] font-mono">{{ baseUrl }}/</code>
+                  <span>+ 你的短码</span>
+                </div>
+                <BaseInput
+                  v-model="customCode"
+                  placeholder="留空自动生成6位随机码"
+                  size="md"
+                />
               </div>
-              <BaseInput
-                v-model="customCode"
-                placeholder="输入自定义短码（留空自动生成）"
-                size="md"
-              />
+              
+              <!-- 有效期 -->
+              <div class="space-y-2">
+                <label class="text-sm font-medium text-[var(--color-text)]">有效期</label>
+                <div class="flex flex-wrap gap-2">
+                  <button
+                    v-for="opt in expiryOptions"
+                    :key="opt.value"
+                    type="button"
+                    :class="[
+                      'px-4 py-2 rounded-lg text-sm transition-colors',
+                      expiryOption === opt.value
+                        ? 'bg-[var(--color-primary)] text-white'
+                        : 'bg-[var(--color-card)] text-[var(--color-text-secondary)] hover:bg-[var(--color-card-hover)]'
+                    ]"
+                    @click="expiryOption = opt.value"
+                  >
+                    {{ opt.label }}
+                  </button>
+                </div>
+              </div>
+              
+              <!-- 密码保护 -->
+              <div class="space-y-2">
+                <label class="text-sm font-medium text-[var(--color-text)]">密码保护</label>
+                <BaseInput
+                  v-model="password"
+                  type="password"
+                  placeholder="设置访问密码（可选）"
+                  size="md"
+                />
+              </div>
+              
+              <!-- 访问限制 -->
+              <div class="space-y-2">
+                <label class="text-sm font-medium text-[var(--color-text)]">访问次数限制</label>
+                <input
+                  v-model="maxClicks"
+                  type="number"
+                  min="1"
+                  placeholder="不限制则留空"
+                  :class="[
+                    'w-full px-4 py-3 bg-[var(--color-card)] border rounded-lg text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:border-transparent',
+                    maxClicksError ? 'border-[var(--color-error)] focus:ring-[var(--color-error)]' : 'border-[var(--color-border)] focus:ring-[var(--color-primary)]'
+                  ]"
+                />
+                <p v-if="maxClicksError" class="text-sm text-[var(--color-error)]">
+                  {{ maxClicksError }}
+                </p>
+              </div>
+              
+              <!-- 备注 -->
+              <div class="space-y-2">
+                <label class="text-sm font-medium text-[var(--color-text)]">备注</label>
+                <textarea
+                  v-model="note"
+                  placeholder="添加链接备注（可选）"
+                  rows="2"
+                  class="w-full px-4 py-3 bg-[var(--color-card)] border border-[var(--color-border)] rounded-lg text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent resize-none"
+                />
+              </div>
             </div>
           </div>
         </Transition>

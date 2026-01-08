@@ -48,7 +48,9 @@ export const useLinkStore = defineStore('links', () => {
     }
   }
   
-  function addLink(originalUrl, customCode = null) {
+  function addLink(originalUrl, options = {}) {
+    const { customCode, expiresIn, password, maxClicks, note } = options
+    
     // 检查是否已存在相同的原始链接
     const existingLink = links.value.find(link => link.originalUrl === originalUrl)
     if (existingLink && !customCode) {
@@ -59,13 +61,25 @@ export const useLinkStore = defineStore('links', () => {
     const code = customCode || generateFriendlyId(6)
     const baseUrl = window.location.origin
     
+    // 计算过期时间
+    let expiresAt = null
+    if (expiresIn && expiresIn !== 'never') {
+      const days = parseInt(expiresIn)
+      expiresAt = Date.now() + days * 24 * 60 * 60 * 1000
+    }
+    
     const newLink = {
       id: Date.now().toString(),
       code,
       originalUrl,
       shortUrl: `${baseUrl}/${code}`,
       clicks: 0,
-      createdAt: Date.now()
+      createdAt: Date.now(),
+      // 高级选项
+      expiresAt,
+      password: password || null,
+      maxClicks: maxClicks && parseInt(maxClicks) > 0 ? parseInt(maxClicks) : null,
+      note: note || null
     }
     
     links.value.unshift(newLink)
