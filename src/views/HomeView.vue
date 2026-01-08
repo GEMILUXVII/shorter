@@ -1,10 +1,5 @@
 <script setup>
 import LinkGenerator from '@/components/features/LinkGenerator.vue'
-import StatsPanel from '@/components/features/StatsPanel.vue'
-import LinkList from '@/components/features/LinkList.vue'
-import { useLinkStore } from '@/stores/linkStore'
-
-const linkStore = useLinkStore()
 </script>
 
 <template>
@@ -23,17 +18,6 @@ const linkStore = useLinkStore()
       <!-- Link Generator -->
       <section class="flex justify-center py-4">
         <LinkGenerator />
-      </section>
-      
-      <!-- Stats Panel -->
-      <section v-if="linkStore.totalLinks > 0" class="py-4">
-        <h2 class="text-2xl font-semibold text-[var(--color-text)] mb-8 text-center">数据概览</h2>
-        <StatsPanel />
-      </section>
-      
-      <!-- Recent Links -->
-      <section v-if="linkStore.totalLinks > 0" class="py-4">
-        <LinkList />
       </section>
       
       <!-- Features -->
