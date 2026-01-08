@@ -5,9 +5,11 @@ import LinkList from '@/components/features/LinkList.vue'
 import BaseCard from '@/components/common/BaseCard.vue'
 import { useLinkStore } from '@/stores/linkStore'
 import { useAuth } from '@/composables/useAuth'
+import { useI18n } from 'vue-i18n'
 
 const linkStore = useLinkStore()
 const { isLoggedIn } = useAuth()
+const { t } = useI18n()
 
 // 页面加载时同步用户链接
 onMounted(() => {
@@ -22,8 +24,8 @@ onMounted(() => {
     <div class="max-w-6xl mx-auto space-y-12">
       <!-- Header -->
       <div class="text-center">
-        <h1 class="text-3xl font-bold text-[var(--color-text)]">管理面板</h1>
-        <p class="mt-3 text-lg text-[var(--color-text-secondary)]">管理和分析您的所有短链接</p>
+        <h1 class="text-3xl font-bold text-[var(--color-text)]">{{ t('dashboard.title') }}</h1>
+        <p class="mt-3 text-lg text-[var(--color-text-secondary)]">{{ t('dashboard.subtitle') }}</p>
       </div>
       
       <!-- Stats Panel -->
@@ -34,7 +36,7 @@ onMounted(() => {
       <!-- Popular Links -->
       <section v-if="linkStore.popularLinks.length > 0">
         <BaseCard padding="lg">
-          <h3 class="text-xl font-semibold text-[var(--color-text)] mb-6">热门链接</h3>
+          <h3 class="text-xl font-semibold text-[var(--color-text)] mb-6">{{ t('dashboard.popular') }}</h3>
           <div class="space-y-4">
             <div
               v-for="(link, index) in linkStore.popularLinks"

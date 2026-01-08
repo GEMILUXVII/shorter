@@ -2,8 +2,9 @@
 import { ref, computed } from 'vue'
 import { useAuth } from '@/composables/useAuth'
 import { useToast } from '@/composables/useToast'
+import { useI18n } from 'vue-i18n'
 
-defineProps({
+const props = defineProps({
   visible: Boolean
 })
 
@@ -11,6 +12,7 @@ const emit = defineEmits(['close'])
 
 const { register, login, isLoading } = useAuth()
 const { success, error: showError } = useToast()
+const { t } = useI18n()
 
 const mode = ref('login') // 'login' or 'register'
 const email = ref('')
@@ -22,14 +24,14 @@ const isRegister = computed(() => mode.value === 'register')
 
 const passwordError = computed(() => {
   if (isRegister.value && password.value && password.value.length < 6) {
-    return '密码至少6位'
+    return t('auth.passwordError')
   }
   return ''
 })
 
 const confirmError = computed(() => {
   if (isRegister.value && confirmPassword.value && confirmPassword.value !== password.value) {
-    return '两次密码不一致'
+    return t('auth.passwordMismatch')
   }
   return ''
 })
@@ -54,7 +56,7 @@ async function handleSubmit() {
   }
   
   if (result.success) {
-    success(isRegister.value ? '注册成功！' : '登录成功！')
+    success(isRegister.value ? t('auth.toast.registerSuccess') : t('auth.toast.loginSuccess'))
     handleClose()
   } else {
     errorMsg.value = result.error
@@ -93,10 +95,10 @@ function switchMode() {
             <!-- Header -->
             <div class="text-center mb-10">
               <h2 class="text-3xl font-serif font-medium text-[var(--color-text)]">
-                {{ isRegister ? '加入 Shorter' : '欢迎回来' }}
+                {{ isRegister ? t('auth.join') : t('auth.welcome') }}
               </h2>
               <p class="mt-2 text-[var(--color-text-secondary)] font-light">
-                {{ isRegister ? '让链接管理变得简单而优雅' : '登录以管理您的所有短链接' }}
+                {{ isRegister ? t('auth.joinDesc') : t('auth.welcomeDesc') }}
               </p>
             </div>
             
@@ -106,7 +108,7 @@ function switchMode() {
                 <input
                   v-model="email"
                   type="email"
-                  placeholder="name@example.com"
+                  :placeholder="t('auth.emailPlaceholder')"
                   class="clean-input !text-base bg-transparent"
                   required
                 />
@@ -116,7 +118,7 @@ function switchMode() {
                 <input
                   v-model="password"
                   type="password"
-                  placeholder="密码"
+                  :placeholder="t('auth.password')"
                   class="clean-input !text-base bg-transparent"
                   required
                 />
@@ -128,7 +130,7 @@ function switchMode() {
                   <input
                     v-model="confirmPassword"
                     type="password"
-                    placeholder="确认密码"
+                    :placeholder="t('auth.confirmPassword')"
                     class="clean-input !text-base bg-transparent"
                     required
                   />
@@ -147,20 +149,20 @@ function switchMode() {
                 class="clean-btn w-full text-lg py-3 mt-4 shadow-lg shadow-[var(--color-primary)]/20"
                 :disabled="!canSubmit || isLoading"
               >
-                <span v-if="isLoading" class="animate-pulse">处理中...</span>
-                <span v-else>{{ isRegister ? '创建账号' : '立即登录' }}</span>
+                <span v-if="isLoading" class="animate-pulse">{{ t('auth.submit.processing') }}</span>
+                <span v-else>{{ isRegister ? t('auth.submit.register') : t('auth.submit.login') }}</span>
               </button>
             </form>
             
             <!-- Footer -->
             <div class="mt-8 text-center text-sm text-[var(--color-text-muted)]">
-              {{ isRegister ? '已有账号？' : "还没有账号？" }}
+              {{ isRegister ? t('auth.switch.hasAccount') : t('auth.switch.noAccount') }}
               <button
                 type="button"
                 class="text-[var(--color-primary)] font-medium hover:underline ml-1"
                 @click="switchMode"
               >
-                {{ isRegister ? '去登录' : '免费注册' }}
+                {{ isRegister ? t('auth.switch.toLogin') : t('auth.switch.toRegister') }}
               </button>
             </div>
             

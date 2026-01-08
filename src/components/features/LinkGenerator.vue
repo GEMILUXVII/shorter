@@ -5,10 +5,12 @@ import { useLinkStore } from '@/stores/linkStore'
 import { useClipboard } from '@/composables/useClipboard'
 import { useToast } from '@/composables/useToast'
 import { isValidUrl, formatUrl } from '@/utils/validators'
+import { useI18n } from 'vue-i18n'
 
 const linkStore = useLinkStore()
 const { copy } = useClipboard()
 const { success, error } = useToast()
+const { t } = useI18n()
 
 const url = ref('')
 const customCode = ref('')
@@ -44,18 +46,18 @@ const password = ref('')
 const maxClicks = ref('')
 const note = ref('')
 
-const expiryOptions = [
-  { value: 'never', label: '永不过期' },
-  { value: '1d', label: '1 天' },
-  { value: '7d', label: '7 天' },
-  { value: '30d', label: '30 天' }
-]
+const expiryOptions = computed(() => [
+  { value: 'never', label: t('link.options.expiryChoices.never') },
+  { value: '1d', label: t('link.options.expiryChoices.d1') },
+  { value: '7d', label: t('link.options.expiryChoices.d7') },
+  { value: '30d', label: t('link.options.expiryChoices.d30') }
+])
 
 const urlError = computed(() => {
   if (!url.value) return ''
   const formatted = formatUrl(url.value)
   if (!isValidUrl(formatted)) {
-    return '请输入有效的 URL 地址'
+    return t('link.error.invalidUrl')
   }
   return ''
 })
@@ -64,7 +66,7 @@ const maxClicksError = computed(() => {
   if (!maxClicks.value) return ''
   const num = parseInt(maxClicks.value)
   if (isNaN(num) || num <= 0) {
-    return '访问次数必须是正整数'
+    return t('link.error.maxClicksInvalid')
   }
   return ''
 })
@@ -89,7 +91,7 @@ async function handleSubmit() {
     })
     
     generatedLink.value = link
-    success('短链创建成功')
+    success(t('link.success'))
     
     // 清空输入
     url.value = ''
@@ -100,7 +102,7 @@ async function handleSubmit() {
     note.value = ''
     showAdvanced.value = false
   } catch (e) {
-    error('创建失败，请重试')
+    error(t('link.error.createFailed'))
   } finally {
     isLoading.value = false
   }
@@ -109,7 +111,7 @@ async function handleSubmit() {
 function handleCopy() {
   if (generatedLink.value) {
     copy(generatedLink.value.shortUrl)
-    success('已复制到剪贴板')
+    success(t('link.copied'))
   }
 }
 
@@ -126,7 +128,7 @@ function handleReset() {
         Simplify your links, <span class="text-[var(--color-primary)] italic">beautifully.</span>
       </h1>
       <p class="text-lg text-[var(--color-text-secondary)] font-light">
-        输入长链接，生成简洁、优雅的短链接。
+        {{ t('home.subtitle') }}
       </p>
     </section>
 
@@ -136,7 +138,7 @@ function handleReset() {
         <input
           v-model="url"
           type="text"
-          placeholder="在此粘贴您的长链接..."
+          :placeholder="t('link.placeholder')"
           class="clean-input text-center md:text-2xl py-6 border-b-2 placeholder-[var(--color-text-muted)] group-hover:border-[var(--color-primary-light)] focus:border-[var(--color-primary)] transition-colors"
           @keyup.enter="handleSubmit"
         />
@@ -158,9 +160,9 @@ function handleReset() {
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            处理中...
+            {{ t('link.processing') }}
           </span>
-          <span v-else>立即生成</span>
+          <span v-else>{{ t('link.generate') }}</span>
         </button>
       </div>
 
@@ -171,7 +173,7 @@ function handleReset() {
           class="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors flex items-center justify-center gap-1 mx-auto"
           @click="showAdvanced = !showAdvanced"
         >
-          <span>更多选项</span>
+          <span>{{ t('link.options.title') }}</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-4 w-4 transition-transform duration-300"
@@ -196,12 +198,12 @@ function handleReset() {
         <div v-if="showAdvanced" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 text-left bg-[var(--color-bg-secondary)]/50 p-8 rounded-3xl">
           <!-- 自定义短码 -->
           <div class="space-y-2">
-            <label class="text-sm font-medium text-[var(--color-text-secondary)]">自定义后缀</label>
+            <label class="text-sm font-medium text-[var(--color-text-secondary)]">{{ t('link.options.customCode') }}</label>
             <div class="flex items-center gap-2">
               <span class="text-[var(--color-text-muted)] font-serif italic">{{ baseUrl.replace(/^https?:\/\//, '') }}/</span>
               <input
                 v-model="customCode"
-                placeholder="random"
+                :placeholder="t('link.options.customCodePlaceholder')"
                 class="clean-input !text-base !py-1 !border-b !w-full"
               />
             </div>
@@ -209,7 +211,7 @@ function handleReset() {
           
           <!-- 有效期 -->
           <div class="space-y-2">
-            <label class="text-sm font-medium text-[var(--color-text-secondary)]">有效期</label>
+            <label class="text-sm font-medium text-[var(--color-text-secondary)]">{{ t('link.options.expiry') }}</label>
             <div class="flex flex-wrap gap-2">
               <button
                 v-for="opt in expiryOptions"
@@ -230,22 +232,22 @@ function handleReset() {
           
           <!-- 密码保护 -->
           <div class="space-y-2">
-            <label class="text-sm font-medium text-[var(--color-text-secondary)]">访问密码</label>
+            <label class="text-sm font-medium text-[var(--color-text-secondary)]">{{ t('link.options.password') }}</label>
             <input
               v-model="password"
               type="password"
-              placeholder="可选"
+              :placeholder="t('link.options.passwordPlaceholder')"
               class="clean-input !text-base !py-1 !border-b"
             />
           </div>
 
           <!-- 访问限制 -->
           <div class="space-y-2">
-            <label class="text-sm font-medium text-[var(--color-text-secondary)]">最大访问次数</label>
+            <label class="text-sm font-medium text-[var(--color-text-secondary)]">{{ t('link.options.maxClicks') }}</label>
             <input
               v-model="maxClicks"
               type="number"
-              placeholder="无限制"
+              :placeholder="t('link.options.maxClicksPlaceholder')"
               class="clean-input !text-base !py-1 !border-b"
             />
           </div>

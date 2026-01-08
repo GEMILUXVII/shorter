@@ -1,8 +1,9 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import AuthModal from '@/components/features/AuthModal.vue'
+import { useI18n } from 'vue-i18n'
 
 defineProps({
   isDark: Boolean
@@ -11,6 +12,7 @@ defineProps({
 defineEmits(['toggle-theme'])
 
 const route = useRoute()
+const { t, locale } = useI18n()
 const mobileMenuOpen = ref(false)
 const showAuthModal = ref(false)
 const showUserMenu = ref(false)
@@ -18,14 +20,20 @@ const isScrolled = ref(false)
 
 const { user, isLoggedIn, logout } = useAuth()
 
-const navLinks = [
-  { name: '首页', path: '/' },
-  { name: '管理面板', path: '/dashboard' }
-]
+const navLinks = computed(() => [
+  { name: t('header.home'), path: '/' },
+  { name: t('header.dashboard'), path: '/dashboard' }
+])
 
 function handleLogout() {
   logout()
   showUserMenu.value = false
+}
+
+function toggleLanguage() {
+  const newLang = locale.value === 'zh' ? 'en' : 'zh'
+  locale.value = newLang
+  localStorage.setItem('user-locale', newLang)
 }
 
 // 滚动监听
@@ -77,11 +85,20 @@ onUnmounted(() => {
         
         <!-- Actions - 极简图标 -->
         <div class="flex items-center gap-4">
+          <!-- Language Toggle -->
+          <button
+            class="p-2 text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors w-8 h-8 flex items-center justify-center rounded-full hover:bg-[var(--color-bg-secondary)]"
+            @click="toggleLanguage"
+            title="Switch Language / 切换语言"
+          >
+            {{ locale === 'zh' ? 'En' : '中' }}
+          </button>
+
           <!-- Theme Toggle -->
           <button
             class="p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
             @click="$emit('toggle-theme')"
-            :title="isDark ? '切换到亮色模式' : '切换到暗色模式'"
+            :title="isDark ? t('header.theme.light') : t('header.theme.dark')"
           >
             <svg v-if="isDark" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
@@ -116,7 +133,7 @@ onUnmounted(() => {
                     class="w-full text-left px-4 py-3 text-sm text-[var(--color-text)] hover:bg-[var(--color-bg-secondary)] transition-colors"
                     @click="handleLogout"
                   >
-                    退出登录
+                    {{ t('header.logout') }}
                   </button>
                 </div>
               </Transition>
@@ -127,22 +144,22 @@ onUnmounted(() => {
                 class="text-sm font-medium text-[var(--color-text)] hover:text-[var(--color-primary)] transition-colors"
                 @click="showAuthModal = true"
               >
-                登录
+                {{ t('header.login') }}
               </button>
             </template>
           </div>
           
           <!-- Mobile menu button -->
           <button
-            class="md:hidden p-2 text-[var(--color-text)]"
-            @click="mobileMenuOpen = !mobileMenuOpen"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-        </div>
-      </div>
+             class="md:hidden p-2 text-[var(--color-text)]"
+             @click="mobileMenuOpen = !mobileMenuOpen"
+           >
+             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+             </svg>
+           </button>
+         </div>
+       </div>
       
       <!-- Mobile Nav -->
       <Transition name="slide-up">

@@ -5,9 +5,11 @@ import BaseButton from '@/components/common/BaseButton.vue'
 import LinkItem from './LinkItem.vue'
 import { useLinkStore } from '@/stores/linkStore'
 import { useToast } from '@/composables/useToast'
+import { useI18n } from 'vue-i18n'
 
 const linkStore = useLinkStore()
 const { success } = useToast()
+const { t } = useI18n()
 
 const searchQuery = ref('')
 
@@ -29,13 +31,13 @@ const hasSearchResults = computed(() => filteredLinks.value.length > 0)
 
 function handleDelete(id) {
   linkStore.removeLink(id)
-  success('链接已删除')
+  success(t('dashboard.list.deleteSuccess'))
 }
 
 function handleClearAll() {
-  if (confirm('确定要删除所有链接吗？此操作不可恢复。')) {
+  if (confirm(t('dashboard.list.deleteConfirm'))) {
     linkStore.clearAll()
-    success('所有链接已删除')
+    success(t('dashboard.list.clearSuccess'))
   }
 }
 </script>
@@ -45,9 +47,9 @@ function handleClearAll() {
     <!-- Header -->
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div>
-        <h3 class="text-xl font-semibold text-[var(--color-text)]">我的短链</h3>
+        <h3 class="text-xl font-semibold text-[var(--color-text)]">{{ t('dashboard.list.title') }}</h3>
         <p class="text-sm text-[var(--color-text-secondary)]">
-          共 {{ linkStore.totalLinks }} 条链接
+          {{ t('dashboard.list.total', { count: linkStore.totalLinks }) }}
         </p>
       </div>
       
@@ -55,7 +57,7 @@ function handleClearAll() {
         <!-- Search -->
         <BaseInput
           v-model="searchQuery"
-          placeholder="搜索链接..."
+          :placeholder="t('dashboard.list.search')"
           size="sm"
           class="flex-1 sm:w-64"
         >
@@ -74,7 +76,7 @@ function handleClearAll() {
           class="flex-shrink-0 text-[var(--color-error)]"
           @click="handleClearAll"
         >
-          清空
+          {{ t('dashboard.list.clear') }}
         </BaseButton>
       </div>
     </div>
@@ -99,7 +101,7 @@ function handleClearAll() {
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
         <p class="mt-4 text-[var(--color-text-secondary)]">
-          未找到匹配 "{{ searchQuery }}" 的链接
+          {{ t('dashboard.list.noMatch', { query: searchQuery }) }}
         </p>
       </div>
     </div>
@@ -110,10 +112,10 @@ function handleClearAll() {
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
       </svg>
       <h4 class="mt-4 text-lg font-medium text-[var(--color-text)]">
-        还没有创建任何短链
+        {{ t('dashboard.empty.title') }}
       </h4>
       <p class="mt-2 text-[var(--color-text-secondary)]">
-        前往首页创建您的第一个短链接
+        {{ t('dashboard.empty.desc') }}
       </p>
       <RouterLink
         to="/"
@@ -122,7 +124,7 @@ function handleClearAll() {
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
           <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
         </svg>
-        创建短链
+        {{ t('dashboard.empty.button') }}
       </RouterLink>
     </div>
   </div>

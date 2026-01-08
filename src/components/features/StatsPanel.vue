@@ -2,12 +2,14 @@
 import { computed } from 'vue'
 import BaseCard from '@/components/common/BaseCard.vue'
 import { useLinkStore } from '@/stores/linkStore'
+import { useI18n } from 'vue-i18n'
 
 const linkStore = useLinkStore()
+const { t } = useI18n()
 
 const stats = computed(() => [
   {
-    label: '总链接数',
+    label: t('stats.totalLinks'),
     value: linkStore.totalLinks,
     icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
@@ -15,7 +17,7 @@ const stats = computed(() => [
     color: 'text-blue-500 bg-blue-50 dark:bg-blue-900/20'
   },
   {
-    label: '总点击量',
+    label: t('stats.totalClicks'),
     value: linkStore.totalClicks,
     icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
@@ -23,7 +25,7 @@ const stats = computed(() => [
     color: 'text-green-500 bg-green-50 dark:bg-green-900/20'
   },
   {
-    label: '今日新增',
+    label: t('stats.todayLinks'),
     value: todayLinks(),
     icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
