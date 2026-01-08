@@ -1,5 +1,6 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
+import QRCode from 'qrcode'
 import BaseInput from '@/components/common/BaseInput.vue'
 import BaseButton from '@/components/common/BaseButton.vue'
 import BaseCard from '@/components/common/BaseCard.vue'
@@ -17,7 +18,28 @@ const customCode = ref('')
 const showAdvanced = ref(false)
 const isLoading = ref(false)
 const generatedLink = ref(null)
+const qrCodeUrl = ref('')
 const baseUrl = window.location.origin
+
+// 生成二维码
+watch(generatedLink, async (newLink) => {
+  if (newLink?.shortUrl) {
+    try {
+      qrCodeUrl.value = await QRCode.toDataURL(newLink.shortUrl, {
+        width: 200,
+        margin: 2,
+        color: {
+          dark: '#171717',
+          light: '#ffffff'
+        }
+      })
+    } catch (e) {
+      console.error('QR Code generation failed:', e)
+    }
+  } else {
+    qrCodeUrl.value = ''
+  }
+})
 
 // 高级选项
 const expiryOption = ref('never') // 1d, 7d, 30d, never
@@ -247,34 +269,43 @@ function handleReset() {
     <!-- 生成结果 -->
     <Transition name="slide-up">
       <BaseCard v-if="generatedLink" padding="md" class="mt-6">
-        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          <!-- 短链信息 -->
-          <div class="flex-1 min-w-0">
-            <p class="text-sm text-[var(--color-text-secondary)] mb-1">您的短链接已生成</p>
-            <a
-              :href="generatedLink.shortUrl"
-              target="_blank"
-              class="text-lg font-medium text-[var(--color-primary)] hover:underline break-all"
-            >
-              {{ generatedLink.shortUrl }}
-            </a>
-            <p class="mt-1 text-sm text-[var(--color-text-muted)] truncate">
-              原链接: {{ generatedLink.originalUrl }}
-            </p>
+        <div class="flex flex-col sm:flex-row gap-6">
+          <!-- 二维码 -->
+          <div v-if="qrCodeUrl" class="flex-shrink-0 flex justify-center sm:justify-start">
+            <div class="p-3 bg-white rounded-xl shadow-sm">
+              <img :src="qrCodeUrl" alt="QR Code" class="w-32 h-32" />
+            </div>
           </div>
           
-          <!-- 操作按钮 -->
-          <div class="flex items-center gap-2 flex-shrink-0">
-            <BaseButton variant="primary" size="sm" @click="handleCopy">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-                <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
-              </svg>
-              复制
-            </BaseButton>
-            <BaseButton variant="ghost" size="sm" @click="handleReset">
-              创建新链接
-            </BaseButton>
+          <!-- 短链信息 -->
+          <div class="flex-1 min-w-0 flex flex-col justify-between">
+            <div>
+              <p class="text-sm text-[var(--color-text-secondary)] mb-1">您的短链接已生成</p>
+              <a
+                :href="generatedLink.shortUrl"
+                target="_blank"
+                class="text-lg font-medium text-[var(--color-primary)] hover:underline break-all"
+              >
+                {{ generatedLink.shortUrl }}
+              </a>
+              <p class="mt-1 text-sm text-[var(--color-text-muted)] truncate">
+                原链接: {{ generatedLink.originalUrl }}
+              </p>
+            </div>
+          
+            <!-- 操作按钮 -->
+            <div class="flex items-center gap-2 mt-4">
+              <BaseButton variant="primary" size="sm" @click="handleCopy">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+                  <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
+                </svg>
+                复制
+              </BaseButton>
+              <BaseButton variant="ghost" size="sm" @click="handleReset">
+                创建新链接
+              </BaseButton>
+            </div>
           </div>
         </div>
       </BaseCard>
