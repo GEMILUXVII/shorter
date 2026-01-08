@@ -10,7 +10,7 @@
 
 <br>
 
-<div align="center">
+
 <div align="center">
   <a href="https://github.com/GEMILUXVII/shorter/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0-E53935?style=for-the-badge" alt="License"></a>
   <a href="https://vuejs.org/"><img src="https://img.shields.io/badge/Vue-3.x-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white" alt="Vue 3"></a>
