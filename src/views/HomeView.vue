@@ -11,7 +11,8 @@ import LinkGenerator from '@/components/features/LinkGenerator.vue'
           简洁 · 快速 · 可靠
         </h1>
         <p class="mt-6 text-xl text-[var(--color-text-secondary)] max-w-3xl mx-auto leading-relaxed">
-          Shorter 是一个现代化的短链服务，帮助您将冗长的链接转换为简洁的短链接，方便分享和追踪。
+          现代化的短链服务<br>
+          将冗长链接转换为简洁短链，方便分享和追踪
         </p>
       </section>
       

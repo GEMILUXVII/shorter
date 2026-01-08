@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
-/* 自定义 CSS 变量 - 简约暖色调设计 */
+/* 自定义 CSS 变量 - 简约蓝色调设计 */
 :root {
-  /* 主色调 - 温暖的橙色系 */
-  --color-primary: #f97316;
-  --color-primary-hover: #ea580c;
-  --color-primary-light: #ffedd5;
+  /* 主色调 - 鲜艳蓝色系 */
+  --color-primary: #0ea5e9;
+  --color-primary-hover: #0284c7;
+  --color-primary-light: #e0f2fe;
 
   /* 中性色 - 深灰色系 */
   --color-bg: #fafafa;
@@ -31,9 +31,9 @@
 
 /* 暗色主题 */
 .dark {
-  --color-primary: #fb923c;
-  --color-primary-hover: #f97316;
-  --color-primary-light: #431407;
+  --color-primary: #38bdf8;
+  --color-primary-hover: #0ea5e9;
+  --color-primary-light: #0c4a6e;
 
   --color-bg: #0a0a0a;
   --color-bg-secondary: #171717;

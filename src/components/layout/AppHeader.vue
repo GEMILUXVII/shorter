@@ -31,7 +31,7 @@ function handleLogout() {
 <template>
   <header class="sticky top-0 z-40 bg-[var(--color-card)] border-b border-[var(--color-border)]">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
+      <div class="relative flex items-center justify-between h-16">
         <!-- Logo -->
         <RouterLink to="/" class="flex items-center gap-2">
           <div class="w-8 h-8 rounded-lg bg-[var(--color-primary)] flex items-center justify-center">
@@ -42,17 +42,17 @@ function handleLogout() {
           <span class="text-xl font-bold text-[var(--color-text)]">Shorter</span>
         </RouterLink>
         
-        <!-- Desktop Nav -->
-        <nav class="hidden md:flex items-center gap-6">
+        <!-- Desktop Nav - 居中 -->
+        <nav class="hidden md:flex items-center gap-8 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           <RouterLink
             v-for="link in navLinks"
             :key="link.path"
             :to="link.path"
             :class="[
-              'text-sm font-medium transition-colors',
+              'text-sm font-medium transition-colors py-1',
               route.path === link.path
-                ? 'text-[var(--color-primary)]'
-                : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
+                ? 'text-[var(--color-primary)] border-b-2 border-[var(--color-primary)]'
+                : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] border-b-2 border-transparent'
             ]"
           >
             {{ link.name }}
