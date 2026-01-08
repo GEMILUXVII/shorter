@@ -133,7 +133,8 @@ function render404Page() {
 <body>
   <div class="container">
     <h1>404</h1>
-    <p>抱歉，该短链接不存在</p>
+    <h2>链接不存在</h2>
+    <p>抱歉，您访问的短链接不存在或已被删除。</p>
     <a href="/">返回首页</a>
   </div>
 </body>
@@ -155,8 +156,9 @@ function renderExpiredPage() {
 </head>
 <body>
   <div class="container">
-    <h1>⏰</h1>
-    <p>抱歉，该短链接已过期</p>
+    <span class="icon">⏰</span>
+    <h2>链接已过期</h2>
+    <p>抱歉，该短链接已超过有效期，无法继续访问。</p>
     <a href="/">返回首页</a>
   </div>
 </body>
@@ -178,8 +180,9 @@ function renderMaxClicksPage() {
 </head>
 <body>
   <div class="container">
-    <h1>🔒</h1>
-    <p>该链接访问次数已达上限</p>
+    <span class="icon">🔒</span>
+    <h2>访问已达上限</h2>
+    <p>该链接的访问次数已达到设置的上限。</p>
     <a href="/">返回首页</a>
   </div>
 </body>
@@ -199,44 +202,68 @@ function renderPasswordPage(code, errorMsg = '') {
   <title>需要密码 - Shorter</title>
   ${getStyles()}
   <style>
-    form { margin-top: 2rem; }
+    form { margin-top: 2rem; display: flex; flex-direction: column; align-items: center; }
     input[type="password"] {
-      padding: 0.75rem 1rem;
-      border: 1px solid #d1d5db;
-      border-radius: 0.5rem;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg);
+      color: var(--color-text);
+      border-radius: 9999px;
       font-size: 1rem;
       width: 100%;
-      max-width: 300px;
-      margin-bottom: 1rem;
+      max-width: 320px;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s;
+      outline: none;
     }
     input[type="password"]:focus {
-      outline: none;
-      border-color: #f97316;
-      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 4px var(--color-primary-light);
     }
     button[type="submit"] {
-      padding: 0.75rem 2rem;
-      background: #f97316;
+      padding: 0.8rem 2.5rem;
+      background: var(--color-primary);
       color: white;
       border: none;
-      border-radius: 0.5rem;
+      border-radius: 9999px;
       font-size: 1rem;
+      font-weight: 500;
       cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
-    button[type="submit"]:hover { background: #ea580c; }
-    .error { color: #ef4444; margin-bottom: 1rem; }
+    @media (prefers-color-scheme: dark) {
+      button[type="submit"] { color: #121212; font-weight: 600; }
+      input[type="password"]:focus { box-shadow: 0 0 0 4px rgba(110, 231, 183, 0.2); }
+    }
+    button[type="submit"]:hover { 
+      background: var(--color-primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    .error { 
+      color: var(--color-error); 
+      background: rgba(239, 68, 68, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem; 
+      font-size: 0.9rem;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>🔐</h1>
-    <p>此链接受密码保护</p>
-    ${errorMsg ? `<p class="error">${errorMsg}</p>` : ''}
+    <span class="icon">🔐</span>
+    <h2>需要访问密码</h2>
+    <p>此链接已加密，请输入密码继续访问</p>
+    
     <form method="POST" action="/${code}">
+      ${errorMsg ? `<div class="error">${errorMsg}</div>` : ''}
       <input type="password" name="password" placeholder="请输入访问密码" required autofocus>
-      <br>
-      <button type="submit">验证</button>
+      <button type="submit">验证并跳转</button>
     </form>
+    
+    <a href="/" style="background: transparent; color: var(--color-text-muted); padding: 0.5rem; margin-top: 1rem; box-shadow: none;">返回首页</a>
   </div>
 </body>
 </html>`,
@@ -247,31 +274,82 @@ function renderPasswordPage(code, errorMsg = '') {
 // 通用样式
 function getStyles() {
   return `<style>
+    :root {
+      --color-primary: #5c8d89;
+      --color-primary-hover: #4a726f;
+      --color-bg: #fdfbf7;
+      --color-text: #2c2c2c;
+      --color-text-muted: #6b7280;
+      --color-border: #e6e2d8;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-primary: #6ee7b7;
+        --color-primary-hover: #34d399;
+        --color-bg: #121212;
+        --color-text: #e5e5e5;
+        --color-text-muted: #9ca3af;
+        --color-border: #333333;
+      }
+    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: system-ui, -apple-system, sans-serif;
-      background: #fafafa;
-      color: #171717;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: background-color 0.3s, color 0.3s;
     }
     .container {
       text-align: center;
-      padding: 2rem;
+      padding: 3rem;
+      max-width: 480px;
+      width: 90%;
     }
-    h1 { font-size: 5rem; color: #f97316; }
-    p { margin-top: 1rem; color: #525252; }
+    h1 { 
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem; 
+      color: var(--color-primary);
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--color-text);
+    }
+    p { 
+      margin-top: 0.5rem; 
+      color: var(--color-text-muted);
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
     a {
-      display: inline-block;
-      margin-top: 2rem;
-      padding: 0.75rem 1.5rem;
-      background: #f97316;
-      color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2.5rem;
+      padding: 0.75rem 2rem;
+      background: var(--color-primary);
+      color: white; /* Always white on primary button */
       text-decoration: none;
-      border-radius: 0.5rem;
+      border-radius: 9999px;
+      font-weight: 500;
+      transition: all 0.2s;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
-    a:hover { background: #ea580c; }
-  </style>`
+    @media (prefers-color-scheme: dark) {
+      a { color: #121212; font-weight: 600; } /* Dark text on bright button in dark mode */
+    }
+    a:hover { 
+      background: var(--color-primary-hover); 
+      transform: translateY(-1px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    .icon { font-size: 4rem; margin-bottom: 1.5rem; display: block; }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">`
 }
