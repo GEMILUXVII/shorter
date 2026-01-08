@@ -7,10 +7,17 @@ export async function onRequestGet(context) {
   const { params, env, request } = context
   const code = params.code
   
-  // 忽略一些特殊路径
+  // 忽略一些特殊路径和 SPA 路由
   const ignorePaths = ['favicon.ico', 'robots.txt', 'sitemap.xml']
+  const spaRoutes = ['dashboard', 'login', 'register', 'settings', 'profile']
+  
   if (ignorePaths.includes(code)) {
     return new Response('Not Found', { status: 404 })
+  }
+  
+  // SPA 路由应该由前端处理，返回 null 让 Cloudflare Pages 处理
+  if (spaRoutes.includes(code) || code.startsWith('assets')) {
+    return env.ASSETS.fetch(request)
   }
   
   try {

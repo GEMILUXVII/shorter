@@ -84,9 +84,15 @@ export const useLinkStore = defineStore('links', () => {
     
     // 调用 API 保存到 KV
     try {
+      const token = localStorage.getItem('auth_token')
+      const headers = { 'Content-Type': 'application/json' }
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`
+      }
+      
       const response = await fetch('/api/links', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({
           code: newLink.code,
           url: newLink.originalUrl,
@@ -115,8 +121,25 @@ export const useLinkStore = defineStore('links', () => {
     return newLink
   }
   
-  function removeLink(id) {
-    const index = links.value.findIndex(link => link.id === id)
+  async function removeLink(id) {
+    const link = links.value.find(link => link.id === id)
+    if (!link) return
+    
+    // 尝试从服务器删除
+    const token = localStorage.getItem('auth_token')
+    if (token && link.code) {
+      try {
+        await fetch(`/api/links?code=${link.code}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` }
+        })
+      } catch (e) {
+        console.error('Delete from server failed:', e)
+      }
+    }
+    
+    // 从本地删除
+    const index = links.value.findIndex(l => l.id === id)
     if (index > -1) {
       links.value.splice(index, 1)
       saveToStorage()
@@ -148,6 +171,33 @@ export const useLinkStore = defineStore('links', () => {
     saveToStorage()
   }
   
+  // 从服务器获取用户的链接
+  async function fetchUserLinks() {
+    const token = localStorage.getItem('auth_token')
+    if (!token) {
+      return
+    }
+    
+    isLoading.value = true
+    try {
+      const response = await fetch('/api/links', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+      
+      if (response.ok) {
+        const serverLinks = await response.json()
+        // 合并服务器链接和本地链接（去重）
+        const localLinks = links.value.filter(l => !serverLinks.find(s => s.code === l.code))
+        links.value = [...serverLinks, ...localLinks]
+        saveToStorage()
+      }
+    } catch (e) {
+      console.error('Fetch user links failed:', e)
+    } finally {
+      isLoading.value = false
+    }
+  }
+  
   // 初始化时加载数据
   loadFromStorage()
   
@@ -167,6 +217,7 @@ export const useLinkStore = defineStore('links', () => {
     incrementClicks,
     updateLink,
     findByCode,
-    clearAll
+    clearAll,
+    fetchUserLinks
   }
 })

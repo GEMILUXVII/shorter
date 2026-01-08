@@ -1,10 +1,20 @@
 <script setup>
+import { onMounted } from 'vue'
 import StatsPanel from '@/components/features/StatsPanel.vue'
 import LinkList from '@/components/features/LinkList.vue'
 import BaseCard from '@/components/common/BaseCard.vue'
 import { useLinkStore } from '@/stores/linkStore'
+import { useAuth } from '@/composables/useAuth'
 
 const linkStore = useLinkStore()
+const { isLoggedIn } = useAuth()
+
+// 页面加载时同步用户链接
+onMounted(() => {
+  if (isLoggedIn.value) {
+    linkStore.fetchUserLinks()
+  }
+})
 </script>
 
 <template>
