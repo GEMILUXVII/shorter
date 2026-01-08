@@ -8,11 +8,15 @@ export async function onRequestGet(context) {
   const code = params.code
   
   // 忽略一些特殊路径和 SPA 路由
-  const ignorePaths = ['favicon.ico', 'robots.txt', 'sitemap.xml']
+  const ignorePaths = ['favicon.ico', 'favicon.svg', 'vite.svg', 'robots.txt', 'sitemap.xml']
   const spaRoutes = ['dashboard', 'login', 'register', 'settings', 'profile']
   
-  if (ignorePaths.includes(code)) {
-    return new Response('Not Found', { status: 404 })
+  // 静态资源扩展名 - 直接让 Cloudflare Pages 处理
+  const staticExtensions = ['.svg', '.png', '.jpg', '.jpeg', '.gif', '.webp', '.ico', '.css', '.js', '.woff', '.woff2', '.ttf', '.eot']
+  const hasStaticExtension = staticExtensions.some(ext => code.endsWith(ext))
+  
+  if (ignorePaths.includes(code) || hasStaticExtension) {
+    return env.ASSETS.fetch(request)
   }
   
   // SPA 路由应该由前端处理，返回 null 让 Cloudflare Pages 处理
