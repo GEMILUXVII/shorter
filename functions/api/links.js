@@ -4,13 +4,25 @@
  */
 export async function onRequestPost(context) {
   const { env, request } = context
-  
+
   try {
     const data = await request.json()
-    const { code, url, expiresAt, password, maxClicks, note } = data
-    
+    const { code, url, expiresAt, password, maxClicks, note, turnstileToken } = data
+
     if (!code || !url) {
       return jsonResponse({ error: 'Missing required fields' }, 400)
+    }
+
+    // 验证 Turnstile token（人机验证）
+    if (env.TURNSTILE_SECRET_KEY) {
+      if (!turnstileToken) {
+        return jsonResponse({ error: 'Human verification required' }, 400)
+      }
+
+      const turnstileValid = await verifyTurnstile(turnstileToken, env.TURNSTILE_SECRET_KEY, request)
+      if (!turnstileValid) {
+        return jsonResponse({ error: 'Human verification failed' }, 403)
+      }
     }
     
     // 获取当前用户（如果已登录）
@@ -231,6 +243,29 @@ function jsonResponse(data, status = 200) {
     status,
     headers: { 'Content-Type': 'application/json' }
   })
+}
+
+// 验证 Cloudflare Turnstile token
+async function verifyTurnstile(token, secretKey, request) {
+  try {
+    const ip = request.headers.get('CF-Connecting-IP') || ''
+
+    const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        secret: secretKey,
+        response: token,
+        remoteip: ip
+      })
+    })
+
+    const result = await response.json()
+    return result.success === true
+  } catch (error) {
+    console.error('Turnstile verification error:', error)
+    return false
+  }
 }
 
 /**

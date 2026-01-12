@@ -49,7 +49,7 @@ export const useLinkStore = defineStore('links', () => {
   }
   
   async function addLink(originalUrl, options = {}) {
-    const { customCode, expiresIn, password, maxClicks, note } = options
+    const { customCode, expiresIn, password, maxClicks, note, turnstileToken } = options
     
     // 保留路径 - 禁止使用这些作为短码
     const reservedCodes = [
@@ -127,7 +127,8 @@ export const useLinkStore = defineStore('links', () => {
           expiresAt: newLink.expiresAt,
           password: newLink.password,
           maxClicks: newLink.maxClicks,
-          note: newLink.note
+          note: newLink.note,
+          turnstileToken
         })
       })
       

@@ -2,24 +2,62 @@ name = "shorter"
 compatibility_date = "2024-01-01"
 pages_build_output_dir = "./dist"
 
-# KV 命名空间绑定
-# 1. 创建 KV: npx wrangler kv namespace create LINKS_KV
-# 2. 创建预览 KV: npx wrangler kv namespace create LINKS_KV --preview
-# 3. 将生成的 id 填入下方，然后重命名此文件为 wrangler.toml
+# ============================================
+# KV 命名空间配置
+# ============================================
+# 步骤:
+# 1. 运行: npx wrangler kv namespace create LINKS_KV
+#    输出示例: { binding = "LINKS_KV", id = "abcd1234..." }
+# 2. 运行: npx wrangler kv namespace create LINKS_KV --preview
+#    输出示例: { binding = "LINKS_KV", preview_id = "efgh5678..." }
+# 3. 将输出的 id 和 preview_id 填入下方
+
 [[kv_namespaces]]
 binding = "LINKS_KV"
-id = "your-kv-namespace-id-here"
-preview_id = "your-preview-kv-namespace-id-here"
+id = "abcd1234-5678-90ab-cdef-1234567890ab"           # 替换为你的实际 id
+preview_id = "efgh5678-1234-abcd-efgh-0987654321ba"   # 替换为你的实际 preview_id
 
-# 用户 KV 命名空间
-# 创建: npx wrangler kv namespace create USERS_KV
-# 预览: npx wrangler kv namespace create USERS_KV --preview
+# 用户 KV 命名空间 (用于存储用户信息)
+# 运行: npx wrangler kv namespace create USERS_KV
+# 运行: npx wrangler kv namespace create USERS_KV --preview
+
 [[kv_namespaces]]
 binding = "USERS_KV"
-id = "your-users-kv-namespace-id-here"
-preview_id = "your-users-preview-kv-namespace-id-here"
+id = "user1234-5678-90ab-cdef-1234567890ab"           # 替换为你的实际 id
+preview_id = "user5678-1234-abcd-efgh-0987654321ba"   # 替换为你的实际 preview_id
 
-# 环境变量
+# ============================================
+# 环境变量配置
+# ============================================
 [vars]
-JWT_SECRET = "your-jwt-secret-here"
+# JWT 密钥 - 用于用户登录认证
+# 建议使用随机字符串，例如运行: openssl rand -hex 32
+JWT_SECRET = "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6"
 
+# Turnstile 密钥 - 用于人机验证 (后端验证用)
+# 从 Cloudflare Dashboard > Turnstile 获取
+# https://dash.cloudflare.com/?to=/:account/turnstile
+TURNSTILE_SECRET_KEY = "0x4AAAAAAXXXXXXXXXXXXXXXXXXXXXXXX"
+
+# ============================================
+# 前端环境变量
+# ============================================
+# 创建 .env.local 文件，添加以下内容:
+#
+# # Turnstile 站点密钥 (前端显示用)
+# VITE_TURNSTILE_SITE_KEY=0x4AAAAAAXXXXXXXXXXXXXXXXXXXXXXXX
+#
+# 注意: TURNSTILE_SECRET_KEY 和 VITE_TURNSTILE_SITE_KEY 是不同的密钥！
+# - Site Key (站点密钥): 用于前端，公开的
+# - Secret Key (密钥): 用于后端验证，保密的
+
+# ============================================
+# 使用说明
+# ============================================
+# 1. 复制此文件为 wrangler.toml
+# 2. 按照上述步骤创建 KV 命名空间并填入 id
+# 3. 生成 JWT_SECRET 并填入
+# 4. 从 Cloudflare Turnstile 获取密钥并填入
+# 5. 创建 .env.local 文件并填入 VITE_TURNSTILE_SITE_KEY
+# 6. 运行 npm run dev 本地测试
+# 7. 运行 npx wrangler pages deploy dist 部署

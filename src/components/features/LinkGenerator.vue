@@ -7,6 +7,7 @@ import { useToast } from '@/composables/useToast'
 import { isValidUrl, formatUrl } from '@/utils/validators'
 import { useI18n } from 'vue-i18n'
 import Button from '@/components/common/Button.vue'
+import Turnstile from '@/components/common/Turnstile.vue'
 
 const linkStore = useLinkStore()
 const { copy } = useClipboard()
@@ -20,6 +21,23 @@ const isLoading = ref(false)
 const generatedLink = ref(null)
 const qrCodeUrl = ref('')
 const baseUrl = window.location.origin
+
+// Turnstile 人机验证
+const turnstileToken = ref('')
+const turnstileRef = ref(null)
+
+function onTurnstileVerify(token) {
+  turnstileToken.value = token
+}
+
+function onTurnstileExpire() {
+  turnstileToken.value = ''
+}
+
+function onTurnstileError(err) {
+  console.error('Turnstile error:', err)
+  turnstileToken.value = ''
+}
 
 // 生成二维码（优化：降低分辨率以减少内存使用）
 watch(generatedLink, async (newLink) => {
@@ -73,14 +91,14 @@ const maxClicksError = computed(() => {
 })
 
 const canSubmit = computed(() => {
-  return url.value && !urlError.value && !maxClicksError.value && !isLoading.value
+  return url.value && !urlError.value && !maxClicksError.value && !isLoading.value && turnstileToken.value
 })
 
 async function handleSubmit() {
   if (!canSubmit.value) return
-  
+
   isLoading.value = true
-  
+
   try {
     const formattedUrl = formatUrl(url.value)
     const link = await linkStore.addLink(formattedUrl, {
@@ -88,12 +106,13 @@ async function handleSubmit() {
       expiresIn: expiryOption.value,
       password: password.value || null,
       maxClicks: maxClicks.value || null,
-      note: note.value || null
+      note: note.value || null,
+      turnstileToken: turnstileToken.value
     })
-    
+
     generatedLink.value = link
     success(t('link.success'))
-    
+
     // 清空输入
     url.value = ''
     customCode.value = ''
@@ -102,6 +121,10 @@ async function handleSubmit() {
     maxClicks.value = ''
     note.value = ''
     showAdvanced.value = false
+
+    // 重置 Turnstile
+    turnstileToken.value = ''
+    turnstileRef.value?.reset()
   } catch (e) {
     if (e.code === 'RESERVED_CODE') {
       error(t('link.error.reservedCode'))
@@ -209,6 +232,17 @@ function handleReset() {
               {{ urlError }}
             </p>
           </Transition>
+
+          <!-- Turnstile 人机验证 -->
+          <div class="mt-8 flex justify-center">
+            <Turnstile
+              ref="turnstileRef"
+              theme="auto"
+              @verify="onTurnstileVerify"
+              @expire="onTurnstileExpire"
+              @error="onTurnstileError"
+            />
+          </div>
 
           <!-- Advanced Options Toggle -->
           <div class="mt-6 text-center">

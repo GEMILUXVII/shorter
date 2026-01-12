@@ -26,6 +26,11 @@ dist-ssr
 # Cloudflare
 wrangler.toml
 
+# Environment variables
+.env
+.env.local
+.env.*.local
+
 # Claude Code temp files
 .claude/
 tmpclaude-*
