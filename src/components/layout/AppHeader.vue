@@ -75,11 +75,11 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <header 
-    class="fixed top-0 w-full z-50 transition-all duration-500"
+  <header
+    class="fixed top-0 w-full z-50 transition-[background-color,backdrop-filter,box-shadow] duration-500"
     :class="[
-      isScrolled 
-        ? 'glass-panel border-b-0' 
+      isScrolled
+        ? 'glass-panel border-b-0'
         : 'bg-transparent'
     ]"
   >
