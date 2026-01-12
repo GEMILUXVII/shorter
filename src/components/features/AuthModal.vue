@@ -80,73 +80,76 @@ function switchMode() {
 
 <template>
   <Teleport to="body">
-    <Transition name="fade">
-      <div v-if="visible" class="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <!-- Backdrop -->
-        <div 
-          class="absolute inset-0 bg-[var(--color-text)]/20 backdrop-blur-sm"
+    <div v-if="visible" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <!-- Backdrop - 独立过渡 -->
+      <Transition name="backdrop">
+        <div
+          v-if="visible"
+          class="absolute inset-0 bg-black/50 backdrop-blur-md"
           @click="handleClose"
         />
-        
-        <!-- Modal -->
-        <div class="relative w-full max-w-md animate-fade-in-up">
-          <!-- 卡片主体 - 极简浮动风格 -->
-          <div class="relative bg-[var(--color-bg)]/95 backdrop-blur-xl rounded-3xl shadow-2xl p-8 md:p-10 border border-[var(--color-border)]">
+      </Transition>
+
+      <!-- Modal - 独立过渡 -->
+      <Transition name="modal">
+        <div v-if="visible" class="relative w-full max-w-md">
+          <!-- 卡片主体 -->
+          <div class="relative bg-[var(--card)] backdrop-blur-xl rounded-3xl shadow-2xl shadow-black/20 p-8 md:p-10 border border-white/20 dark:border-white/10">
             <!-- Header -->
             <div class="text-center mb-10">
-              <h2 class="text-3xl font-serif font-medium text-[var(--color-text)]">
+              <h2 class="text-3xl font-serif font-medium text-[var(--foreground)]">
                 {{ isRegister ? t('auth.join') : t('auth.welcome') }}
               </h2>
-              <p class="mt-2 text-[var(--color-text-secondary)] font-light">
+              <p class="mt-2 text-[var(--muted-foreground)] font-light">
                 {{ isRegister ? t('auth.joinDesc') : t('auth.welcomeDesc') }}
               </p>
             </div>
             
             <!-- Form -->
-            <form @submit.prevent="handleSubmit" class="space-y-6">
-              <div class="space-y-1">
+            <form @submit.prevent="handleSubmit" class="space-y-5">
+              <div>
                 <input
                   v-model="email"
                   type="email"
                   :placeholder="t('auth.emailPlaceholder')"
-                  class="clean-input !text-base bg-transparent"
+                  class="w-full h-12 px-4 text-base bg-[var(--secondary)]/50 dark:bg-white/5 border border-[var(--border)] dark:border-white/10 rounded-xl text-[var(--foreground)] placeholder-[var(--muted-foreground)] focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"
                   required
                 />
               </div>
-              
+
               <div class="space-y-1">
                 <input
                   v-model="password"
                   type="password"
                   :placeholder="t('auth.password')"
-                  class="clean-input !text-base bg-transparent"
+                  class="w-full h-12 px-4 text-base bg-[var(--secondary)]/50 dark:bg-white/5 border border-[var(--border)] dark:border-white/10 rounded-xl text-[var(--foreground)] placeholder-[var(--muted-foreground)] focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"
                   required
                 />
-                <p v-if="passwordError" class="text-sm text-[var(--color-error)] text-right">{{ passwordError }}</p>
+                <p v-if="passwordError" class="text-sm text-[var(--destructive)] text-right">{{ passwordError }}</p>
               </div>
-              
+
               <Transition name="slide-up">
                 <div v-if="isRegister" class="space-y-1">
                   <input
                     v-model="confirmPassword"
                     type="password"
                     :placeholder="t('auth.confirmPassword')"
-                    class="clean-input !text-base bg-transparent"
+                    class="w-full h-12 px-4 text-base bg-[var(--secondary)]/50 dark:bg-white/5 border border-[var(--border)] dark:border-white/10 rounded-xl text-[var(--foreground)] placeholder-[var(--muted-foreground)] focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"
                     required
                   />
-                  <p v-if="confirmError" class="text-sm text-[var(--color-error)] text-right">{{ confirmError }}</p>
+                  <p v-if="confirmError" class="text-sm text-[var(--destructive)] text-right">{{ confirmError }}</p>
                 </div>
               </Transition>
-              
+
               <!-- Error message -->
-              <div v-if="errorMsg" class="p-3 bg-[var(--color-error)]/10 rounded-lg">
-                <p class="text-sm text-[var(--color-error)] text-center">{{ errorMsg }}</p>
+              <div v-if="errorMsg" class="p-3 bg-[var(--destructive)]/10 border border-[var(--destructive)]/20 rounded-xl">
+                <p class="text-sm text-[var(--destructive)] text-center">{{ errorMsg }}</p>
               </div>
-              
+
               <!-- Submit -->
               <button
                 type="submit"
-                class="clean-btn w-full text-lg py-3 mt-4 shadow-lg shadow-[var(--color-primary)]/20"
+                class="w-full h-12 text-base font-medium bg-[var(--primary)] text-white rounded-xl hover:bg-[var(--primary-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-[var(--primary)]/25 border border-white/10"
                 :disabled="!canSubmit || isLoading"
               >
                 <span v-if="isLoading" class="animate-pulse">{{ t('auth.submit.processing') }}</span>
@@ -155,21 +158,21 @@ function switchMode() {
             </form>
             
             <!-- Footer -->
-            <div class="mt-8 text-center text-sm text-[var(--color-text-muted)]">
+            <div class="mt-8 text-center text-sm text-[var(--muted-foreground)]">
               {{ isRegister ? t('auth.switch.hasAccount') : t('auth.switch.noAccount') }}
               <button
                 type="button"
-                class="text-[var(--color-primary)] font-medium hover:underline ml-1"
+                class="text-[var(--primary)] font-medium hover:underline ml-1"
                 @click="switchMode"
               >
                 {{ isRegister ? t('auth.switch.toLogin') : t('auth.switch.toRegister') }}
               </button>
             </div>
-            
+
             <!-- Close button -->
             <button
               type="button"
-              class="absolute top-4 right-4 p-2 text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+              class="absolute top-4 right-4 p-2 text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors"
               @click="handleClose"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -178,20 +181,38 @@ function switchMode() {
             </button>
           </div>
         </div>
-      </div>
-    </Transition>
+      </Transition>
+    </div>
   </Teleport>
 </template>
 
 <style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
+/* Backdrop 过渡 - 背景模糊立即生效 */
+.backdrop-enter-active {
+  transition: opacity 0.2s ease;
+}
+.backdrop-leave-active {
+  transition: opacity 0.3s ease 0.1s;
+}
+.backdrop-enter-from,
+.backdrop-leave-to {
+  opacity: 0;
 }
 
-.fade-enter-from,
-.fade-leave-to {
+/* Modal 过渡 - 卡片弹出动画 */
+.modal-enter-active {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.modal-leave-active {
+  transition: all 0.2s ease;
+}
+.modal-enter-from {
   opacity: 0;
+  transform: scale(0.95) translateY(10px);
+}
+.modal-leave-to {
+  opacity: 0;
+  transform: scale(0.98);
 }
 
 .slide-up-enter-active,
