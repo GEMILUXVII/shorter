@@ -22,35 +22,35 @@
   --accent: oklch(65% 0.1 165);
   --accent-foreground: oklch(98% 0 0);
 
-  /* 背景色 */
-  --background: oklch(99% 0 0);
-  --background-secondary: oklch(97% 0.005 286);
+  /* 背景色 - Claude 风格温暖奶油色 */
+  --background: oklch(94% 0.025 80);
+  --background-secondary: oklch(91% 0.03 80);
 
-  /* 前景/文字色 */
-  --foreground: oklch(14% 0.005 286);
-  --foreground-secondary: oklch(40% 0.01 286);
-  --foreground-muted: oklch(55% 0.015 286);
+  /* 前景/文字色 - 温暖的深色 */
+  --foreground: oklch(25% 0.02 55);
+  --foreground-secondary: oklch(42% 0.018 55);
+  --foreground-muted: oklch(52% 0.015 55);
 
-  /* 卡片 */
-  --card: oklch(100% 0 0);
-  --card-foreground: oklch(14% 0.005 286);
+  /* 卡片 - 略白但带暖色调 */
+  --card: oklch(96% 0.018 80);
+  --card-foreground: oklch(25% 0.02 55);
 
   /* 弹出层 */
-  --popover: oklch(100% 0 0);
-  --popover-foreground: oklch(14% 0.005 286);
+  --popover: oklch(96% 0.018 80);
+  --popover-foreground: oklch(25% 0.02 55);
 
   /* 次要元素 */
-  --secondary: oklch(96.7% 0.001 286);
-  --secondary-foreground: oklch(21% 0.006 286);
+  --secondary: oklch(90% 0.025 80);
+  --secondary-foreground: oklch(30% 0.018 55);
 
   /* 静音色 */
-  --muted: oklch(96.7% 0.001 286);
-  --muted-foreground: oklch(55% 0.016 286);
+  --muted: oklch(90% 0.025 80);
+  --muted-foreground: oklch(48% 0.02 55);
 
-  /* 边框 */
-  --border: oklch(92% 0.004 286);
-  --input: oklch(92% 0.004 286);
-  --ring: oklch(70% 0.015 286);
+  /* 边框 - 温暖的灰色 */
+  --border: oklch(85% 0.025 80);
+  --input: oklch(85% 0.025 80);
+  --ring: oklch(65% 0.03 80);
 
   /* 状态色 */
   --success: oklch(65% 0.2 145);
@@ -58,13 +58,13 @@
   --warning: oklch(75% 0.15 85);
   --destructive: oklch(58% 0.245 27);
 
-  /* 阴影 */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  /* 阴影 - 温暖色调 */
+  --shadow-sm: 0 1px 2px 0 rgb(120 100 80 / 0.06);
+  --shadow-md: 0 4px 6px -1px rgb(120 100 80 / 0.08), 0 2px 4px -2px rgb(120 100 80 / 0.06);
   --shadow-lg:
-    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    0 10px 15px -3px rgb(120 100 80 / 0.08), 0 4px 6px -4px rgb(120 100 80 / 0.06);
   --shadow-xl:
-    0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    0 20px 25px -5px rgb(120 100 80 / 0.1), 0 8px 10px -6px rgb(120 100 80 / 0.08);
 }
 
 /* 暗色主题 */
