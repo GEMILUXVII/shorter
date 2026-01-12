@@ -113,4 +113,9 @@ watch(() => props.siteKey, () => {
   display: flex;
   justify-content: center;
 }
+
+/* 让 Turnstile iframe 圆角更柔和 */
+.turnstile-container :deep(iframe) {
+  border-radius: 8px;
+}
 </style>

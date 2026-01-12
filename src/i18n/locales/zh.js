@@ -84,6 +84,7 @@ export default {
       createFailed: '创建失败，请稍后重试'
     },
     success: '生成成功！',
+    verification: '安全验证',
     copy: '复制',
     copied: '已复制',
     qr: '二维码',

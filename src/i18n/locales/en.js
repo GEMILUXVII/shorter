@@ -84,6 +84,7 @@ export default {
       createFailed: 'Failed to create, please try again'
     },
     success: 'Shortened!',
+    verification: 'Security Check',
     copy: 'Copy',
     copied: 'Copied',
     qr: 'QR Code',
