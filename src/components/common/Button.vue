@@ -102,20 +102,29 @@ const classes = computed(() => {
     ],
   };
 
-  // Size styles
+  // Size styles (不包含圆角，圆角单独处理)
   const sizes = {
-    sm: "h-8 px-3 text-xs rounded-md",
-    md: "h-10 px-4 text-sm rounded-lg",
-    lg: "h-11 px-6 text-base rounded-lg",
-    xl: "h-12 px-8 text-lg rounded-xl",
-    icon: "h-10 w-10 rounded-lg",
+    sm: "h-8 px-3 text-xs",
+    md: "h-10 px-4 text-sm",
+    lg: "h-11 px-6 text-base",
+    xl: "h-12 px-8 text-lg",
+    icon: "h-10 w-10",
+  };
+
+  // 圆角样式
+  const radiusMap = {
+    sm: "rounded-md",
+    md: "rounded-lg",
+    lg: "rounded-lg",
+    xl: "rounded-xl",
+    icon: "rounded-lg",
   };
 
   return [
     ...base,
     ...variants[props.variant],
     sizes[props.size],
-    props.rounded ? "rounded-full" : "",
+    props.rounded ? "rounded-full" : radiusMap[props.size],
     props.loading ? "cursor-wait" : "cursor-pointer",
   ]
     .filter(Boolean)

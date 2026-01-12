@@ -190,18 +190,18 @@ function handleReset() {
           </p>
         </div>
 
-        <!-- URL Input - 简洁发光效果 -->
+        <!-- URL Input - 胶囊融合设计 + 光束效果 -->
         <div
           class="relative opacity-0 animate-fade-in-up delay-200 max-w-2xl mx-auto"
           style="animation-fill-mode: forwards;"
         >
-          <div class="glass-panel p-2 rounded-2xl flex items-center gap-2 transition-all duration-300 border border-white/10 focus-within:border-[var(--primary)]/50 focus-within:shadow-[0_0_20px_rgba(124,58,237,0.15)]">
+          <div class="beam-effect glass-panel p-1.5 rounded-full flex items-center gap-2 transition-all duration-300 border border-white/10 hover:border-white/20">
             <div class="flex-1 relative">
               <input
                 v-model="url"
                 type="text"
                 :placeholder="t('link.placeholder')"
-                class="w-full h-12 px-4 bg-transparent border-0 text-lg text-[var(--foreground)] placeholder-[var(--muted-foreground)]/50 focus:outline-none focus:ring-0 transition-all font-light tracking-wide"
+                class="w-full h-12 px-6 bg-transparent border-0 text-lg text-[var(--foreground)] placeholder-[var(--muted-foreground)]/50 focus:outline-none focus:ring-0 transition-all font-light tracking-wide"
                 @keyup.enter="handleSubmit"
               />
             </div>
@@ -209,9 +209,10 @@ function handleReset() {
             <Button
               variant="primary"
               size="lg"
+              rounded
               :loading="isLoading"
               :disabled="!canSubmit"
-              class="h-12 px-8 rounded-xl shadow-lg shadow-[var(--primary)]/25 hover:shadow-[var(--primary)]/40 transition-all duration-300 transform hover:scale-[1.02]"
+              class="h-12 px-8 shadow-lg shadow-[var(--primary)]/30 hover:shadow-[var(--primary)]/50 transition-all duration-300 transform hover:scale-[1.02]"
               @click="handleSubmit"
             >
               <template v-if="!isLoading">
