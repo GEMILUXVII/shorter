@@ -4,12 +4,14 @@ export default {
     dashboard: 'Dashboard',
     login: 'Log In',
     logout: 'Log Out',
+    userMenuAriaLabel: 'User menu for {user}',
     theme: {
       light: 'Switch to Light Mode',
       dark: 'Switch to Dark Mode'
     }
   },
   home: {
+    title: 'Simplify your links,',
     subtitle: 'Paste a long link to generate a clean, elegant short link.',
     whyChoose: 'Why Choose Shorter?',
     features: {
@@ -56,7 +58,13 @@ export default {
     item: {
       clicks: '{count} clicks',
       copy: 'Copy link',
-      copySuccess: 'Link copied'
+      copySuccess: 'Link copied',
+      ariaLabel: 'Short link: {url}',
+      openLink: 'Open short link {url} in new tab',
+      copyAriaLabel: 'Copy short link {url} to clipboard',
+      openOriginal: 'Open original URL {url} in new tab',
+      deleteAriaLabel: 'Delete short link {url}',
+      statsLabel: 'Link statistics'
     }
   },
   stats: {

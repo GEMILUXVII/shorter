@@ -1,5 +1,4 @@
 <script setup>
-import BaseButton from '@/components/common/BaseButton.vue'
 import { useClipboard } from '@/composables/useClipboard'
 import { truncateText, extractDomain } from '@/utils/validators'
 import { useI18n } from 'vue-i18n'
@@ -36,18 +35,21 @@ function handleDelete() {
 </script>
 
 <template>
-  <div class="group flex items-center gap-5 p-5 bg-[var(--color-card)] border border-[var(--color-border)] rounded-xl hover:border-[var(--color-primary)] transition-all">
+  <article
+    class="group flex items-center gap-4 p-4 rounded-xl hover:bg-[var(--background)]/50 dark:hover:bg-[var(--background)]/30 transition-all"
+    :aria-label="t('dashboard.item.ariaLabel', { url: link.shortUrl })"
+  >
     <!-- Favicon / Domain icon -->
-    <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-[var(--color-bg-secondary)] flex items-center justify-center">
+    <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-[var(--secondary)]/50 flex items-center justify-center" aria-hidden="true">
       <img
         :src="`https://www.google.com/s2/favicons?domain=${extractDomain(link.originalUrl)}&sz=32`"
         :alt="extractDomain(link.originalUrl)"
-        class="w-5 h-5"
+        class="w-4 h-4"
         loading="lazy"
         @error="$event.target.style.display = 'none'"
       />
     </div>
-    
+
     <!-- Link info -->
     <div class="flex-1 min-w-0">
       <!-- Short URL -->
@@ -55,57 +57,60 @@ function handleDelete() {
         <a
           :href="link.shortUrl"
           target="_blank"
-          class="text-base font-medium text-[var(--color-primary)] hover:underline truncate"
+          rel="noopener noreferrer"
+          class="text-sm font-medium text-[var(--primary)] hover:text-[var(--primary-hover)] truncate transition-colors"
+          :aria-label="t('dashboard.item.openLink', { url: link.shortUrl })"
         >
           {{ link.shortUrl.replace(/^https?:\/\//, '') }}
         </a>
         <button
-          class="flex-shrink-0 p-1 rounded text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg-secondary)] transition-colors"
+          class="flex-shrink-0 p-1 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors"
           :title="t('dashboard.item.copy')"
+          :aria-label="t('dashboard.item.copyAriaLabel', { url: link.shortUrl })"
           @click="handleCopy"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-            <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
           </svg>
         </button>
       </div>
-      
+
       <!-- Original URL -->
       <a
         :href="link.originalUrl"
         target="_blank"
-        class="block text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] truncate"
+        rel="noopener noreferrer"
+        class="block text-xs text-[var(--muted-foreground)] hover:text-[var(--foreground-secondary)] truncate transition-colors mt-0.5"
         :title="link.originalUrl"
+        :aria-label="t('dashboard.item.openOriginal', { url: link.originalUrl })"
       >
         {{ truncateText(link.originalUrl, 60) }}
       </a>
     </div>
-    
+
     <!-- Stats -->
-    <div class="flex-shrink-0 text-right hidden sm:block">
-      <div class="flex items-center gap-1 text-sm text-[var(--color-text)]">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[var(--color-text-muted)]" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-          <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+    <div class="flex-shrink-0 text-right hidden sm:block" aria-label="t('dashboard.item.statsLabel')">
+      <div class="flex items-center gap-1 text-sm text-[var(--foreground)]">
+        <svg class="h-3.5 w-3.5 text-[var(--muted-foreground)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
         </svg>
-        {{ t('dashboard.item.clicks', { count: link.clicks || 0 }) }}
+        <span class="text-xs">{{ t('dashboard.item.clicks', { count: link.clicks || 0 }) }}</span>
       </div>
-      <p class="text-xs text-[var(--color-text-muted)] mt-1">
-        {{ formatDate(link.createdAt) }}
+      <p class="text-xs text-[var(--muted-foreground)] mt-0.5">
+        <time :datetime="new Date(link.createdAt).toISOString()">{{ formatDate(link.createdAt) }}</time>
       </p>
     </div>
-    
+
     <!-- Delete button -->
-    <BaseButton
-      variant="ghost"
-      size="sm"
-      class="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity text-[var(--color-error)]"
+    <button
+      class="flex-shrink-0 p-1.5 rounded-lg opacity-0 group-hover:opacity-100 focus:opacity-100 text-[var(--muted-foreground)] hover:text-[var(--error)] hover:bg-[var(--error)]/10 transition-all"
+      :aria-label="t('dashboard.item.deleteAriaLabel', { url: link.shortUrl })"
       @click="handleDelete"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
       </svg>
-    </BaseButton>
-  </div>
+    </button>
+  </article>
 </template>

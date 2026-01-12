@@ -1,172 +1,366 @@
 @import "tailwindcss";
 
-/* 自定义 CSS 变量 - 清新脱俗（Zen Garden Design） */
+/* ============================================
+   Shorter 设计系统 - 现代化版本
+   灵感来源: Credit 项目
+   ============================================ */
+
+/* ============================================
+   CSS 变量 - oklch 色彩系统
+   ============================================ */
 :root {
-  /* 主色调 - 鼠尾草绿/自然系 */
-  /* 使用较柔和的绿色，而非刺眼的电光绿 */
-  --color-primary: #5c8d89; /* 灰绿色 Sage */
-  --color-primary-hover: #4a726f;
-  --color-primary-light: #e6f2f1;
+  /* 圆角基准 */
+  --radius: 0.625rem;
 
-  /* 辅助色 */
-  --color-accent: #d8ac9c; /* 柔和的珊瑚/陶土色，用于点缀 */
+  /* 主色调 - 紫蓝渐变系 */
+  --primary: oklch(58.5% 0.25 277);
+  --primary-hover: oklch(52% 0.25 277);
+  --primary-light: oklch(95% 0.05 277);
+  --primary-foreground: oklch(98.5% 0 0);
 
-  /* 背景色 - 奶油/米白调 */
-  --color-bg: #fdfbf7; /* 极淡的暖米色 */
-  --color-bg-secondary: #f4f1ea;
-  --color-card: #ffffff;
-  
-  /* 边框 - 极淡 */
-  --color-border: #e6e2d8;
+  /* 辅助色 - 保留鼠尾草绿作为 accent */
+  --accent: oklch(65% 0.1 165);
+  --accent-foreground: oklch(98% 0 0);
 
-  /* 文字颜色 - 深炭灰，高对比度但不如纯黑生硬 */
-  --color-text: #2c2c2c;
-  --color-text-secondary: #595959;
-  --color-text-muted: #6b7280;
+  /* 背景色 */
+  --background: oklch(99% 0 0);
+  --background-secondary: oklch(97% 0.005 286);
 
-  /* 状态色 - 调低饱和度 */
-  --color-success: #5c8d89;
-  --color-error: #ef8e8e;
-  --color-warning: #eace88;
+  /* 前景/文字色 */
+  --foreground: oklch(14% 0.005 286);
+  --foreground-secondary: oklch(40% 0.01 286);
+  --foreground-muted: oklch(55% 0.015 286);
 
-  /* 阴影 - 几乎不可见，仅用于浮动感 */
-  --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.02);
-  --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.04);
+  /* 卡片 */
+  --card: oklch(100% 0 0);
+  --card-foreground: oklch(14% 0.005 286);
+
+  /* 弹出层 */
+  --popover: oklch(100% 0 0);
+  --popover-foreground: oklch(14% 0.005 286);
+
+  /* 次要元素 */
+  --secondary: oklch(96.7% 0.001 286);
+  --secondary-foreground: oklch(21% 0.006 286);
+
+  /* 静音色 */
+  --muted: oklch(96.7% 0.001 286);
+  --muted-foreground: oklch(55% 0.016 286);
+
+  /* 边框 */
+  --border: oklch(92% 0.004 286);
+  --input: oklch(92% 0.004 286);
+  --ring: oklch(70% 0.015 286);
+
+  /* 状态色 */
+  --success: oklch(65% 0.2 145);
+  --error: oklch(60% 0.25 25);
+  --warning: oklch(75% 0.15 85);
+  --destructive: oklch(58% 0.245 27);
+
+  /* 阴影 */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl:
+    0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
-/* 暗色主题 - 午夜森林 (Midnight Garden) */
+/* 暗色主题 */
 .dark {
-  /* 主色调 - 保持鼠尾草/薄荷绿，但略微提亮以适应深底 */
-  --color-primary: #6ee7b7; /* Emerald 300 - 发光的薄荷绿 */
-  --color-primary-hover: #34d399;
-  --color-primary-light: #064e3b;
+  --primary: oklch(75% 0.15 277);
+  --primary-hover: oklch(80% 0.15 277);
+  --primary-light: oklch(25% 0.1 277);
+  --primary-foreground: oklch(15% 0.01 277);
 
-  /* 背景色 - 深邃的炭灰/深岩石色 */
-  --color-bg: #121212; /* 纯黑略带暖意 */
-  --color-bg-secondary: #1c1c1c;
-  --color-card: #262626;
+  --accent: oklch(70% 0.12 165);
+  --accent-foreground: oklch(15% 0 0);
 
-  /* 边框 - 深灰 */
-  --color-border: #333333;
+  --background: oklch(14% 0.005 286);
+  --background-secondary: oklch(18% 0.006 286);
 
-  /* 文字颜色 - 柔和的米白 */
-  --color-text: #e5e5e5;
-  --color-text-secondary: #a3a3a3;
-  --color-text-muted: #525252;
+  --foreground: oklch(98.5% 0 0);
+  --foreground-secondary: oklch(75% 0.01 286);
+  --foreground-muted: oklch(55% 0.016 286);
 
-  /* 阴影 - 改为发光感 */
-  --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.5);
+  --card: oklch(21% 0.006 286);
+  --card-foreground: oklch(98.5% 0 0);
+
+  --popover: oklch(21% 0.006 286);
+  --popover-foreground: oklch(98.5% 0 0);
+
+  --secondary: oklch(27% 0.006 286);
+  --secondary-foreground: oklch(98.5% 0 0);
+
+  --muted: oklch(27% 0.006 286);
+  --muted-foreground: oklch(70% 0.015 286);
+
+  --border: oklch(100% 0 0 / 10%);
+  --input: oklch(100% 0 0 / 15%);
+  --ring: oklch(55% 0.016 286);
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-lg:
+    0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --shadow-xl:
+    0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.4);
 }
 
-/* 基础样式重置与字体 */
+/* ============================================
+   基础样式重置与字体
+   ============================================ */
 html {
-  /* 优先使用优雅的衬线体作为标题，无衬线体作为正文 */
-  font-family: "Optima", "Candara", "Noto Sans SC", system-ui, sans-serif;
-  line-height: 1.7;
+  font-family:
+    "Inter",
+    "SF Pro Display",
+    "Noto Sans SC",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  background-color: var(--color-bg);
-  color: var(--color-text);
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 body {
   min-height: 100vh;
-  /* 添加极其微妙的纹理或渐变背景 */
-  background: 
-    radial-gradient(circle at 10% 20%, rgba(92, 141, 137, 0.03) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(216, 172, 156, 0.05) 0%, transparent 40%);
-  background-color: var(--color-bg);
+  background-color: var(--background);
+  /* 噪点纹理 - 提升质感的关键 */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* 标题样式 - 更具设计感 */
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Playfair Display", "Times New Roman", serif; /* 引入衬线体增强高级感 */
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: var(--color-text);
-}
+/* ... existing code ... */
 
-/* 极简输入框 (.clean-input) */
-.clean-input {
-  width: 100%;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--color-border);
-  padding: 0.75rem 0;
-  font-size: 1.125rem;
-  color: var(--color-text);
-  transition: border-color 0.2s ease;
-}
-
-.clean-input::placeholder {
-  color: #c7c2b8;
-  font-weight: 300;
-  transition: opacity 0.2s ease;
-}
-
-.clean-input:focus::placeholder {
-  opacity: 0;
-}
-
-.clean-input:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  background: linear-gradient(to bottom, transparent 95%, rgba(92, 141, 137, 0.05) 100%);
-}
-
-/* 极简按钮 (.clean-btn) */
-.clean-btn {
+/* ============================================
+   按钮系统 - High-End Refinement
+   ============================================ */
+.btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem 2rem;
-  background-color: var(--color-primary);
-  color: white;
-  border-radius: 9999px; /* 全圆角 */
+  gap: 0.5rem;
+  white-space: nowrap;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
   font-weight: 500;
-  letter-spacing: 0.05em;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: var(--shadow-sm);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.01em;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  outline: none;
 }
 
-.clean-btn:hover {
-  background-color: var(--color-primary-hover);
-  transform: translateY(-1px);
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* 按钮变体 */
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  /* 顶部高光 + 底部阴影 = 物理质感 */
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 1px 2px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(0, 0, 0, 0.05); 
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.05);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.dark .btn-primary {
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dark .btn-secondary {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--foreground);
+}
+
+.btn-secondary:hover {
+  background: var(--secondary);
+  filter: brightness(0.95);
+}
+
+.dark .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--foreground-secondary);
+  border: 1px solid transparent;
+}
+
+.btn-ghost:hover {
+  background-color: var(--secondary);
+  color: var(--foreground);
+}
+
+.dark .btn-ghost:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid var(--border);
+  color: var(--foreground);
+}
+
+.btn-outline:hover {
+  background-color: var(--secondary);
+}
+
+/* 按钮尺寸 */
+.btn-sm {
+  height: 2rem;
+  padding: 0 0.75rem;
+  font-size: 0.75rem;
+}
+
+.btn-md {
+  height: 2.5rem;
+  padding: 0 1rem;
+}
+
+.btn-lg {
+  height: 2.75rem;
+  padding: 0 1.5rem;
+  font-size: 1rem;
+}
+
+.btn-xl {
+  height: 3.25rem;
+  padding: 0 2rem;
+  font-size: 1.125rem;
+}
+
+.btn-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-rounded {
+  border-radius: 9999px;
+}
+
+/* ============================================
+   卡片系统
+   ============================================ */
+.card {
+  background-color: var(--card);
+  color: var(--card-foreground);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 4px);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.card:hover {
   box-shadow: var(--shadow-md);
 }
 
-.clean-btn:disabled {
-  background-color: #d1d5db;
-  cursor: not-allowed;
-  transform: none;
+.card-glass {
+  background: var(--card) / 60%;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
-.clean-btn.ghost {
+/* ============================================
+   输入框系统
+   ============================================ */
+.input {
+  width: 100%;
+  height: 2.5rem;
+  padding: 0 0.75rem;
   background-color: transparent;
-  color: var(--color-text-secondary);
-  box-shadow: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  color: var(--foreground);
+  transition: all 0.2s ease;
 }
 
-.clean-btn.ghost:hover {
-  background-color: rgba(0,0,0,0.03);
-  color: var(--color-text);
+.input::placeholder {
+  color: var(--muted-foreground);
 }
 
-/* 布局容器 - 去除卡片感 */
-.page-container {
-  max-width: 64rem;
-  margin: 0 auto;
-  padding: 2rem;
+.input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary) / 20%;
 }
 
-.section-content {
-  margin-top: 4rem;
-  margin-bottom: 4rem;
+.input-clean {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--border);
+  padding: 0.75rem 0;
+  font-size: 1.125rem;
+  color: var(--foreground);
+  transition: border-color 0.2s ease;
 }
 
-/* 通用动画 - 缓慢上浮 */
-@keyframes fadeInUp {
+.input-clean::placeholder {
+  color: var(--muted-foreground);
+  font-weight: 300;
+}
+
+.input-clean:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* ============================================
+   动画
+   ============================================ */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -177,59 +371,452 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-.animate-fade-in-up {
-  animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* 覆盖 Tailwind 类以适应极简风格 */
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px var(--primary) / 30%;
+  }
+  50% {
+    box-shadow: 0 0 40px var(--primary) / 50%;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease forwards;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in-down {
+  animation: fade-in-down 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* 动画延迟工具类 */
+.delay-100 {
+  animation-delay: 0.1s;
+}
+.delay-200 {
+  animation-delay: 0.2s;
+}
+.delay-300 {
+  animation-delay: 0.3s;
+}
+.delay-400 {
+  animation-delay: 0.4s;
+}
+.delay-500 {
+  animation-delay: 0.5s;
+}
+
+/* ============================================
+   工具类
+   ============================================ */
+.glass {
+  background: var(--background) / 80%;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.glass-strong {
+  background: var(--background) / 90%;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* 隐藏滚动条 */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
 /* 隐藏数字输入框 Spinner */
 input[type="number"] {
   -moz-appearance: textfield;
   appearance: none;
 }
+
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* 滚动条 - 极细极淡 */
+/* 滚动条 */
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #e0e0e0;
+  background: var(--muted-foreground) / 30%;
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #d0d0d0;
+  background: var(--muted-foreground) / 50%;
 }
 
 /* 选中文字 */
 ::selection {
-  background-color: rgba(92, 141, 137, 0.2);
-  color: var(--color-text);
+  background-color: var(--primary) / 20%;
+  color: var(--foreground);
 }
 
-/* 实用工具类 */
-.text-serif {
-  font-family: "Playfair Display", serif;
+/* ============================================
+   过渡动画
+   ============================================ */
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.3s ease;
 }
 
-.bg-cream {
-  background-color: var(--color-bg);
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 
-/* 响应式调整 */
+/* Fade 过渡 */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Slide Up 过渡 */
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slide-up-enter-from,
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+/* Scale 过渡 */
+.scale-enter-active,
+.scale-leave-active {
+  transition: all 0.2s ease;
+}
+
+.scale-enter-from,
+.scale-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+/* ============================================
+   响应式调整
+   ============================================ */
 @media (max-width: 640px) {
-  .clean-input {
+  .input-clean {
     font-size: 1rem;
   }
-  .page-container {
-    padding: 1rem;
-  }
 }
+
+/* ============================================
+   Credit 风格增强包 (The Vibe Pack)
+   ============================================ */
+
+/* 文字发光 */
+.text-glow {
+  text-shadow: 0 0 20px var(--primary);
+}
+
+.text-glow-sm {
+  text-shadow: 0 0 10px var(--primary);
+}
+
+/* 升级版渐变文字 */
+.text-gradient {
+  background: linear-gradient(
+    135deg,
+    #e0ccff 0%,
+    var(--primary) 50%,
+    #818cf8 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+}
+
+/* 输入框光晕 */
+.input-glow {
+  transition: all 0.3s ease;
+}
+.input-glow:focus-within {
+  box-shadow: 0 0 0 1px var(--primary), 0 0 20px rgba(139, 92, 246, 0.3);
+  border-color: var(--primary);
+}
+
+/* 极简玻璃面板 */
+.glass-panel {
+  background: color-mix(in oklab, var(--background), transparent 60%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+    0 2px 4px -2px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.dark .glass-panel {
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 
+    0 0 0 1px rgba(0,0,0,1),
+    0 10px 20px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+
+/* ============================================
+   戏剧性效果 - Dramatic Effects
+   ============================================ */
+
+/* 🌈 动画渐变边框 */
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotate-gradient {
+  0% { --gradient-angle: 0deg; }
+  100% { --gradient-angle: 360deg; }
+}
+
+.animated-border {
+  position: relative;
+  background: var(--card);
+  border-radius: 1rem;
+  z-index: 0;
+}
+
+.animated-border::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--gradient-angle),
+    #7c3aed,
+    #06b6d4,
+    #10b981,
+    #f59e0b,
+    #ef4444,
+    #ec4899,
+    #7c3aed
+  );
+  animation: rotate-gradient 4s linear infinite;
+  opacity: 0.8;
+}
+
+.animated-border::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--card);
+}
+
+/* ✨ 光束扫过效果 */
+@keyframes beam-sweep {
+  0% { left: -100%; }
+  50%, 100% { left: 200%; }
+}
+
+.beam-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.beam-effect::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(124, 58, 237, 0.15),
+    rgba(124, 58, 237, 0.3),
+    rgba(124, 58, 237, 0.15),
+    transparent
+  );
+  animation: beam-sweep 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* 🔦 聚光灯效果 (需配合 JS) */
+.spotlight-container {
+  position: relative;
+}
+
+.spotlight {
+  pointer-events: none;
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(124, 58, 237, 0.15) 0%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%);
+  z-index: 50;
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.spotlight-container:hover .spotlight {
+  opacity: 1;
+}
+
+/* 🌟 闪烁星星效果 */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle var(--duration, 3s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.5);
+}
+
+/* 🎯 按钮脉冲光晕 */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.btn-pulse {
+  position: relative;
+}
+
+.btn-pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--primary);
+  z-index: -1;
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+/* 🌊 波纹背景 */
+@keyframes ripple {
+  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+  100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+}
+
+.ripple-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ripple-bg::before,
+.ripple-bg::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 1px solid var(--primary);
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0; /* 初始状态不可见，避免加载时闪现 */
+  animation: ripple 4s ease-out infinite;
+}
+
+.ripple-bg::after {
+  animation-delay: 2s;
+}
+

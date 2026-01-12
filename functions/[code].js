@@ -3,6 +3,8 @@
  * GET /:code
  * 302 重定向到原始 URL
  */
+import { verifyPassword } from './api/links.js'
+
 export async function onRequestGet(context) {
   const { params, env, request } = context
   const code = params.code
@@ -44,11 +46,13 @@ export async function onRequestGet(context) {
     
     // 检查是否需要密码验证
     if (data.password) {
-      // 检查 cookie 中是否有有效的验证
+      // 检查 cookie 中是否有有效的验证令牌
       const cookies = parseCookies(request.headers.get('cookie') || '')
       const authCookie = cookies[`auth_${code}`]
-      
-      if (authCookie !== data.password) {
+
+      // 使用安全令牌验证而非密码比对
+      const expectedToken = await generateAuthToken(code, data.password)
+      if (authCookie !== expectedToken) {
         return renderPasswordPage(code)
       }
     }
@@ -88,13 +92,14 @@ export async function onRequestPost(context) {
       return Response.redirect(`/${code}`, 302)
     }
     
-    if (inputPassword === data.password) {
-      // 密码正确，设置 cookie 并重定向
+    if (await verifyPassword(inputPassword, data.password)) {
+      // 密码正确，生成安全令牌并设置 cookie
+      const authToken = await generateAuthToken(code, data.password)
       return new Response(null, {
         status: 302,
         headers: {
           'Location': `/${code}`,
-          'Set-Cookie': `auth_${code}=${data.password}; Path=/; Max-Age=3600; HttpOnly; SameSite=Strict`
+          'Set-Cookie': `auth_${code}=${authToken}; Path=/; Max-Age=3600; HttpOnly; SameSite=Strict`
         }
       })
     } else {
@@ -117,6 +122,15 @@ function parseCookies(cookieString) {
     }
   })
   return cookies
+}
+
+// 生成安全的认证令牌（基于 code + password hash 的 HMAC）
+async function generateAuthToken(code, passwordHash) {
+  const encoder = new TextEncoder()
+  const data = encoder.encode(`${code}:${passwordHash}`)
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 32)
 }
 
 // 404 页面

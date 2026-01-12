@@ -4,12 +4,14 @@ export default {
     dashboard: '管理面板',
     login: '登录',
     logout: '退出登录',
+    userMenuAriaLabel: '{user} 的用户菜单',
     theme: {
       light: '切换到亮色模式',
       dark: '切换到暗色模式'
     }
   },
   home: {
+    title: '简化你的链接，',
     subtitle: '输入长链接，生成简洁、优雅的短链接。',
     whyChoose: '为什么选择 Shorter?',
     features: {
@@ -56,7 +58,13 @@ export default {
     item: {
       clicks: '{count} 次点击',
       copy: '复制短链',
-      copySuccess: '链接已复制'
+      copySuccess: '链接已复制',
+      ariaLabel: '短链接: {url}',
+      openLink: '在新标签页打开短链接 {url}',
+      copyAriaLabel: '复制短链接 {url} 到剪贴板',
+      openOriginal: '在新标签页打开原始链接 {url}',
+      deleteAriaLabel: '删除短链接 {url}',
+      statsLabel: '链接统计'
     }
   },
   stats: {

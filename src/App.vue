@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
 import Toast from '@/components/common/Toast.vue'
+import MouseSpotlight from '@/components/common/MouseSpotlight.vue'
 
 const isDark = ref(false)
 
@@ -47,5 +48,8 @@ function updateTheme() {
     
     <!-- 全局 Toast 组件 -->
     <Toast />
+    
+    <!-- 🔦 鼠标聚光灯效果 -->
+    <MouseSpotlight />
   </div>
 </template>

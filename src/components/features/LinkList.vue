@@ -1,7 +1,5 @@
 <script setup>
 import { ref, computed } from 'vue'
-import BaseInput from '@/components/common/BaseInput.vue'
-import BaseButton from '@/components/common/BaseButton.vue'
 import LinkItem from './LinkItem.vue'
 import { useLinkStore } from '@/stores/linkStore'
 import { useToast } from '@/composables/useToast'
@@ -47,42 +45,38 @@ function handleClearAll() {
     <!-- Header -->
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div>
-        <h3 class="text-xl font-semibold text-[var(--color-text)]">{{ t('dashboard.list.title') }}</h3>
-        <p class="text-sm text-[var(--color-text-secondary)]">
+        <h3 class="text-lg font-semibold text-[var(--foreground)]">{{ t('dashboard.list.title') }}</h3>
+        <p class="text-sm text-[var(--muted-foreground)]">
           {{ t('dashboard.list.total', { count: linkStore.totalLinks }) }}
         </p>
       </div>
       
-      <div class="flex items-center gap-2 w-full sm:w-auto">
+      <div class="flex items-center gap-3 w-full sm:w-auto">
         <!-- Search -->
-        <BaseInput
-          v-model="searchQuery"
-          :placeholder="t('dashboard.list.search')"
-          size="sm"
-          class="flex-1 sm:w-64"
-        >
-          <template #prefix>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-            </svg>
-          </template>
-        </BaseInput>
+        <div class="relative flex-1 sm:w-64">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--muted-foreground)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input
+            v-model="searchQuery"
+            :placeholder="t('dashboard.list.search')"
+            class="w-full h-9 pl-9 pr-3 text-sm bg-[var(--background)]/50 dark:bg-[var(--background)]/30 rounded-lg text-[var(--foreground)] placeholder-[var(--muted-foreground)] focus:outline-none focus:ring-1 focus:ring-[var(--primary)]/50 transition-all"
+          />
+        </div>
         
         <!-- Clear all -->
-        <BaseButton
+        <button
           v-if="!isEmpty"
-          variant="ghost"
-          size="sm"
-          class="flex-shrink-0 text-[var(--color-error)]"
+          class="flex-shrink-0 text-sm text-[var(--muted-foreground)] hover:text-[var(--error)] transition-colors"
           @click="handleClearAll"
         >
           {{ t('dashboard.list.clear') }}
-        </BaseButton>
+        </button>
       </div>
     </div>
     
     <!-- Links list -->
-    <div v-if="!isEmpty" class="space-y-4">
+    <div v-if="!isEmpty" class="space-y-2">
       <TransitionGroup name="list">
         <LinkItem
           v-for="link in filteredLinks"
@@ -97,10 +91,10 @@ function handleClearAll() {
         v-if="!hasSearchResults && searchQuery"
         class="py-12 text-center"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-[var(--color-text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg class="h-10 w-10 mx-auto text-[var(--muted-foreground)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
-        <p class="mt-4 text-[var(--color-text-secondary)]">
+        <p class="mt-3 text-sm text-[var(--muted-foreground)]">
           {{ t('dashboard.list.noMatch', { query: searchQuery }) }}
         </p>
       </div>
@@ -108,22 +102,19 @@ function handleClearAll() {
     
     <!-- Empty state -->
     <div v-else class="py-16 text-center">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-[var(--color-text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+      <svg class="h-12 w-12 mx-auto text-[var(--muted-foreground)]/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
       </svg>
-      <h4 class="mt-4 text-lg font-medium text-[var(--color-text)]">
+      <h4 class="mt-4 text-base font-medium text-[var(--foreground)]">
         {{ t('dashboard.empty.title') }}
       </h4>
-      <p class="mt-2 text-[var(--color-text-secondary)]">
+      <p class="mt-1 text-sm text-[var(--muted-foreground)]">
         {{ t('dashboard.empty.desc') }}
       </p>
       <RouterLink
         to="/"
-        class="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-[var(--color-primary)] text-white rounded-lg hover:bg-[var(--color-primary-hover)] transition-colors"
+        class="inline-flex items-center gap-2 mt-6 px-4 py-2 text-sm font-medium bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-hover)] transition-colors"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
-        </svg>
         {{ t('dashboard.empty.button') }}
       </RouterLink>
     </div>

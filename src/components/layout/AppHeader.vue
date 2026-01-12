@@ -1,8 +1,9 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import AuthModal from '@/components/features/AuthModal.vue'
+import Button from '@/components/common/Button.vue'
 import { useI18n } from 'vue-i18n'
 
 defineProps({
@@ -17,6 +18,7 @@ const mobileMenuOpen = ref(false)
 const showAuthModal = ref(false)
 const showUserMenu = ref(false)
 const isScrolled = ref(false)
+const userMenuRef = ref(null)
 
 const { user, isLoggedIn, logout } = useAuth()
 
@@ -36,69 +38,105 @@ function toggleLanguage() {
   localStorage.setItem('user-locale', newLang)
 }
 
-// 滚动监听
-import { onMounted, onUnmounted } from 'vue'
-
 function handleScroll() {
   isScrolled.value = window.scrollY > 20
 }
 
+// 键盘导航：按 Escape 关闭菜单
+function handleKeydown(event) {
+  if (event.key === 'Escape') {
+    if (showUserMenu.value) {
+      showUserMenu.value = false
+    }
+    if (mobileMenuOpen.value) {
+      mobileMenuOpen.value = false
+    }
+  }
+}
+
+// 点击外部关闭用户菜单
+function handleClickOutside(event) {
+  if (userMenuRef.value && !userMenuRef.value.contains(event.target)) {
+    showUserMenu.value = false
+  }
+}
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  window.addEventListener('keydown', handleKeydown)
+  document.addEventListener('click', handleClickOutside)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('keydown', handleKeydown)
+  document.removeEventListener('click', handleClickOutside)
 })
 </script>
 
 <template>
-  <header class="fixed top-0 w-full z-40 transition-all duration-300" :class="{ 'bg-[var(--color-bg)]/80 backdrop-blur-md shadow-sm': isScrolled, 'bg-transparent': !isScrolled }">
-    <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
-      <div class="relative flex items-center justify-between h-20">
-        <!-- Logo - 纯文字极简风格 -->
+  <header 
+    class="fixed top-0 w-full z-50 transition-all duration-500"
+    :class="[
+      isScrolled 
+        ? 'glass-panel border-b-0' 
+        : 'bg-transparent'
+    ]"
+  >
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="relative flex items-center justify-between h-16 lg:h-20">
+        <!-- Logo -->
         <RouterLink to="/" class="flex items-center gap-2 group">
-          <span class="text-2xl font-serif font-bold text-[var(--color-text)] tracking-tight group-hover:text-[var(--color-primary)] transition-colors">Shorter.</span>
+          <div class="flex items-center justify-center transition-transform group-hover:scale-110 duration-300">
+            <svg class="w-7 h-7 text-[var(--primary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+            </svg>
+          </div>
+          <span class="text-xl font-semibold tracking-tight text-[var(--foreground)]">
+            Shorter
+          </span>
         </RouterLink>
         
-        <!-- Desktop Nav - 居中纯文本 -->
-        <nav class="hidden md:flex items-center gap-12 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <!-- Desktop Nav - Minimalist Style -->
+        <nav class="hidden md:flex items-center gap-8 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           <RouterLink
             v-for="link in navLinks"
             :key="link.path"
             :to="link.path"
+            class="relative text-sm font-medium transition-all duration-300"
             :class="[
-              'text-base font-medium transition-all relative py-1',
               route.path === link.path
-                ? 'text-[var(--color-text)]'
-                : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
+                ? 'text-[var(--foreground)] text-glow-sm'
+                : 'text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:text-glow-sm'
             ]"
           >
             {{ link.name }}
-            <!-- 悬停/激活时的微下划线 -->
+            <!-- Subtle Dot for Active State -->
             <span 
-              class="absolute bottom-0 left-0 w-full h-[1px] bg-[var(--color-primary)] transform origin-left transition-transform duration-300"
-              :class="route.path === link.path ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'"
-            ></span>
+              v-if="route.path === link.path"
+              class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[var(--primary)] shadow-[0_0_8px_var(--primary)]"
+            />
           </RouterLink>
         </nav>
         
-        <!-- Actions - 极简图标 -->
-        <div class="flex items-center gap-4">
+        <!-- Actions -->
+        <div class="flex items-center gap-1">
           <!-- Language Toggle -->
-          <button
-            class="p-2 text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors w-8 h-8 flex items-center justify-center rounded-full hover:bg-[var(--color-bg-secondary)]"
+          <Button
+            variant="ghost"
+            size="sm"
+            class="text-xs font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
             @click="toggleLanguage"
-            title="Switch Language / 切换语言"
           >
             {{ locale === 'zh' ? 'En' : '中' }}
-          </button>
+          </Button>
 
           <!-- Theme Toggle -->
-          <button
-            class="p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+          <Button
+            variant="ghost"
+            size="icon"
             @click="$emit('toggle-theme')"
-            :title="isDark ? t('header.theme.light') : t('header.theme.dark')"
+            class="text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
           >
             <svg v-if="isDark" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
@@ -106,33 +144,47 @@ onUnmounted(() => {
             <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
             </svg>
-          </button>
+          </Button>
           
           <!-- Login / User Menu -->
-          <div class="relative">
+          <div class="relative ml-2" ref="userMenuRef">
             <template v-if="isLoggedIn">
-              <button
-                class="flex items-center gap-2 text-sm font-medium text-[var(--color-text)] hover:text-[var(--color-primary)] transition-colors"
+              <Button
+                variant="ghost"
+                class="gap-2 pl-2 pr-4 bg-[var(--secondary)]/50 hover:bg-[var(--secondary)] border border-[var(--border)]/50"
                 @click="showUserMenu = !showUserMenu"
+                rounded
+                :aria-expanded="showUserMenu"
+                aria-haspopup="true"
+                :aria-label="t('header.userMenuAriaLabel', { user: user?.email })"
               >
-                <span>{{ user?.email?.split('@')[0] }}</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-50" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                </svg>
-              </button>
-              
-              <Transition name="fade">
+                <div class="w-6 h-6 rounded-full bg-gradient-to-br from-[var(--primary)] to-[var(--primary-hover)] flex items-center justify-center">
+                  <span class="text-[10px] font-bold text-white">
+                    {{ user?.email?.charAt(0).toUpperCase() }}
+                  </span>
+                </div>
+                <span class="hidden sm:inline text-xs font-medium">{{ user?.email?.split('@')[0] }}</span>
+              </Button>
+
+              <Transition name="scale">
                 <div
                   v-if="showUserMenu"
-                  class="absolute right-0 mt-4 w-48 bg-[var(--color-card)]/90 backdrop-blur-sm border border-[var(--color-border)] rounded-2xl shadow-lg py-2"
+                  class="absolute right-0 mt-2 w-56 glass-panel rounded-xl py-1 overflow-hidden origin-top-right z-50"
+                  role="menu"
+                  aria-orientation="vertical"
                 >
-                  <div class="px-4 py-2 text-xs text-[var(--color-text-muted)] border-b border-[var(--color-border)] uppercase tracking-wider">
-                    {{ user?.email }}
+                  <div class="px-4 py-3 border-b border-[var(--border)]/20">
+                    <p class="text-sm font-medium text-[var(--foreground)]">{{ user?.email?.split('@')[0] }}</p>
+                    <p class="text-xs text-[var(--muted-foreground)] truncate">{{ user?.email }}</p>
                   </div>
                   <button
-                    class="w-full text-left px-4 py-3 text-sm text-[var(--color-text)] hover:bg-[var(--color-bg-secondary)] transition-colors"
+                    class="w-full text-left px-4 py-2.5 text-sm text-[var(--foreground)] hover:bg-[var(--secondary)]/50 transition-colors flex items-center gap-2"
+                    role="menuitem"
                     @click="handleLogout"
                   >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
                     {{ t('header.logout') }}
                   </button>
                 </div>
@@ -140,48 +192,71 @@ onUnmounted(() => {
             </template>
             
             <template v-else>
-              <button
-                class="text-sm font-medium text-[var(--color-text)] hover:text-[var(--color-primary)] transition-colors"
+              <Button
+                variant="primary"
+                size="sm"
+                rounded
+                class="hidden sm:inline-flex shadow-lg shadow-[var(--primary)]/20"
                 @click="showAuthModal = true"
               >
                 {{ t('header.login') }}
-              </button>
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                class="sm:hidden"
+                @click="showAuthModal = true"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </Button>
             </template>
           </div>
           
           <!-- Mobile menu button -->
-          <button
-             class="md:hidden p-2 text-[var(--color-text)]"
-             @click="mobileMenuOpen = !mobileMenuOpen"
-           >
-             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-             </svg>
-           </button>
-         </div>
-       </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            class="md:hidden ml-1"
+            @click="mobileMenuOpen = !mobileMenuOpen"
+          >
+            <svg v-if="!mobileMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </Button>
+        </div>
+      </div>
       
       <!-- Mobile Nav -->
       <Transition name="slide-up">
-        <nav v-if="mobileMenuOpen" class="md:hidden py-6 bg-[var(--color-bg)]/95 backdrop-blur absolute top-20 left-0 w-full border-t border-[var(--color-border)] shadow-sm px-6">
-          <RouterLink
-            v-for="link in navLinks"
-            :key="link.path"
-            :to="link.path"
-            :class="[
-              'block py-3 text-lg font-serif transition-colors',
-              route.path === link.path
-                ? 'text-[var(--color-primary)]'
-                : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
-            ]"
-            @click="mobileMenuOpen = false"
-          >
-            {{ link.name }}
-          </RouterLink>
+        <nav 
+          v-if="mobileMenuOpen" 
+          class="md:hidden py-4 border-t border-[var(--border)]/20 glass-panel mt-2 rounded-xl"
+        >
+          <div class="space-y-1 p-2">
+            <RouterLink
+              v-for="link in navLinks"
+              :key="link.path"
+              :to="link.path"
+              class="block px-4 py-3 text-base font-medium rounded-lg transition-colors"
+              :class="[
+                route.path === link.path
+                  ? 'text-[var(--primary)] bg-[var(--primary)]/10'
+                  : 'text-[var(--foreground-secondary)] hover:text-[var(--foreground)] hover:bg-[var(--secondary)]/50'
+              ]"
+              @click="mobileMenuOpen = false"
+            >
+              {{ link.name }}
+            </RouterLink>
+          </div>
         </nav>
       </Transition>
     </div>
+    
+    <AuthModal :visible="showAuthModal" @close="showAuthModal = false" />
   </header>
-  
-  <AuthModal :visible="showAuthModal" @close="showAuthModal = false" />
 </template>
