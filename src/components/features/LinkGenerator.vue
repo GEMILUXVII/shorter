@@ -156,8 +156,8 @@ function handleReset() {
 
 <template>
   <div class="w-full">
-    <!-- Hero Section -->
-    <section class="relative min-h-[85vh] flex items-center justify-center px-6 py-20 overflow-hidden">
+    <!-- Hero Section - 占满一整屏 -->
+    <section class="relative min-h-screen flex items-center justify-center px-6 py-20 overflow-hidden">
       <!-- 🌟 Stars Background -->
       <div class="absolute inset-0 pointer-events-none">
         <div class="star" style="top: 10%; left: 20%; --duration: 2s; --delay: 0s;" />

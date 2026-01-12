@@ -32,8 +32,8 @@ const features = [
     <!-- Hero + Link Generator -->
     <LinkGenerator />
     
-    <!-- Features Section - 更加淡化 -->
-    <section class="relative py-24 lg:py-32 px-6">
+    <!-- Features Section - 第二屏 -->
+    <section class="relative min-h-screen flex flex-col justify-center py-24 lg:py-32 px-6">
       <div class="max-w-6xl mx-auto">
         <!-- Section Header -->
         <div class="text-center mb-16 opacity-0 animate-fade-in-up" style="animation-fill-mode: forwards; animation-delay: 0.1s;">
