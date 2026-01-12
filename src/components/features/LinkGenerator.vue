@@ -25,18 +25,24 @@ const baseUrl = window.location.origin
 // Turnstile 人机验证
 const turnstileToken = ref('')
 const turnstileRef = ref(null)
+const verificationStatus = ref('pending') // 'pending' | 'verifying' | 'verified' | 'error'
 
 function onTurnstileVerify(token) {
   turnstileToken.value = token
+  verificationStatus.value = 'verified'
 }
 
 function onTurnstileExpire() {
   turnstileToken.value = ''
+  verificationStatus.value = 'pending'
+  // 自动重新触发验证
+  turnstileRef.value?.reset()
 }
 
 function onTurnstileError(err) {
   console.error('Turnstile error:', err)
   turnstileToken.value = ''
+  verificationStatus.value = 'error'
 }
 
 // 生成二维码（优化：降低分辨率以减少内存使用）
@@ -233,17 +239,10 @@ function handleReset() {
             </p>
           </Transition>
 
-          <!-- Turnstile 人机验证 -->
-          <div class="mt-8 flex justify-center">
-            <div class="turnstile-wrapper glass-panel p-4 rounded-2xl border border-white/10 shadow-lg">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="w-8 h-8 rounded-full bg-[var(--primary)]/20 flex items-center justify-center">
-                  <svg class="w-4 h-4 text-[var(--primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                </div>
-                <span class="text-sm text-[var(--muted-foreground)]">{{ t('link.verification') || 'Security Check' }}</span>
-              </div>
+          <!-- Turnstile 人机验证 (隐形模式 + 自定义状态显示) -->
+          <div class="mt-6 flex justify-center">
+            <!-- 隐藏的 Turnstile 组件 -->
+            <div class="hidden">
               <Turnstile
                 ref="turnstileRef"
                 theme="dark"
@@ -251,6 +250,41 @@ function handleReset() {
                 @expire="onTurnstileExpire"
                 @error="onTurnstileError"
               />
+            </div>
+
+            <!-- 自定义验证状态显示 -->
+            <div
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm transition-all duration-300"
+              :class="{
+                'bg-[var(--muted)]/30 text-[var(--muted-foreground)]': verificationStatus === 'pending',
+                'bg-[var(--success)]/10 text-[var(--success)]': verificationStatus === 'verified',
+                'bg-[var(--destructive)]/10 text-[var(--destructive)]': verificationStatus === 'error'
+              }"
+            >
+              <!-- 验证中 (加载动画) -->
+              <template v-if="verificationStatus === 'pending'">
+                <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                </svg>
+                <span>{{ t('link.verifying') || 'Verifying...' }}</span>
+              </template>
+
+              <!-- 已验证 -->
+              <template v-else-if="verificationStatus === 'verified'">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+                <span>{{ t('link.verified') || 'Verified' }}</span>
+              </template>
+
+              <!-- 验证失败 -->
+              <template v-else-if="verificationStatus === 'error'">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span>{{ t('link.verifyError') || 'Verification failed' }}</span>
+              </template>
             </div>
           </div>
 
