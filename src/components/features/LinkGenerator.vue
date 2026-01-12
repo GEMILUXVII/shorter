@@ -190,14 +190,12 @@ function handleReset() {
           </p>
         </div>
 
-        <!-- URL Input - 带光束效果 -->
-        <div 
+        <!-- URL Input - 简洁发光效果 -->
+        <div
           class="relative opacity-0 animate-fade-in-up delay-200 max-w-2xl mx-auto"
           style="animation-fill-mode: forwards;"
         >
-          <!-- ✨ Animated Border Container -->
-          <div class="animated-border p-[2px] rounded-2xl">
-            <div class="beam-effect glass-panel bg-[var(--card)] p-2 rounded-2xl flex items-center gap-2 transition-all duration-300 focus-within:ring-1 focus-within:ring-[var(--primary)]/50">
+          <div class="glass-panel p-2 rounded-2xl flex items-center gap-2 transition-all duration-300 border border-white/10 focus-within:border-[var(--primary)]/50 focus-within:shadow-[0_0_20px_rgba(124,58,237,0.15)]">
             <div class="flex-1 relative">
               <input
                 v-model="url"
@@ -207,7 +205,7 @@ function handleReset() {
                 @keyup.enter="handleSubmit"
               />
             </div>
-            
+
             <Button
               variant="primary"
               size="lg"
@@ -226,9 +224,8 @@ function handleReset() {
                 <span>{{ t('link.processing') }}</span>
               </template>
             </Button>
-            </div>
           </div>
-          
+
           <!-- Error Message -->
           <Transition name="fade">
             <p v-if="urlError" class="absolute -bottom-8 left-4 text-sm text-[var(--destructive)] font-medium flex items-center gap-1">
