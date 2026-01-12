@@ -32,8 +32,8 @@ const features = [
     <!-- Hero + Link Generator -->
     <LinkGenerator />
     
-    <!-- Features Section - 第二屏 -->
-    <section class="relative min-h-screen flex flex-col justify-center py-24 lg:py-32 px-6">
+    <!-- Features + Stats Section - 第二屏 -->
+    <section class="relative min-h-screen flex flex-col justify-center py-20 px-6">
       <div class="max-w-6xl mx-auto">
         <!-- Section Header -->
         <div class="text-center mb-16 opacity-0 animate-fade-in-up" style="animation-fill-mode: forwards; animation-delay: 0.1s;">
@@ -85,28 +85,26 @@ const features = [
             </p>
           </div>
         </div>
-      </div>
-    </section>
-    
-    <!-- Stats Section - 更简洁 -->
-    <section class="relative py-16 px-6">
-      <div class="max-w-4xl mx-auto">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          <div class="space-y-1">
-            <div class="text-2xl sm:text-3xl font-bold text-[var(--foreground)]">200+</div>
-            <div class="text-xs text-[var(--muted-foreground)]">全球边缘节点</div>
-          </div>
-          <div class="space-y-1">
-            <div class="text-2xl sm:text-3xl font-bold text-[var(--foreground)]">&lt;50ms</div>
-            <div class="text-xs text-[var(--muted-foreground)]">平均响应时间</div>
-          </div>
-          <div class="space-y-1">
-            <div class="text-2xl sm:text-3xl font-bold text-[var(--foreground)]">99.9%</div>
-            <div class="text-xs text-[var(--muted-foreground)]">服务可用性</div>
-          </div>
-          <div class="space-y-1">
-            <div class="text-2xl sm:text-3xl font-bold text-[var(--foreground)]">∞</div>
-            <div class="text-xs text-[var(--muted-foreground)]">免费链接数</div>
+
+        <!-- Stats - 统计数据 -->
+        <div class="max-w-4xl mx-auto mt-24 lg:mt-32">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div class="space-y-1">
+              <div class="text-2xl sm:text-3xl font-bold text-[var(--foreground)]">200+</div>
+              <div class="text-xs text-[var(--muted-foreground)]">全球边缘节点</div>
+            </div>
+            <div class="space-y-1">
+              <div class="text-2xl sm:text-3xl font-bold text-[var(--foreground)]">&lt;50ms</div>
+              <div class="text-xs text-[var(--muted-foreground)]">平均响应时间</div>
+            </div>
+            <div class="space-y-1">
+              <div class="text-2xl sm:text-3xl font-bold text-[var(--foreground)]">99.9%</div>
+              <div class="text-xs text-[var(--muted-foreground)]">服务可用性</div>
+            </div>
+            <div class="space-y-1">
+              <div class="text-2xl sm:text-3xl font-bold text-[var(--foreground)]">∞</div>
+              <div class="text-xs text-[var(--muted-foreground)]">免费链接数</div>
+            </div>
           </div>
         </div>
       </div>
