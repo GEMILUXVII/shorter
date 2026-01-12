@@ -553,16 +553,26 @@ input[type="number"]::-webkit-outer-spin-button {
   opacity: 0;
 }
 
-/* Slide Up 过渡 */
+/* Slide Up 过渡 (带高度动画) */
 .slide-up-enter-active,
 .slide-up-leave-active {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
 }
 
 .slide-up-enter-from,
 .slide-up-leave-to {
   opacity: 0;
   transform: translateY(10px);
+  max-height: 0 !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.slide-up-enter-to,
+.slide-up-leave-from {
+  max-height: 500px;
 }
 
 /* Scale 过渡 */
