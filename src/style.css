@@ -611,12 +611,12 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* 升级版渐变文字 */
 .text-gradient {
-  /* Light mode: warm earthy gradient */
+  /* Light mode: elegant warm gradient */
   background: linear-gradient(
     135deg,
-    oklch(45% 0.12 160) 0%,
-    oklch(35% 0.08 80) 50%,
-    oklch(50% 0.15 200) 100%
+    oklch(55% 0.18 25) 0%,
+    oklch(45% 0.12 350) 50%,
+    oklch(50% 0.2 280) 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

@@ -56,30 +56,30 @@ onUnmounted(() => {
 .aurora-layer {
   position: absolute;
   inset: -10px;
-  /* Light mode: warm, sage-like tones that harmonize with cream background */
+  /* Light mode: warm, visible aurora with soft pastels */
   background-image:
     repeating-linear-gradient(
       100deg,
-      oklch(96% 0.02 80) 0%,
-      oklch(96% 0.02 80) 7%,
+      oklch(95% 0.03 80) 0%,
+      oklch(95% 0.03 80) 7%,
       transparent 10%,
       transparent 12%,
-      oklch(96% 0.02 80) 16%
+      oklch(95% 0.03 80) 16%
     ),
     repeating-linear-gradient(
       100deg,
-      oklch(85% 0.08 140) 10%,
-      oklch(88% 0.06 80) 15%,
-      oklch(90% 0.05 200) 20%,
-      oklch(87% 0.07 160) 25%,
-      oklch(85% 0.06 120) 30%
+      oklch(75% 0.15 140) 10%,
+      oklch(80% 0.12 60) 15%,
+      oklch(78% 0.1 200) 20%,
+      oklch(82% 0.14 320) 25%,
+      oklch(76% 0.12 100) 30%
     );
   background-size: 300%, 200%;
   background-position:
     50% 50%,
     50% 50%;
   filter: blur(10px);
-  opacity: 0.6;
+  opacity: 0.7;
   animation: aurora 60s linear infinite;
   pointer-events: none;
 }
