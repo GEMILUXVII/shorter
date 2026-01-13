@@ -75,24 +75,19 @@ onUnmounted(() => {
 }
 
 .dark .aurora-layer {
-  /* 使用更均匀的亮度，避免条带效果 */
+  /* 暗色模式渐变 - 使用不同色相创造流动感 */
   background-image:
     linear-gradient(
-      135deg,
-      oklch(18% 0.12 280) 0%,
-      oklch(17% 0.10 300) 33%,
-      oklch(18% 0.11 260) 66%,
-      oklch(18% 0.12 280) 100%
+      125deg,
+      oklch(20% 0.12 290) 0%,
+      oklch(18% 0.15 260) 25%,
+      oklch(22% 0.10 320) 50%,
+      oklch(19% 0.14 240) 75%,
+      oklch(20% 0.12 290) 100%
     );
-  background-size: 200% 200%;
-  filter: blur(100px);
-  opacity: 0.8;
-}
-
-/* 暗色模式下移除遮罩，保持均匀效果 */
-.dark .aurora-layer.with-mask {
-  mask-image: none;
-  -webkit-mask-image: none;
+  background-size: 300% 300%;
+  filter: blur(80px);
+  opacity: 0.9;
 }
 
 .aurora-layer.with-mask {
@@ -102,6 +97,12 @@ onUnmounted(() => {
     black 10%,
     transparent 70%
   );
+}
+
+/* 暗色模式下移除遮罩 - 必须放在 with-mask 之后 */
+.dark .aurora-layer.with-mask {
+  mask-image: none;
+  -webkit-mask-image: none;
 }
 
 @keyframes aurora-flow {
