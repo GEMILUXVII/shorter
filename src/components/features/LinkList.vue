@@ -113,7 +113,7 @@ function handleClearAll() {
       </p>
       <RouterLink
         to="/"
-        class="inline-flex items-center gap-2 mt-6 px-4 py-2 text-sm font-medium bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-hover)] transition-colors"
+        class="inline-flex items-center gap-2 mt-6 px-5 py-2.5 text-sm font-medium bg-[var(--primary)] text-[var(--primary-foreground)] rounded-lg hover:bg-[var(--primary-hover)] transition-all shadow-lg hover:shadow-xl hover:scale-[1.02]"
       >
         {{ t('dashboard.empty.button') }}
       </RouterLink>
