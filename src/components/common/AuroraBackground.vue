@@ -75,19 +75,22 @@ onUnmounted(() => {
 }
 
 .dark .aurora-layer {
-  /* 暗色模式渐变 - 使用不同色相创造流动感 */
+  /* 暗色模式渐变 - 更多颜色节点让过渡更平滑 */
   background-image:
     linear-gradient(
       125deg,
-      oklch(20% 0.12 290) 0%,
-      oklch(18% 0.15 260) 25%,
-      oklch(22% 0.10 320) 50%,
-      oklch(19% 0.14 240) 75%,
-      oklch(20% 0.12 290) 100%
+      oklch(20% 0.10 290) 0%,
+      oklch(19% 0.11 275) 15%,
+      oklch(18% 0.12 260) 30%,
+      oklch(19% 0.09 300) 45%,
+      oklch(21% 0.08 320) 60%,
+      oklch(19% 0.11 250) 75%,
+      oklch(20% 0.10 280) 90%,
+      oklch(20% 0.10 290) 100%
     );
   background-size: 300% 300%;
-  filter: blur(80px);
-  opacity: 0.9;
+  filter: blur(120px);
+  opacity: 0.85;
 }
 
 .aurora-layer.with-mask {
