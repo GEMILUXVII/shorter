@@ -75,14 +75,19 @@ onUnmounted(() => {
 }
 
 .dark .aurora-layer {
-  /* 暗色模式 - 简化渐变，大幅模糊消除摩尔纹 */
-  background:
-    radial-gradient(ellipse at 30% 20%, oklch(25% 0.15 280) 0%, transparent 50%),
-    radial-gradient(ellipse at 70% 60%, oklch(22% 0.12 260) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 80%, oklch(20% 0.10 300) 0%, transparent 50%),
-    oklch(16% 0.02 280);
-  filter: blur(60px);
-  opacity: 1;
+  /* 暗色模式 - 低饱和度避免摩尔纹，保持流动动画 */
+  background-image:
+    linear-gradient(
+      115deg,
+      oklch(18% 0.06 280) 0%,
+      oklch(16% 0.05 300) 25%,
+      oklch(17% 0.04 260) 50%,
+      oklch(16% 0.05 290) 75%,
+      oklch(18% 0.06 280) 100%
+    );
+  background-size: 400% 100%;
+  filter: blur(50px);
+  opacity: 0.9;
 }
 
 .aurora-layer.with-mask {
