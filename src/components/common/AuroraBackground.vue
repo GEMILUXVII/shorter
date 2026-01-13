@@ -75,19 +75,20 @@ onUnmounted(() => {
 }
 
 .dark .aurora-layer {
-  /* 暗色模式 - 低饱和度避免摩尔纹，保持流动动画 */
+  /* 暗色模式 - 参照亮色模式的结构，相同的饱和度和亮度差 */
   background-image:
     linear-gradient(
       115deg,
-      oklch(18% 0.06 280) 0%,
-      oklch(16% 0.05 300) 25%,
-      oklch(17% 0.04 260) 50%,
-      oklch(16% 0.05 290) 75%,
-      oklch(18% 0.06 280) 100%
+      oklch(22% 0.08 280) 0%,
+      oklch(20% 0.10 300) 20%,
+      oklch(18% 0.12 260) 40%,
+      oklch(21% 0.10 320) 60%,
+      oklch(19% 0.08 240) 80%,
+      oklch(22% 0.08 280) 100%
     );
   background-size: 400% 100%;
-  filter: blur(50px);
-  opacity: 0.9;
+  filter: blur(40px);
+  opacity: 0.8;
 }
 
 .aurora-layer.with-mask {
