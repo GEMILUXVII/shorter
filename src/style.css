@@ -848,41 +848,4 @@ input[type="number"]::-webkit-outer-spin-button {
   animation: pulse-ring 2s ease-out infinite;
 }
 
-/* 🌊 波纹背景 */
-@keyframes ripple {
-  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
-  100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
-}
-
-.ripple-bg {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.ripple-bg::before,
-.ripple-bg::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  transform: translate(-50%, -50%) scale(0.8);
-  opacity: 0; /* 初始状态不可见，避免加载时闪现 */
-  animation: ripple 4s ease-out infinite;
-}
-
-.ripple-bg::after {
-  animation-delay: 2s;
-}
-
-/* Dark mode: use primary color for ripples */
-.dark .ripple-bg::before,
-.dark .ripple-bg::after {
-  border: 1px solid var(--primary);
-}
 
