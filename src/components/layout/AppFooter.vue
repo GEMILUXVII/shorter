@@ -23,32 +23,32 @@ const currentYear = new Date().getFullYear()
               <span class="text-xl font-semibold text-[var(--foreground)]">Shorter</span>
             </div>
             <p class="text-sm text-[var(--muted-foreground)] max-w-xs leading-relaxed">
-              简洁、安全、快速的短链接服务
+              {{ t('footer.tagline') }}
             </p>
           </div>
 
           <!-- Links Section -->
           <div class="flex flex-wrap gap-x-16 gap-y-8">
-            <!-- 产品 -->
+            <!-- Product -->
             <div>
-              <h4 class="text-xs font-semibold text-[var(--foreground)] uppercase tracking-wider mb-4">产品</h4>
+              <h4 class="text-xs font-semibold text-[var(--foreground)] uppercase tracking-wider mb-4">{{ t('footer.product') }}</h4>
               <ul class="space-y-3">
                 <li>
                   <a href="/" class="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">
-                    首页
+                    {{ t('footer.home') }}
                   </a>
                 </li>
                 <li>
                   <a href="/dashboard" class="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">
-                    控制台
+                    {{ t('footer.dashboard') }}
                   </a>
                 </li>
               </ul>
             </div>
 
-            <!-- 资源 -->
+            <!-- Resources -->
             <div>
-              <h4 class="text-xs font-semibold text-[var(--foreground)] uppercase tracking-wider mb-4">资源</h4>
+              <h4 class="text-xs font-semibold text-[var(--foreground)] uppercase tracking-wider mb-4">{{ t('footer.resources') }}</h4>
               <ul class="space-y-3">
                 <li>
                   <a
@@ -70,7 +70,7 @@ const currentYear = new Date().getFullYear()
                     rel="noopener noreferrer"
                     class="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors inline-flex items-center gap-1.5"
                   >
-                    更新日志
+                    {{ t('footer.changelog') }}
                     <svg class="w-3 h-3 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
@@ -79,18 +79,18 @@ const currentYear = new Date().getFullYear()
               </ul>
             </div>
 
-            <!-- 法律 -->
+            <!-- Legal -->
             <div>
-              <h4 class="text-xs font-semibold text-[var(--foreground)] uppercase tracking-wider mb-4">法律</h4>
+              <h4 class="text-xs font-semibold text-[var(--foreground)] uppercase tracking-wider mb-4">{{ t('footer.legal') }}</h4>
               <ul class="space-y-3">
                 <li>
                   <a href="/privacy" class="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">
-                    隐私政策
+                    {{ t('footer.privacy') }}
                   </a>
                 </li>
                 <li>
                   <a href="/terms" class="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">
-                    服务条款
+                    {{ t('footer.terms') }}
                   </a>
                 </li>
               </ul>
