@@ -56,29 +56,30 @@ onUnmounted(() => {
 .aurora-layer {
   position: absolute;
   inset: -10px;
+  /* Light mode: warm, sage-like tones that harmonize with cream background */
   background-image:
     repeating-linear-gradient(
       100deg,
-      oklch(99% 0 0) 0%,
-      oklch(99% 0 0) 7%,
+      oklch(96% 0.02 80) 0%,
+      oklch(96% 0.02 80) 7%,
       transparent 10%,
       transparent 12%,
-      oklch(99% 0 0) 16%
+      oklch(96% 0.02 80) 16%
     ),
     repeating-linear-gradient(
       100deg,
-      oklch(65% 0.25 277) 10%,
-      oklch(70% 0.2 300) 15%,
-      oklch(75% 0.15 220) 20%,
-      oklch(80% 0.1 280) 25%,
-      oklch(70% 0.2 260) 30%
+      oklch(85% 0.08 140) 10%,
+      oklch(88% 0.06 80) 15%,
+      oklch(90% 0.05 200) 20%,
+      oklch(87% 0.07 160) 25%,
+      oklch(85% 0.06 120) 30%
     );
   background-size: 300%, 200%;
   background-position:
     50% 50%,
     50% 50%;
   filter: blur(10px);
-  opacity: 0.5;
+  opacity: 0.6;
   animation: aurora 60s linear infinite;
   pointer-events: none;
 }
@@ -136,12 +137,13 @@ onUnmounted(() => {
   animation: float 6s ease-in-out infinite;
 }
 
+/* Light mode blobs - warm sage/amber tones */
 .blob-1 {
   top: 10%;
   right: 10%;
   width: 300px;
   height: 300px;
-  background: oklch(65% 0.25 277 / 50%);
+  background: oklch(80% 0.1 140 / 40%);
   animation-delay: 0s;
 }
 
@@ -150,7 +152,7 @@ onUnmounted(() => {
   left: 10%;
   width: 250px;
   height: 250px;
-  background: oklch(70% 0.2 200 / 40%);
+  background: oklch(85% 0.08 80 / 35%);
   animation-delay: 2s;
 }
 
@@ -159,10 +161,11 @@ onUnmounted(() => {
   left: 50%;
   width: 200px;
   height: 200px;
-  background: oklch(75% 0.15 300 / 30%);
+  background: oklch(82% 0.06 200 / 30%);
   animation-delay: 4s;
 }
 
+/* Dark mode blobs - keep purple/blue */
 .dark .blob-1 {
   background: oklch(50% 0.3 277 / 30%);
 }
