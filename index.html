@@ -2,22 +2,106 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Basic SEO -->
+    <title>Shorter - Modern URL Shortener | Elegant Link Management</title>
     <meta
       name="description"
-      content="Shorter - 现代化短链服务，帮助您将冗长的链接转换为简洁的短链接，方便分享和追踪。"
+      content="Shorter is a modern URL shortening service. Transform long URLs into clean, trackable short links. Built on Cloudflare's global edge network for ultra-fast redirects."
     />
-    <meta name="keywords" content="短链,短网址,URL缩短,link shortener" />
+    <meta name="keywords" content="URL shortener, link shortener, short URL, short link, shorten URL, link management, QR code, click tracking" />
+    <meta name="author" content="GEMILUXVII" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://shorter-7sc.pages.dev/" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://shorter-7sc.pages.dev/" />
+    <meta property="og:title" content="Shorter - Modern URL Shortener" />
+    <meta property="og:description" content="Transform long URLs into clean, trackable short links. Built on Cloudflare's global edge network for ultra-fast redirects." />
+    <meta property="og:image" content="https://shorter-7sc.pages.dev/home.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Shorter" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="zh_CN" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://shorter-7sc.pages.dev/" />
+    <meta name="twitter:title" content="Shorter - Modern URL Shortener" />
+    <meta name="twitter:description" content="Transform long URLs into clean, trackable short links. Built on Cloudflare's global edge network." />
+    <meta name="twitter:image" content="https://shorter-7sc.pages.dev/home.png" />
+
+    <!-- Additional SEO -->
+    <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f5f0e8" media="(prefers-color-scheme: light)" />
+    <meta name="application-name" content="Shorter" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Shorter" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Shorter",
+      "description": "Modern URL shortening service with click tracking, QR codes, and password protection.",
+      "url": "https://shorter-7sc.pages.dev",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "URL Shortening",
+        "Custom Short Codes",
+        "QR Code Generation",
+        "Click Analytics",
+        "Password Protection",
+        "Link Expiration"
+      ],
+      "author": {
+        "@type": "Person",
+        "name": "GEMILUXVII"
+      }
+    }
+    </script>
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <title>Shorter - 简洁高效的短链服务</title>
   </head>
   <body>
+    <!-- Fallback content for SEO (visible to crawlers) -->
+    <noscript>
+      <div style="padding: 2rem; text-align: center; font-family: system-ui, sans-serif;">
+        <h1>Shorter - Modern URL Shortener</h1>
+        <p>Transform long URLs into clean, trackable short links.</p>
+        <p>Please enable JavaScript to use this application.</p>
+        <ul style="list-style: none; padding: 0;">
+          <li>Instant link generation with 6-character codes</li>
+          <li>Custom short codes for branded links</li>
+          <li>QR code generation for every link</li>
+          <li>Real-time click analytics</li>
+          <li>Password protection for sensitive links</li>
+          <li>Link expiration options</li>
+        </ul>
+      </div>
+    </noscript>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>

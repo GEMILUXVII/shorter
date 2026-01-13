@@ -1,0 +1,13 @@
+# Shorter - URL Shortener
+# https://shorter-7sc.pages.dev
+
+User-agent: *
+Allow: /
+Allow: /dashboard
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://shorter-7sc.pages.dev/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
