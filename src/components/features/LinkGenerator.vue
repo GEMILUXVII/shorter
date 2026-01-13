@@ -249,11 +249,11 @@ function handleReset() {
 
             <!-- 自定义验证状态显示 -->
             <div
-              class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm transition-all duration-300"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300"
               :class="{
                 'bg-[var(--muted)]/30 text-[var(--muted-foreground)]': verificationStatus === 'pending',
-                'bg-[var(--success)]/10 text-[var(--success)]': verificationStatus === 'verified',
-                'bg-[var(--destructive)]/10 text-[var(--destructive)]': verificationStatus === 'error'
+                'bg-[var(--success)]/20 text-[var(--success)] border border-[var(--success)]/30': verificationStatus === 'verified',
+                'bg-[var(--destructive)]/20 text-[var(--destructive)] border border-[var(--destructive)]/30': verificationStatus === 'error'
               }"
             >
               <!-- 验证中 (加载动画) -->
