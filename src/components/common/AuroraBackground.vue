@@ -75,18 +75,24 @@ onUnmounted(() => {
 }
 
 .dark .aurora-layer {
+  /* 使用更均匀的亮度，避免条带效果 */
   background-image:
     linear-gradient(
-      115deg,
-      oklch(25% 0.15 280) 0%,
-      oklch(22% 0.12 310) 25%,
-      oklch(20% 0.10 250) 50%,
-      oklch(23% 0.13 290) 75%,
-      oklch(25% 0.15 280) 100%
+      135deg,
+      oklch(18% 0.12 280) 0%,
+      oklch(17% 0.10 300) 33%,
+      oklch(18% 0.11 260) 66%,
+      oklch(18% 0.12 280) 100%
     );
-  background-size: 300% 100%;
-  filter: blur(60px);
-  opacity: 0.7;
+  background-size: 200% 200%;
+  filter: blur(100px);
+  opacity: 0.8;
+}
+
+/* 暗色模式下移除遮罩，保持均匀效果 */
+.dark .aurora-layer.with-mask {
+  mask-image: none;
+  -webkit-mask-image: none;
 }
 
 .aurora-layer.with-mask {
