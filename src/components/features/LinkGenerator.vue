@@ -171,7 +171,7 @@ function handleReset() {
       </div>
 
       <!-- Glow Effect Behind -->
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[var(--primary)]/15 rounded-full blur-[150px] pointer-events-none animate-pulse" />
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[var(--primary)]/15 rounded-full blur-[150px] pointer-events-none" />
       
       <div class="relative max-w-4xl mx-auto w-full z-10">
         <!-- Main Title -->
