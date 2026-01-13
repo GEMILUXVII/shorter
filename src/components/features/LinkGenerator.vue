@@ -170,9 +170,6 @@ function handleReset() {
         <div class="star" style="top: 45%; left: 95%; --duration: 2.2s; --delay: 0.6s;" />
       </div>
 
-      <!-- 🌊 Ripple Effect -->
-      <div class="ripple-bg" />
-      
       <!-- Glow Effect Behind -->
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[var(--primary)]/15 rounded-full blur-[150px] pointer-events-none animate-pulse" />
       
