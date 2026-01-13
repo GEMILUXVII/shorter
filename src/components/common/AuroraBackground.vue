@@ -56,53 +56,38 @@ onUnmounted(() => {
 .aurora-layer {
   position: absolute;
   inset: -10px;
-  /* Light mode: warm, visible aurora with soft pastels */
+  /* Light mode: smooth flowing aurora with soft pastels */
   background-image:
-    repeating-linear-gradient(
-      100deg,
-      oklch(95% 0.03 80) 0%,
-      oklch(95% 0.03 80) 7%,
-      transparent 10%,
-      transparent 12%,
-      oklch(95% 0.03 80) 16%
-    ),
-    repeating-linear-gradient(
-      100deg,
-      oklch(75% 0.15 140) 10%,
-      oklch(80% 0.12 60) 15%,
-      oklch(78% 0.1 200) 20%,
-      oklch(82% 0.14 320) 25%,
-      oklch(76% 0.12 100) 30%
+    linear-gradient(
+      115deg,
+      oklch(92% 0.08 140) 0%,
+      oklch(90% 0.1 60) 20%,
+      oklch(88% 0.12 200) 40%,
+      oklch(91% 0.1 320) 60%,
+      oklch(89% 0.08 100) 80%,
+      oklch(92% 0.08 140) 100%
     );
-  background-size: 300%, 200%;
-  background-position:
-    50% 50%,
-    50% 50%;
-  filter: blur(10px);
-  opacity: 0.7;
-  animation: aurora 60s linear infinite;
+  background-size: 400% 100%;
+  filter: blur(40px);
+  opacity: 0.8;
+  animation: aurora-flow 20s ease-in-out infinite;
   pointer-events: none;
 }
 
 .dark .aurora-layer {
   background-image:
-    repeating-linear-gradient(
-      100deg,
-      oklch(14% 0 0) 0%,
-      oklch(14% 0 0) 7%,
-      transparent 10%,
-      transparent 12%,
-      oklch(14% 0 0) 16%
-    ),
-    repeating-linear-gradient(
-      100deg,
-      oklch(50% 0.3 277) 10%,
-      oklch(55% 0.25 300) 15%,
-      oklch(60% 0.2 220) 20%,
-      oklch(55% 0.15 280) 25%,
-      oklch(50% 0.25 260) 30%
+    linear-gradient(
+      115deg,
+      oklch(30% 0.25 277) 0%,
+      oklch(35% 0.2 300) 20%,
+      oklch(40% 0.18 220) 40%,
+      oklch(35% 0.22 280) 60%,
+      oklch(30% 0.2 260) 80%,
+      oklch(30% 0.25 277) 100%
     );
-  opacity: 0.35;
+  background-size: 400% 100%;
+  filter: blur(40px);
+  opacity: 0.5;
 }
 
 .aurora-layer.with-mask {
@@ -114,16 +99,12 @@ onUnmounted(() => {
   );
 }
 
-@keyframes aurora {
-  from {
-    background-position:
-      50% 50%,
-      50% 50%;
+@keyframes aurora-flow {
+  0%, 100% {
+    background-position: 0% 50%;
   }
-  to {
-    background-position:
-      350% 50%,
-      350% 50%;
+  50% {
+    background-position: 100% 50%;
   }
 }
 
