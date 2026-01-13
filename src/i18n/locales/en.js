@@ -14,6 +14,13 @@ export default {
     title: 'Simplify your links',
     subtitle: 'Paste a long link to generate a clean, elegant short link.',
     whyChoose: 'Why Choose Shorter?',
+    whyChooseSubtitle: 'Enterprise-grade link shortening powered by Cloudflare global edge network.',
+    stats: {
+      edgeNodes: 'Global Edge Nodes',
+      avgLatency: 'Avg Response Time',
+      uptime: 'Service Uptime',
+      freeLinks: 'Free Links'
+    },
     features: {
       speed: {
         title: 'Blazing Fast',

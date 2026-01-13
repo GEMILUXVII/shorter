@@ -14,6 +14,13 @@ export default {
     title: '简化你的链接',
     subtitle: '输入长链接，生成简洁、优雅的短链接。',
     whyChoose: '为什么选择 Shorter?',
+    whyChooseSubtitle: '基于 Cloudflare 全球边缘网络，为您提供企业级的短链接服务',
+    stats: {
+      edgeNodes: '全球边缘节点',
+      avgLatency: '平均响应时间',
+      uptime: '服务可用性',
+      freeLinks: '免费链接数'
+    },
     features: {
       speed: {
         title: '极速响应',

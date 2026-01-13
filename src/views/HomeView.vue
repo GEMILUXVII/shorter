@@ -41,7 +41,7 @@ const features = [
             {{ t('home.whyChoose') }}
           </h2>
           <p class="text-base text-[var(--muted-foreground)] max-w-xl mx-auto">
-            基于 Cloudflare 全球边缘网络，为您提供企业级的短链接服务
+            {{ t('home.whyChooseSubtitle') }}
           </p>
         </div>
         
@@ -91,19 +91,19 @@ const features = [
           <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div class="space-y-1">
               <div class="text-2xl sm:text-3xl font-bold text-[var(--foreground)]">200+</div>
-              <div class="text-xs text-[var(--muted-foreground)]">全球边缘节点</div>
+              <div class="text-xs text-[var(--muted-foreground)]">{{ t('home.stats.edgeNodes') }}</div>
             </div>
             <div class="space-y-1">
               <div class="text-2xl sm:text-3xl font-bold text-[var(--foreground)]">&lt;50ms</div>
-              <div class="text-xs text-[var(--muted-foreground)]">平均响应时间</div>
+              <div class="text-xs text-[var(--muted-foreground)]">{{ t('home.stats.avgLatency') }}</div>
             </div>
             <div class="space-y-1">
               <div class="text-2xl sm:text-3xl font-bold text-[var(--foreground)]">99.9%</div>
-              <div class="text-xs text-[var(--muted-foreground)]">服务可用性</div>
+              <div class="text-xs text-[var(--muted-foreground)]">{{ t('home.stats.uptime') }}</div>
             </div>
             <div class="space-y-1">
               <div class="text-2xl sm:text-3xl font-bold text-[var(--foreground)]">∞</div>
-              <div class="text-xs text-[var(--muted-foreground)]">免费链接数</div>
+              <div class="text-xs text-[var(--muted-foreground)]">{{ t('home.stats.freeLinks') }}</div>
             </div>
           </div>
         </div>
