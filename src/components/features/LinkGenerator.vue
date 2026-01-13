@@ -182,7 +182,7 @@ function handleReset() {
           <h1 class="text-5xl sm:text-7xl font-medium tracking-tight text-[var(--foreground)] leading-[1.1] mb-6">
             {{ t('home.title') }}
             <br class="hidden sm:block" />
-            <span class="text-gradient font-semibold">beautifully.</span>
+            <span class="text-gradient font-semibold">beautifully</span>
           </h1>
           
           <p class="text-lg sm:text-xl text-[var(--muted-foreground)] max-w-2xl mx-auto leading-relaxed font-light tracking-wide">

@@ -12,10 +12,10 @@
   /* 圆角基准 */
   --radius: 0.625rem;
 
-  /* 主色调 - 祖母绿 Emerald */
-  --primary: oklch(55% 0.17 160);
-  --primary-hover: oklch(48% 0.18 160);
-  --primary-light: oklch(92% 0.05 160);
+  /* 主色调 - 极简黑 */
+  --primary: oklch(25% 0.005 60);
+  --primary-hover: oklch(35% 0.005 60);
+  --primary-light: oklch(95% 0.005 60);
   --primary-foreground: oklch(99% 0 0);
 
   /* 辅助色 - 保留鼠尾草绿作为 accent */
@@ -69,10 +69,10 @@
 
 /* 暗色主题 */
 .dark {
-  --primary: oklch(65% 0.15 160);
-  --primary-hover: oklch(70% 0.14 160);
-  --primary-light: oklch(25% 0.08 160);
-  --primary-foreground: oklch(15% 0.02 160);
+  --primary: oklch(95% 0.005 60);
+  --primary-hover: oklch(85% 0.005 60);
+  --primary-light: oklch(20% 0.005 60);
+  --primary-foreground: oklch(15% 0.01 60);
 
   --accent: oklch(70% 0.12 165);
   --accent-foreground: oklch(15% 0 0);

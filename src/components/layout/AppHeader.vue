@@ -87,11 +87,12 @@ onUnmounted(() => {
       <div class="relative flex items-center justify-between h-16 lg:h-20">
         <!-- Logo -->
         <RouterLink to="/" class="flex items-center gap-2 group">
-          <div class="flex items-center justify-center transition-transform group-hover:scale-110 duration-300">
-            <svg class="w-7 h-7 text-[var(--primary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
-            </svg>
-          </div>
+          <svg class="w-7 h-7 text-[var(--foreground)] transition-transform group-hover:scale-110 duration-300" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M24 38h-5a9 9 0 0 1 0-18h5"/>
+            <path d="M40 26h5a9 9 0 0 1 0 18h-5"/>
+            <path d="M24 32h16"/>
+            <path d="M33 18l-8 14h8l-2 14 8-14h-8z"/>
+          </svg>
           <span class="text-xl font-semibold tracking-tight text-[var(--foreground)]">
             Shorter
           </span>

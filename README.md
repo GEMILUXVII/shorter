@@ -140,14 +140,14 @@ npx wrangler pages deploy dist
 
 ## 技术栈
 
-| 分类       | 技术                                |
-| ---------- | ----------------------------------- |
-| 前端       | Vue 3, Vite, Tailwind CSS           |
-| 状态管理   | Pinia                               |
-| 国际化     | vue-i18n                            |
-| 后端       | Cloudflare Workers (Functions)      |
-| 存储       | Cloudflare KV                       |
-| 部署       | Cloudflare Pages                    |
+| 分类     | 技术                           |
+| -------- | ------------------------------ |
+| 前端     | Vue 3, Vite, Tailwind CSS      |
+| 状态管理 | Pinia                          |
+| 国际化   | vue-i18n                       |
+| 后端     | Cloudflare Workers (Functions) |
+| 存储     | Cloudflare KV                  |
+| 部署     | Cloudflare Pages               |
 
 ## 项目结构
 

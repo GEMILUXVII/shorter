@@ -11,7 +11,7 @@ export default {
     }
   },
   home: {
-    title: '简化你的链接，',
+    title: '简化你的链接',
     subtitle: '输入长链接，生成简洁、优雅的短链接。',
     whyChoose: '为什么选择 Shorter?',
     features: {

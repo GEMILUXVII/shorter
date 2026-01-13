@@ -11,7 +11,7 @@ export default {
     }
   },
   home: {
-    title: 'Simplify your links,',
+    title: 'Simplify your links',
     subtitle: 'Paste a long link to generate a clean, elegant short link.',
     whyChoose: 'Why Choose Shorter?',
     features: {
