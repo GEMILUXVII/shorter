@@ -12,7 +12,7 @@ export default {
   },
   home: {
     title: '简化你的链接',
-    subtitle: '输入长链接，生成简洁、优雅的短链接。',
+    subtitle: '输入长链接，生成简洁、优雅的短链接',
     whyChoose: '为什么选择 Shorter?',
     whyChooseSubtitle: '基于 Cloudflare 全球边缘网络，为您提供企业级的短链接服务',
     stats: {
@@ -121,8 +121,8 @@ export default {
   auth: {
     join: '加入 Shorter',
     welcome: '欢迎回来',
-    joinDesc: '让链接管理变得简单而优雅。',
-    welcomeDesc: '登录以管理您的所有短链接。',
+    joinDesc: '让链接管理变得简单而优雅',
+    welcomeDesc: '登录以管理您的所有短链接',
     email: '邮箱',
     emailPlaceholder: 'name@example.com',
     password: '密码',
