@@ -78,15 +78,15 @@ onUnmounted(() => {
   background-image:
     linear-gradient(
       115deg,
-      oklch(22% 0.08 280) 0%,
-      oklch(20% 0.06 300) 25%,
-      oklch(18% 0.05 260) 50%,
-      oklch(20% 0.07 290) 75%,
-      oklch(22% 0.08 280) 100%
+      oklch(25% 0.15 280) 0%,
+      oklch(22% 0.12 310) 25%,
+      oklch(20% 0.10 250) 50%,
+      oklch(23% 0.13 290) 75%,
+      oklch(25% 0.15 280) 100%
     );
   background-size: 300% 100%;
-  filter: blur(80px);
-  opacity: 0.6;
+  filter: blur(60px);
+  opacity: 0.7;
 }
 
 .aurora-layer.with-mask {
@@ -145,20 +145,20 @@ onUnmounted(() => {
   animation-delay: 4s;
 }
 
-/* Dark mode blobs - subtle and soft */
+/* Dark mode blobs - vibrant but smooth */
 .dark .blob-1 {
-  background: oklch(35% 0.1 280 / 20%);
-  filter: blur(80px);
+  background: oklch(40% 0.18 280 / 25%);
+  filter: blur(70px);
 }
 
 .dark .blob-2 {
-  background: oklch(30% 0.08 260 / 15%);
-  filter: blur(80px);
+  background: oklch(35% 0.15 240 / 20%);
+  filter: blur(70px);
 }
 
 .dark .blob-3 {
-  background: oklch(32% 0.06 300 / 12%);
-  filter: blur(80px);
+  background: oklch(38% 0.12 310 / 18%);
+  filter: blur(70px);
 }
 
 @keyframes float {
