@@ -75,22 +75,14 @@ onUnmounted(() => {
 }
 
 .dark .aurora-layer {
-  /* 暗色模式渐变 - 更多颜色节点让过渡更平滑 */
-  background-image:
-    linear-gradient(
-      125deg,
-      oklch(20% 0.10 290) 0%,
-      oklch(19% 0.11 275) 15%,
-      oklch(18% 0.12 260) 30%,
-      oklch(19% 0.09 300) 45%,
-      oklch(21% 0.08 320) 60%,
-      oklch(19% 0.11 250) 75%,
-      oklch(20% 0.10 280) 90%,
-      oklch(20% 0.10 290) 100%
-    );
-  background-size: 300% 300%;
-  filter: blur(120px);
-  opacity: 0.85;
+  /* 暗色模式 - 简化渐变，大幅模糊消除摩尔纹 */
+  background:
+    radial-gradient(ellipse at 30% 20%, oklch(25% 0.15 280) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 60%, oklch(22% 0.12 260) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, oklch(20% 0.10 300) 0%, transparent 50%),
+    oklch(16% 0.02 280);
+  filter: blur(60px);
+  opacity: 1;
 }
 
 .aurora-layer.with-mask {
